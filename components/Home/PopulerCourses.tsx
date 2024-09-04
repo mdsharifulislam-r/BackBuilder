@@ -20,23 +20,23 @@ export function CourseCard({image,name,star,price}:courseCardProps){
     return (
         <div className='flex gap-4 place-items-start  lg:p-9 md:p-5 p-2 bg-white rounded-md group hover:bg-primary transition-all duration-500'>
             <div className="imageBox w-[80%] h-full relative min-h-40 rounded-md overflow-hidden">
-              <div className="lessen z-50 bg-orange absolute p-2 text-sm rounded-lg text-white gap-2 top-3 left-3 flex place-items-center">
+              <div className="lessen z-10 bg-orange absolute p-2 md:text-sm text-[10px] rounded-lg text-white gap-2 top-3 left-3 flex place-items-center">
                 <FaClock/> 12 Weeks
               </div>
-                <Image src={image} className=' absolute w-full h-full object-cover top-0 left-0' width={500} height={500} alt='courseImage'/>
+                <Image src={image} className='z-0 absolute w-full h-full object-cover top-0 left-0' width={500} height={500} alt='courseImage'/>
             </div>
             <div className="textBox w-[120%] pb-10 group-hover:text-white">
                 <h2 className='text-xl font-bold text-secondary group-hover:text-white'>${price}</h2>
-                <h1 className='text-xl text-darkBlack font-medium group-hover:text-white'>{name}.</h1>
+                <h1 className='md:text-xl text-base text-darkBlack font-medium group-hover:text-white'>{name}.</h1>
                 <div className="start flex place-items-center gap-2 py-2">
-                  <div className="star flex place-items-center group-hover:text-white text-orange">
+                  <div className="star flex place-items-center group-hover:text-white text-sm text-orange">
                     {startArr} {star.toString().includes(".") && <FaStarHalf/>}
                   </div>
                   <div className="rating">
                   ({star}/ 2 Ratings)
                   </div>
                 </div>
-                <div className="lesson pt-5 group-hover:text-white flex place-items-center gap-3 text-sm text-slate-500">
+                <div className="lesson pt-5 group-hover:text-white flex place-items-center gap-3 md:text-sm text-[10px] text-slate-500">
                   <div className="lesson flex place-items-center gap-3">
                     <FaBook/> 8 Lessons |
                   </div>

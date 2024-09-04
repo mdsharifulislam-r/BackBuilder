@@ -40,7 +40,7 @@ function Card({icon,text,color}:props){
             <div className={cn(data)}>
                 {icon}
             </div>
-            <div className="text">
+            <div className="text text-sm md:text-base">
                 {text}
             </div>
         </div>

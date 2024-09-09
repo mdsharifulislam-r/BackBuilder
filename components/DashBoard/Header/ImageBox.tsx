@@ -7,16 +7,24 @@ import { uploadImage } from '@/lib/Helper/imageUploader'
 import { UpdateStudentInfo } from '@/lib/Helper/UpdateStudentInfo'
 import toast from 'react-hot-toast'
 import { UpdateSingleInstructor } from '@/lib/Helper/UpdateSingleInstructor'
+import { useAppDispatch, useAppSelector } from '@/lib/hooks/Hooks'
+import { signInUser } from '@/lib/Store/features/UserSclice'
 export default function ImageBox({image,userid,type}:{image:string,userid:string,type:string}) {
+  const user = useAppSelector(state=>state.userReduicer.user)
+  const dispatch = useAppDispatch()
     async function ChangePicture(e:ChangeEvent<HTMLInputElement>) {
         const files = e.target.files
         const imageLink = await uploadImage(files)
-       
+    
         const formData = new FormData()
         formData.append("image",imageLink)
       
         const res = type!='student'? await UpdateSingleInstructor({image:imageLink},userid): await UpdateStudentInfo(formData)
         if(res.isOk){
+          dispatch(signInUser({
+            ...user,
+            image:imageLink
+           }))
             toast.success(res.massage)
         }else{
             toast.error(res.massage)

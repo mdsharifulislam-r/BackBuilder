@@ -44,7 +44,32 @@ export default function SideBar({id,type}:{id:string,type:string}) {
       icon:<AiOutlineSound/>,
       text:"Announcement"
     },
-  ].map((item,index)=>{
+  ]
+  const Userlinks = [
+    {
+      icon:<FaHome/>,
+      text:"Dashboard"
+    },
+    {
+      icon:<FaUser/>,
+      text:"My Profile"
+    },
+    {
+      icon:<RiComputerLine/>,
+      text:"Courses"
+    },
+    
+  ]
+  const instructor = links.map((item,index)=>{
+    return <LinkItem
+    icon={item.icon}
+    text={item.text}
+    key={Date.now()*index}
+    id={id}
+    type={type}
+    />
+  })
+  const users = Userlinks.map((item,index)=>{
     return <LinkItem
     icon={item.icon}
     text={item.text}
@@ -55,7 +80,7 @@ export default function SideBar({id,type}:{id:string,type:string}) {
   })
   return (
     <div className='px-7 py-5 bg-white border-primary min-h-[600px] border-2 rounded-md shadow-xl hidden md:block w-[25%]'>
-      {links}
+      {type=='teacher'?instructor:users}
     </div>
   )
 }

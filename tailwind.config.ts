@@ -20,7 +20,7 @@ const config: Config = {
   },
   plugins: [daisyui,require('tailwind-scrollbar')],
   daisyui: {
-    themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    themes: ["light"], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: "light", // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components
@@ -29,5 +29,28 @@ const config: Config = {
     logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
     themeRoot: ":root", // The element that receives theme color CSS variables
   },
+  safelist : [
+    'bg-gray-100',
+    'bg-slate-100',
+    'bg-neutral-100',
+    'bg-stone-100',
+    'bg-red-100',
+    'bg-orange-100',
+    'bg-amber-100',
+    'bg-yellow-100',
+    'bg-lime-100',
+    'bg-green-100',
+    'bg-emerald-100',
+    'bg-teal-100',
+    'bg-cyan-100',
+    'bg-sky-100',
+    'bg-blue-100',
+    'bg-indigo-100',
+    'bg-violet-100',
+    'bg-purple-100',
+    'bg-fuchsia-100',
+    'bg-pink-100',
+    'bg-rose-100'
+  ]
 };
 export default config;

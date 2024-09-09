@@ -8,7 +8,7 @@ import ButtonTest from './ButtonTest'
 import { UpdateStudentIntrest } from '@/lib/Helper/updateStudentIntrest'
 import { cookies } from 'next/headers'
 import StudentForm from './StudentForm'
-
+import man from "@/assets/Register/man.webp";
 export default function TellMeAbout({type}:{type:string}) {
  
     
@@ -20,7 +20,7 @@ export default function TellMeAbout({type}:{type:string}) {
             
             <StudentForm type={type}/>
         </div>
-        <SidePart/>
+        <SidePart image={man}/>
       </div>
     </div>
   )

@@ -13,7 +13,8 @@ export interface searchObject{
     instructors:string[],
     price:string,
     id:string,
-    text:string
+    text:string,
+   
 }
 export default function AboutPage({searchParams,params}:any) {
     const dataK = searchParams 
@@ -65,7 +66,7 @@ export default function AboutPage({searchParams,params}:any) {
             <Header path='Courses'/>
             <div className="container">
                 <Title heading='Our Courses' tagline='Find Best courses'/>
-                <CourseContainer searchData={searchObject} />
+                <CourseContainer active={dataK.active} searchData={searchObject} />
             </div>
         </div>
     )

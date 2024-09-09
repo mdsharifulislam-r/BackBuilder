@@ -31,7 +31,10 @@
         z-index: -1;
       }
       
-     
+     .bounce-one{
+      @apply animate-bounce;
+      animation-iteration-count: 2;
+     }
     .box-animation{
         animation: box_animation 3s ease-in-out infinite ;
     }

@@ -7,6 +7,7 @@ import toast from "react-hot-toast"
 import avater from '@/assets/Avatar/avatar.jpg'
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+
 export default function ProfileButton() {
   const dispatch = useAppDispatch()
   const router = useRouter()

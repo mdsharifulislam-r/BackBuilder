@@ -3,7 +3,7 @@ import SideBar from './SideBar'
 import Container from './Container'
 import { searchObject } from '@/app/(pages)/courses/page'
 
-export default function CourseContainer({searchData}:{searchData:searchObject}) {
+export default function CourseContainer({searchData,active}:{searchData:searchObject,active:string}) {
 
   
   return (
@@ -12,9 +12,9 @@ export default function CourseContainer({searchData}:{searchData:searchObject}) 
       <SideBar/>
       </div>
       <Suspense fallback={"...Loading"}>
-      <Container searchData={searchData}/>
+      <Container active={active} searchData={searchData}/>
       </Suspense>
-      
+    
     </div>
   )
 }

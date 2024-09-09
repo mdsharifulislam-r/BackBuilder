@@ -1,3 +1,4 @@
+import Courses from '@/components/DashBoard/InstrutorDashBoard/Courses/Courses';
 import DashBoard from '@/components/DashBoard/InstrutorDashBoard/DashBoard';
 import EnrollStudents from '@/components/DashBoard/InstrutorDashBoard/EnrollStudents';
 import MyCourse from '@/components/DashBoard/InstrutorDashBoard/MyCoursees/MyCourse';
@@ -17,6 +18,8 @@ switch (text) {
         return <Reviews id={id}/>
     case "my_courses":
         return <MyCourse id={id}/>
+    case "courses":
+        return <Courses id={id}/>
 
     default:
         return <DashBoard/>

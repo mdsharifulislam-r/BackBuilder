@@ -7,11 +7,14 @@ import { searchObject } from "@/app/(pages)/courses/page";
 import filterCourses from "../Hooks/filterCourses";
 import { getStudentInfo } from "@/lib/Helper/getStudent";
 import { cookies } from "next/headers";
+import Pegination from "./Pegination";
 
 export default async function Container({
   searchData,
+  active
 }: {
   searchData: searchObject;
+  active:string
 }) {
   const token = cookies().get('token')?.value
 
@@ -57,8 +60,11 @@ export default async function Container({
   return (
     <div className=" lg:w-[75%] md:w-[75%] w-full lg:pl-4 md:px-2 py-2">
       <TopSecton />
-      <div className="con -z-[2] lg:grid-cols-3 grid md:grid-cols-2  grid-cols-1 place-items-center gap-5 pt-6">
+      <div className="con -z-[2] lg:grid-cols-3 grid md:grid-cols-2 min-h-[1000px]  grid-cols-1 place-items-start gap-5 pt-6">
         {data}
+      </div>
+      <div>
+<Pegination courses={courses} active={active} />
       </div>
     </div>
   );

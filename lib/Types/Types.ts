@@ -45,3 +45,24 @@ export interface InstructorType{
     students:string[],
     ratings:review[]
 }
+
+export interface Booktype{
+    name:string,
+    _id:string,
+    instructor:{
+        id:string,
+        name:string
+    },
+    image:string,
+    ratings?:{
+        user:string,
+        star:string,
+        desc:string
+    }[],
+    publishDate:string,
+    price:string,
+    level:string,
+    type:string,
+    description:string
+
+}

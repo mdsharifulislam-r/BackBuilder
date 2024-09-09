@@ -21,7 +21,8 @@ export default function Videoframe({videoLinks,videoId}:props) {
  
 async function TakeTime(){
   const userData:Student|null= await getStudentInfoClient([],user?._id)
-  const videoIds = userData?.completeVideos?.length ? [...userData?.completeVideos,videoId]:[videoId]
+
+  const videoIds = (userData?.completeVideos?.length && !userData?.completeVideos?.includes(videoId)) ? [...userData?.completeVideos,videoId]:[videoId]
   const res = await UpdateStudentInfoObject({
     completeVideos:videoIds
   })

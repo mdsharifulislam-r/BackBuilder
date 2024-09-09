@@ -25,9 +25,9 @@ export default async function Header({id,type}:{id:string,type:string}) {
       
          <div>
           <h1 className='text-4xl font-semibold'>{user?.name}</h1>
-          {type != 'student' && <div> <p className='font-light text-sm py-3'>A {user?.title}</p>
+          {type != 'student' ? <div> <p className='font-light text-sm py-3'>A {user?.title}</p>
           <div className='flex place-items-center gap-1 text-orange'>{star} <span className='text-black'>({user?.ratings?.length} Ratings)</span></div>
-          </div>}
+          </div>: <p className='font-light text-sm py-3'>A Learner and Student</p> }
          </div>
         </div>
        { type != 'student'&& <div>

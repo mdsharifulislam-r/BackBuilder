@@ -15,7 +15,10 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Elsie_Swash_Caps } from "next/font/google";
 import { uploadImage } from "@/lib/Helper/imageUploader";
-
+import { useAppDispatch } from "@/lib/hooks/Hooks";
+import { setOTP, setTempUser } from "@/lib/Store/features/UserSclice";
+import {Resend} from "resend"
+import { sendOtp } from "@/lib/Helper/sendOtp";
 export interface register {
   name: string;
   email: string;
@@ -25,19 +28,22 @@ export interface register {
   type: string;
 }
 export default function Form({response}:{response?:responseData}) {
+  const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_KEY)
+
   const [userType,setUserType]=useState('student')
   const [imageFormData,setImageFormData]=useState<string>("")
   async function GetImage(e:ChangeEvent<HTMLInputElement>){
     const file = e.target.files
     if(file){
       const formData = new FormData()
-      const data = await uploadImage(file[0])
-      setImageFormData(data)
+      const dataK = await uploadImage(file[0])
+      setImageFormData(dataK)
       
       
     }
 
   }
+  const dispatch = useAppDispatch()
   const router = useRouter()
   const [loading,SetLoading]=useState(false)
   function AddValue(e:ChangeEvent<HTMLInputElement>){
@@ -47,8 +53,8 @@ export default function Form({response}:{response?:responseData}) {
   async function SubmitData(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
  
-    const data = Object.fromEntries(new FormData(e.currentTarget));
-    const { name, type, email, pass1, pass2, phone } = data;
+    const dataK = Object.fromEntries(new FormData(e.currentTarget));
+    const { name, type, email, pass1, pass2, phone } = dataK;
     if (name && type && email && pass1 && pass2 && phone) {
 
       if(pass1.toString().length<8){
@@ -56,47 +62,57 @@ export default function Form({response}:{response?:responseData}) {
         return
       }
       if (pass1 == pass2) {
-  SetLoading(true)
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/${userType=='student'?"student":"instructor"}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: userType=='student'? JSON.stringify({
-            type: data.type,
-            email: data.email,
-            password: data.pass1,
-            name,
-            phone,
-            isSocialLogin: {
-              status: false,
-            },
-          }):JSON.stringify({
-            type: data.type,
-            email: data.email,
-            password: data.pass1,
-            name,
-            phone,
-            desc:data.desc,
-            image:imageFormData,
-            title:data.title,
-            isSocialLogin: {
-              status: false,
-            },
-          })
-        });
-        const dat= await res.json()
-        if(dat.isOk){
-          router.push("/login")
-          SetLoading(false)
-          toast.success(dat.massage)
+        SetLoading(true)
+        const randomOtp = Math.floor(Math.random()*10000)
+        let randId = ""
+        if(randomOtp.toString()?.length<4){
+          randId = randomOtp.toString()+"53"
         }else{
-          SetLoading(false)
-          toast.error(dat.massage)
+          randId=randomOtp.toString()
         }
+        const res = await sendOtp(`${email}`,parseInt(randId),true)
+     if(res.isOk){
       
-      
-      
+      toast.success(res.massage
+      )
+      dispatch(setOTP(randomOtp))
+             
+  if(dataK.type=='student'){
+
+
+    dispatch(setTempUser({
+      type: dataK.type,
+      email: dataK.email,
+      password: dataK.pass1,
+      name,
+      phone,
+      isSocialLogin: {
+        status: false,
+      },
+    }))
+  }else{
+    dispatch(setTempUser({
+      type: dataK.type,
+      email: dataK.email,
+      password: dataK.pass1,
+      name,
+      phone,
+      desc:dataK.desc,
+      image:imageFormData,
+      title:dataK.title,
+      isSocialLogin: {
+        status: false,
+      },
+    }))
+  }
+  SetLoading(false)
+  router.push('/otp')
+     }else{
+      SetLoading(false)
+      toast.error(res.massage)
+     }
+ 
+        
     }else{
       toast.error("Password not match")
     }
@@ -108,7 +124,7 @@ export default function Form({response}:{response?:responseData}) {
   },[])
   return (
     <>
-      <div className="flex p-4 h-full w-full justify-center place-items-center flex-col">
+      <div className="flex md:p-4 h-full w-full justify-center place-items-center flex-col">
        {hydred && <form onSubmit={SubmitData} className="w-full">
           <h1 className="text-4xl font-bold pb-5 text-darkBlack">Sign Up</h1>
           <div className="flex w-full ">

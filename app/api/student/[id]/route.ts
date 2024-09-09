@@ -185,6 +185,7 @@ export async function PUT(Request: NextRequest) {
       });
     }
   }
+  
   const res = await StudentModel.findByIdAndUpdate(id, data.dataObject);
 
     if (res) {

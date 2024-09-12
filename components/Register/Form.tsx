@@ -28,7 +28,7 @@ export interface register {
   type: string;
 }
 export default function Form({response}:{response?:responseData}) {
-  const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_KEY)
+
 
   const [userType,setUserType]=useState('student')
   const [imageFormData,setImageFormData]=useState<string>("")

@@ -1,9 +1,10 @@
 import { searchObject } from "@/app/(pages)/courses/page";
 import { CourseType } from "../Courses/CourseCard/CourseCard";
+import { Booktype } from "@/lib/Types/Types";
 // this is my{anonymous} creation
 export default function filterCourses(
   searchData: searchObject,
-  courses: CourseType[]
+  courses: CourseType[]|Booktype[]
 ): any {
   const { catagories, instructors, level, price: filterPrice,id,text} = searchData;
   const categoriesSet = new Set(catagories);

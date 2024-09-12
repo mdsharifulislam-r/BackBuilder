@@ -5,29 +5,57 @@ import { ChangeEvent, FormEvent, FormEventHandler, useEffect, useState } from "r
 import { getSingleInstructor } from "@/lib/Helper/getSingleInstructor";
 import { useAppSelector } from "@/lib/hooks/Hooks";
 import toast from "react-hot-toast";
-import { InstructorType, review } from "@/lib/Types/Types";
+import { Booktype, InstructorType, review } from "@/lib/Types/Types";
 import { UpdateSingleInstructor } from "@/lib/Helper/UpdateSingleInstructor";
 import LoadingButton from "@/components/Common/Button/Button";
 import { getSingleCourse } from "@/lib/Helper/getSingleCourse";
 import { updateCourse } from "@/lib/Helper/UpdateCourse";
 import { CourseType } from "@/components/Courses/CourseCard/CourseCard";
+import { getSingleBook } from "@/lib/Helper/getSingleBook";
+import { updateBooks } from "@/lib/Helper/updateBook";
+import Ratings from "./Ratings";
 
-export default function ReviewForm() {
+export default function ReviewForm({id}:{id:string}) {
   const user = useAppSelector((state) => state.userReduicer.user);
- 
+
   const [desc,setDesc]=useState<string|undefined>("")
   const [star,setStar]=useState(0)
-
-
-
+useEffect(()=>{
+  getSingleBook(id)
+    .then((res:Booktype)=>{
+      const ratings = res?.ratings?.find(rate=>rate.user==user?._id)
+  setStar(parseInt(ratings?.star!)||0)
+  setDesc(ratings?.desc||"")
+    })
+},[])
  
-  
+ async function SubmitData(){
+    const book:Booktype = await getSingleBook(id)
+    const objectData = {user:user?._id,star:star.toString(),desc:desc}
+    let review = book?.ratings?.length ? [...book?.ratings,objectData]:[objectData]
+    if(book?.ratings?.some(data=>data.user == user?._id)){
+      const index = book?.ratings?.findIndex(data=>data.user==user?._id)
+      let data = [...book?.ratings]
+      data[index]={user:user?._id!,star:star.toString(),desc:desc!}
+      review = data
+    }
+    const res = await updateBooks({
+      ratings:review
+    },id,true)
+    if(res.isOk){
+      toast.success(res.massage)
+    }else{
+      toast.error(res.massage)
+    }
+
+  }
   function setStarValue(e:ChangeEvent<HTMLInputElement>){
     setStar(parseInt(e.target.value))
+    
   }
 
   return (
-    <form className={`md:w-[50%]  mx-auto pt-8`}>
+    <form action={SubmitData} className={`md:w-[50%]  mx-auto pt-8`}>
       <div className="rating">
         <input
           type="radio"
@@ -85,7 +113,7 @@ export default function ReviewForm() {
        
       ></textarea>
       <LoadingButton className="bg-primary text-white rounded-md px-3 py-2">
-       update
+       {desc?"Update":"Submit"}
       </LoadingButton>
     </form>
   );

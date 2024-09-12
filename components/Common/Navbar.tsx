@@ -7,6 +7,7 @@ import Cart from "./Cart";
 import { useAppSelector } from "@/lib/hooks/Hooks";
 import dynamic from "next/dynamic";
 import ProfileButton from "./ProfileButton/ProfileButton";
+import Diamond from "./Diamond/Diamond";
 
 interface props {
   pathname: string;
@@ -91,7 +92,7 @@ export default function Navbar() {
       />
     );
   });
-
+const user = useAppSelector(state=>state.userReduicer.user)
   return (
     <>
       {/* component */}
@@ -148,6 +149,9 @@ export default function Navbar() {
             >
               <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                 {data}
+                <li>
+                  <Diamond id={user?._id||""}/>
+                </li>
                 {hydrated && <Cart />}
                 {hydrated && (
                   <li>

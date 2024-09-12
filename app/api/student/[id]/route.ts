@@ -59,7 +59,7 @@ export async function POST(Request: Request) {
         if (match) {
           const newData = await StudentModel.findOne(
             { email: email },
-            { name: 1, phone: 1, email: 1, type: 1, intrestTypes: 1 }
+            { name: 1, phone: 1, email: 1, type: 1, intrestTypes: 1 ,address:1}
           );
           const oneDay = 24 * 60 * 60;
           const token = jwt.encode(newData._id, process.env.JWT_SECRET || "");

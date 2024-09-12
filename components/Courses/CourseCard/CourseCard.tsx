@@ -66,7 +66,7 @@ export default function CourseCard({image,name,desc,ratings,duration,type,_id,pr
         <span className='text-xs'>For <span className=' capitalize px-3 py-1 text-white rounded-md bg-orange '>{level}</span></span>
         <h1 className='text-base font-bold line-clamp-2'>{name}
         </h1>
-        <span className=' text-sm text-slate-500'>By <span className='text-base font-bold text-orange'>{instructor.name}</span></span>
+        <span className=' text-sm text-slate-500'>By <span className='text-base font-bold text-orange'>{instructor?.name}</span></span>
 
         <p className=' line-clamp-2 text-[10px] font-light'>
             {desc}

@@ -9,6 +9,8 @@ import { UpdateStudentInfo } from '@/lib/Helper/UpdateStudentInfo';
 import { UpdateStudentInfoObject } from '@/lib/Helper/UpdateStudentObject';
 import toast from 'react-hot-toast';
 import { ChangeVideoStatus } from '../SingleCourseDetails/Curriculum/ModuleLink';
+import { Duplex } from 'stream';
+import { setUpdateDiamon } from '../Common/Diamond/Diamond';
 interface props{
   videoLinks:string | undefined,
   videoId:string
@@ -21,15 +23,20 @@ export default function Videoframe({videoLinks,videoId}:props) {
  
 async function TakeTime(){
   const userData:Student|null= await getStudentInfoClient([],user?._id)
-
-  const videoIds = (userData?.completeVideos?.length && !userData?.completeVideos?.includes(videoId)) ? [...userData?.completeVideos,videoId]:[videoId]
+if(!userData?.completeVideos?.includes(videoId)){
+  const videoIds = (userData?.completeVideos?.length ) ? [...userData?.completeVideos,videoId]:[videoId]
+  const diamond = userData?.diamond? userData?.diamond+10 : 10
   const res = await UpdateStudentInfoObject({
-    completeVideos:videoIds
+    completeVideos:videoIds,
+    diamond
   })
+
   if(!res.isOk){
     toast.error(res.massage)
   }
+  setUpdateDiamon()
   ChangeVideoStatus()
+}
 }
 const [hydred,setHydred]=useState(false)
 useEffect(()=>{

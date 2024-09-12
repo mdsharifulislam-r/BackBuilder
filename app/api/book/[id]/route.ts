@@ -52,7 +52,8 @@ export async function PUT(Request:Request,{params}:{params:{id:string}}) {
             })
         }
     const data = jwt.decode(payload,process.env.JWT_SECRET!)
-    if(!data){
+    const res = await BookModel.findByIdAndUpdate(id,data)
+    if(!res){
         return NextResponse.json({
             isOk:false,
             massage:"Something went wrong"

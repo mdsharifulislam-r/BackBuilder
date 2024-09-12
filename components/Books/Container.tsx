@@ -3,10 +3,15 @@ import Title from '../Common/Title'
 import BookCard from '../BookCard/BookCard'
 import { getBooks } from '@/lib/Helper/getBooks'
 import { Booktype } from '@/lib/Types/Types'
+import { searchObject } from '@/app/(pages)/courses/page'
+import filterCourses from '../Hooks/filterCourses'
 
-export default async function Container() {
+export default async function Container({searchData}:{searchData:searchObject}) {
   const BookData:Booktype[] = await getBooks()
-  const books = BookData?.map(book=>{
+  const filterBooksData:Booktype[] = filterCourses(searchData,BookData)
+  console.log(filterBooksData);
+  
+  const books = filterBooksData?.map(book=>{
     return <BookCard
     _id={book._id}
     name={book.name}

@@ -6,6 +6,7 @@ import { FaArrowRight } from 'react-icons/fa'
 import { getRandomClass } from '@/lib/colors/getRandomColor'
 import { Booktype } from '@/lib/Types/Types'
 import Link from 'next/link'
+import AddCartButton from './AddCartButton'
 export default function BookCard({name,description,_id,instructor,price,image}:Booktype) {
    const bg = getRandomClass()
   return (
@@ -28,9 +29,7 @@ export default function BookCard({name,description,_id,instructor,price,image}:B
             <span className='text-xl text-primary font-bold'> ${price}</span>
             <span className=' text-slate-400 text-sm line-through font-bold'> $43</span>
             </div>
-            <div>
-                <button className='md:px-4 px-2 md:py-2 py-1 text-[10px] rounded-md transition-all duration-300 hover:bg-primary bg-secondary text-white md:text-xs font-bold flex place-items-center gap-1'>Add to Cart <FaArrowRight/> </button>
-            </div>
+         <AddCartButton name={name} _id={_id} instructor={instructor} price={price} image={image}/>
 
         </div>
       </div>

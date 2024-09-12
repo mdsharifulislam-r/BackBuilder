@@ -1,8 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import React from "react";
-import pic from "@/assets/Home/Teacher/teacher1.webp";
-import pic2 from "@/assets/Home/Teacher/teacher2.webp";
-import pic3 from "@/assets/Home/Teacher/teacher3.webp";
+
 
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { getStudentInfo } from "@/lib/Helper/getStudent";

@@ -36,6 +36,8 @@ export const StudentSchema = new Schema({
     intrestTypes:{
         type:Array<String>
     },
-    completeVideos:Array<String>
+    completeVideos:Array<String>,
+    address:Array<String>,
+    diamond:Number
 
 })

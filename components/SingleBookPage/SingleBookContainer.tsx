@@ -16,7 +16,7 @@ export default async function SingleBookContainer({id}:{id:string}) {
       <TextContainer book={book}/>
       
       </div>
-      <Ratings/>
+      <Ratings id={id}/>
     </div>
   )
 }

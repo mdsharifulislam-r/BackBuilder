@@ -8,6 +8,7 @@ import { addCartData, cartItem, deleteCartData } from '@/lib/Store/features/Cart
 import toast from 'react-hot-toast';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { getRandomClass } from '@/lib/colors/getRandomColor';
 
 export function makePrice(arr:cartItem[]):number{
   let sum = 0
@@ -15,8 +16,10 @@ export function makePrice(arr:cartItem[]):number{
 
   
   for(let i of arr){
-    if(i.price!=='free'
+    if(i.amount
     ){
+      sum+=parseInt(i.price)*i.amount
+    }else if(i.price!=='free'){
       sum+=parseInt(i.price)
     }
   }
@@ -47,15 +50,53 @@ function CartBox({name,_id,cartId,author,amount,image,price,type}:cartItem){
   <div className="absolute right-4 top-4">
     <button className='text-xl ' onClick={Delete}>x</button>
   </div>
-  <div className="imageBpx w-[30%] h-40 relative">
-    <Image src={image} alt='' className='absolute w-full h-full left-0 top-0 object-cover' width={300} height={300} />
+  <div className="imageBpx w-60 relative">
+    <Image src={image} alt='' className='w-full h-full left-0 top-0 object-cover' width={300} height={300} />
+
+  </div>
+  <div className='w-[80%]'>
+    <h1 className='text-sm font-medium pb-1 line-clamp-2'>{name}</h1>
+    <p className='text-sm pb-2 text-slate-400'>by {author}</p>
+    <div className="price text-base text-secondary capitalize">
+      {price !== "free" ? `$${price}`:price}<span>{amount}</span>
+    </div>
+  </div>
+</div>
+}
+function BookItem({name,_id,cartId,author,amount,image,price,type}:cartItem){
+  const bg = getRandomClass()
+  const dispatch = useAppDispatch()
+  function AddData(){
+      const obj:cartItem={
+          name:name,
+          author:author,
+          _id:_id,
+          image:image,
+          cartId:cartId,
+          price:price,
+          type:type
+      }
+      dispatch(addCartData(obj))
+  }
+  function Delete(){
+    dispatch(deleteCartData(cartId))
+    toast.custom(<h1 className='px-4 py-3 bg-white text-secondary rounded-lg'> Data deleted successfully <button onClick={AddData} className=' underline text-primary'>Undo</button></h1>,{
+      position:"bottom-center"
+    })
+  }
+  return <div className='flex gap-2 p-3 border-b relative'>
+  <div className="absolute right-4 top-4">
+    <button className='text-xl ' onClick={Delete}>x</button>
+  </div>
+  <div className={`imageBpx p-2 ${bg} rounded-md relative`}>
+    <Image src={image} alt='' className=' w-full max-h-36 object-cover drop-shadow-lg' width={300} height={300} />
 
   </div>
   <div>
-    <h1 className='text-lg font-medium pb-1 '>{name}</h1>
-    <p className='text-sm pb-2 text-slate-400'>by {author}</p>
+    <h1 className='text-sm font-medium pb-1 '>{name}</h1>
+    <p className='text-[10px] pb-2 text-slate-400'>by {author}</p>
     <div className="price text-base text-secondary capitalize">
-      {price !== "free" ? `${price}`:price}<span>{amount}</span>
+      {price !== "free" ? `$${price}`:price}<span>x{amount}</span>
     </div>
   </div>
 </div>
@@ -63,7 +104,17 @@ function CartBox({name,_id,cartId,author,amount,image,price,type}:cartItem){
 export default function Cart() {
  const data = useAppSelector(state=>state.cartReduicer.cartData)
  const cartItemData = data?.map(item=>{
-  return <CartBox
+  return item.type!=="book"? <CartBox
+  name={item?.name}
+  _id={item?._id}
+  cartId={item?.cartId}
+  image={item?.image}
+  author={item?.author}
+  amount={item?.amount}
+  type={item?.type}
+  price={item?.price}
+  key={item?.cartId}
+  />:<BookItem
   name={item?.name}
   _id={item?._id}
   cartId={item?.cartId}
@@ -99,11 +150,11 @@ export default function Cart() {
         {cartItemData}
       </div>
       <div className='p-4 pt-8'>
-        <div className="sub font-semibold flex justify-between place-items-center">
+        <div className="sub font-semibold flex justify-between place-items-center px-2">
           <span>Subtotal</span>
           <span>${price}</span>
         </div>
-        <div className='py-5 flex flex-col gap-3'>
+        <div className='py-5 flex flex-col gap-3 px-3'>
           <Link href={"/cart"} className='w-full text-center  py-3 rounded-full bg-primary text-white'>View Cart</Link>
           <Link href={"/checkout"} className='w-full text-center py-3 rounded-full border-[1px] border-primary text-primary'>Checkout</Link>
         </div>

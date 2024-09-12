@@ -1,4 +1,5 @@
 import { CourseType } from "@/components/Courses/CourseCard/CourseCard";
+import { cartItem } from "../Store/features/CartSlice";
 interface isSocialLogin{
     status:boolean,
     type?:string
@@ -16,6 +17,8 @@ export interface Student{
     isSocialLogin:isSocialLogin,
     intrestTypes:string[],
     completeVideos:string[],
+    address?:string[],
+    diamond?:number
 }
 export interface review{
     user?:string,
@@ -43,7 +46,8 @@ export interface InstructorType{
     title:string,
     socialLinks:socialLinks,
     students:string[],
-    ratings:review[]
+    ratings:review[],
+    address?:string[]
 }
 
 export interface Booktype{
@@ -65,4 +69,12 @@ export interface Booktype{
     type:string,
     description:string
 
+}
+export type status = "pending"|"shiping"|"deliverd"|"cencel"
+export type orderItem = cartItem | {orderId:string,orderDate:string,userId:string,status:status}
+export interface OrderType{
+    userId:string,
+    orders:orderItem[],
+    orderDate:string,
+    address:string
 }

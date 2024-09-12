@@ -23,7 +23,7 @@ export default function   TextContainer({book}:{book:Booktype}) {
       <p className="text-slate-500 md:text-base text-sm text-justify"> 
 {book?.description}
       </p>
-    <AddToCart/>
+    <AddToCart item={book}/>
     <div className="div">
       <div>
         <span className="font-bold">Catagories :</span>

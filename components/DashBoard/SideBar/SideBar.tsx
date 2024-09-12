@@ -3,7 +3,7 @@ import React from 'react'
 import { FaHome, FaUser } from 'react-icons/fa'
 import { FaUsers } from 'react-icons/fa6';
 import { IoBookOutline, IoStarOutline } from "react-icons/io5";
-import { RiComputerLine } from "react-icons/ri";
+import { RiBox1Fill, RiComputerLine } from "react-icons/ri";
 import { AiOutlineSound } from "react-icons/ai";
 function LinkItem({icon,text,id,type}:{icon:any,text:string,id:string,type:string}){
   const link = text?.split(" ")?.join("_")?.toLowerCase()
@@ -57,6 +57,10 @@ export default function SideBar({id,type}:{id:string,type:string}) {
     {
       icon:<RiComputerLine/>,
       text:"Courses"
+    },
+    {
+      icon:<RiBox1Fill/>,
+      text:"Orders"
     },
     
   ]

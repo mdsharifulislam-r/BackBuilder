@@ -10,7 +10,7 @@ export default function CourseBox({item}:{item:cartItem}) {
     <h1 className='font-bold'>{item.name}</h1>
     </div>
  
-    <div className="price text-slate-500 capitalize">{item.price !== "free" ? `${item.price}`:item.price}</div>
+    <div className="price text-slate-500 capitalize">{item.price !== "free" ? `${item.price}x${item.amount||1}`:item.price}</div>
 </div>
   )
 }

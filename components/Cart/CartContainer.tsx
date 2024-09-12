@@ -6,13 +6,15 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { cartItem } from "@/lib/Store/features/CartSlice";
 import Link from "next/link";
+import BookItemBox from "./BookItemBox";
+import AddressSection from "./AddressSection";
 export default function CartContainer() {
     const cartData = useAppSelector(state=>state.cartReduicer.cartData)
     const [Item,setItem]=useState<cartItem | null>(null)
-
+    
     
     const Cartitem = cartData?.map(item=>{
-        return <CartItemBox
+        return item.type !="book" && <CartItemBox
         image={item.image}
         name={item.name}
         _id={item._id}
@@ -24,6 +26,20 @@ export default function CartContainer() {
         key={item.cartId}
         setItem={setItem}
         />
+    })
+    const bookItem = cartData?.map(item=>{
+      return item.type == 'book' && <BookItemBox
+      image={item.image}
+      name={item.name}
+      _id={item._id}
+      cartId={item.cartId}
+      author={item.author}
+      price={item.price}
+      type={item.type}
+      amount={item.amount}
+      key={item.cartId}
+
+      />
     })
     const [price,setPrice]=useState(makePrice(cartData))
     const [promo,setPromo]=useState("")
@@ -53,17 +69,27 @@ export default function CartContainer() {
         })
       }
     }
-    
+const [isAdd,setAddress]=useState(false)
+
+const isBookExist = cartData.some(item=>item.type=="book")
+
   return (
     <div className="container">
       <div className=" ">
         <div className="sm:flex shadow-md my-10">
-          <div className="  w-full  sm:w-3/4 bg-white px-10 py-10">
+          <div className="  w-full md:max-h-[600px] overflow-y-scroll scrollbar-none  sm:w-3/4 bg-white px-10 py-10">
             <div className="flex justify-between border-b pb-8 ">
               <h1 className="font-semibold text-2xl">Course Cart</h1>
               <h2 className="font-semibold text-2xl">{cartData?.length} Items</h2>
             </div>
-            {Cartitem}
+            <div>
+              <h1 className="text-2xl font-bold py-2 text-primary">Course Items</h1>
+              {Cartitem}
+            </div>
+            <div>
+            <h1 className="text-2xl font-bold py-2 text-primary">Book Items</h1>
+            {bookItem}
+            </div>
             <a
               href="#"
               className="flex font-semibold text-indigo-600 text-sm mt-10"
@@ -88,14 +114,14 @@ export default function CartContainer() {
               <span className="font-semibold text-sm uppercase">Items {cartData?.length}</span>
               <span className="font-semibold text-sm">{makePrice(cartData)}$</span>
             </div>
-            {Item?.type !== 'course' && <div>
+      {isBookExist && <AddressSection/>}
+         {isBookExist && <div>
               <label className="font-medium inline-block mb-3 text-sm uppercase">
                 Shipping
               </label>
-              <select onChange={(e)=>{setPrice(makePrice(cartData)+parseInt(e.target.value))
-              }} className="block p-2 text-gray-600 w-full text-sm">
+              <select  className="block p-2 text-gray-600 w-full text-sm">
                 <option value={10}>Standard shipping - $10.00</option>
-                <option value={30}>Standard shipping - $10.00</option>
+                <option value={30}>Standard shipping - $30.00</option>
               </select>
             </div>}
             <div className="py-10">
@@ -116,13 +142,15 @@ export default function CartContainer() {
               Apply
             </button>
             <div className="border-t mt-8">
-              <div className="flex font-semibold justify-between py-6 text-sm uppercase">
+            
+              <div className="flex font-semibold justify-between py-3 text-sm uppercase">
                 <span>Total cost</span>
-                <span>${price}</span>
+                <span>${makePrice(cartData)}</span>
               </div>
-              <Link href={`/checkout?id=${Item?._id}`} className=" text-center block bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
-                Checkout
-              </Link>
+     
+           { cartData.length ? <Link href={`/checkout?`} className="popUp text-center my-2 block bg-secondary font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
+                Checkout Items ({cartData?.length})
+              </Link>:""}
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import Container from '@/components/Lessons/Container'
 import SideBar from '@/components/Lessons/SideBar'
 import React, { Suspense } from 'react'
-
+export const dynamic = "force-dynamic"
 export default function page({params}:any) {
   const {lesson}:{lesson:string}=params
   const [courseId,moduleId,videoId]=lesson?.split("%2B")

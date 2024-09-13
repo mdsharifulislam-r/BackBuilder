@@ -19,15 +19,16 @@ export default function CheckoutContainer({id}:{id:string}) {
     const cartdata = useAppSelector(state=>state.cartReduicer.cartData)
     const user = useAppSelector(state=>state.userReduicer.user)
     const dispatch = useAppDispatch()
+    const bookExist = cartdata?.some(item=>item.type=="book")
     const data:cartItem[] = id ? cartdata.filter(item=>item._id==id) : cartdata
     
     const price = makePrice(data)
 
-  async function Enroll() {
+  async function Enroll(courseId:string="") {
    const tempUser = await getStudentClient(["diamond"],id)
     
     const res = await EnrollCourse({
-      courseId:id,
+      courseId:courseId||id,
       userId:user?._id
     })
     if(res.isOk){
@@ -48,9 +49,20 @@ export default function CheckoutContainer({id}:{id:string}) {
 const [loading,setLoading]=useState(false)
 const address = useAppSelector(state=>state.cartReduicer.address)
 async  function placeOrder(){
+  if(!address && bookExist){
+    toast.error("Please add a address first")
+  }
   if(cartdata?.length){
   setLoading(true)
-    const newArr = cartdata?.map(item=>{
+  const freeCourse = cartdata?.filter(item=>item.price=='free')
+  if(freeCourse?.length){
+    freeCourse.forEach(item=>Enroll(item._id))
+  }
+  const paidItem = cartdata?.filter(item=>item.price!=='free')
+  if(!paidItem?.length){
+    return
+  }
+    const newArr = paidItem?.map(item=>{
       const obj = {
         orderId:Math.random().toString(),
         userId:user?._id,
@@ -67,8 +79,9 @@ async  function placeOrder(){
 orderDate:new Date().toDateString(),
 userId:user?._id||"",
 orders:newArr,
-address:address
-
+address:address,
+price:makePrice(cartdata),
+status:"pending"
   }
   const res = await createOrder(dataObj)
   if(res.isOk){
@@ -92,7 +105,7 @@ address:address
             <PaymentBox />
         </div>:""}
         <div>
-            {price ?<LoadingButton isLoading={loading} onClick={placeOrder} className='py-3 w-full bg-primary text-white'>Place Order</LoadingButton>:<LoadingButton onClick={Enroll} className='py-3 w-full bg-primary text-white'>Enroll for free</LoadingButton>}
+            {price ?<LoadingButton isLoading={loading} onClick={placeOrder} className='py-3 w-full bg-primary text-white'>Place Order</LoadingButton>:<LoadingButton onClick={()=>Enroll()} className='py-3 w-full bg-primary text-white'>Enroll for free</LoadingButton>}
         </div>
         </div>
       </div>

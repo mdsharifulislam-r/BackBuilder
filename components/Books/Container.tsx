@@ -9,7 +9,7 @@ import filterCourses from '../Hooks/filterCourses'
 export default async function Container({searchData}:{searchData:searchObject}) {
   const BookData:Booktype[] = await getBooks()
   const filterBooksData:Booktype[] = filterCourses(searchData,BookData)
-  console.log(filterBooksData);
+
   
   const books = filterBooksData?.map(book=>{
     return <BookCard

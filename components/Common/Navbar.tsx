@@ -149,9 +149,9 @@ const user = useAppSelector(state=>state.userReduicer.user)
             >
               <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                 {data}
-                <li>
-                  <Diamond id={user?._id||""}/>
-                </li>
+                {( hydrated && user?.name && user?.type=="student") &&  <li>
+               <Diamond id={user?._id||""}/>
+                </li>}
                 {hydrated && <Cart />}
                 {hydrated && (
                   <li>

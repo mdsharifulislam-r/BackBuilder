@@ -17,7 +17,7 @@ export default function Form() {
     const [image,setImage]=useState("")
     async function GetImage(e:ChangeEvent<HTMLInputElement>){
         const imageLink = await uploadImage(e.target.files)
-        console.log(imageLink);
+     
         
         setImage(imageLink)
     }

@@ -7,5 +7,7 @@ export const OrderSchema = new Schema({
     },
     orders:Array<Object>,
     orderDate:String,
-    address:String
+    address:String,
+    price:Number,
+    status:String
 })

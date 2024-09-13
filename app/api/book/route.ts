@@ -9,7 +9,7 @@ export async function POST(Request:Request){
     try {
         const {payload}:{payload:string}= await Request.json()
         const {name,price,instructor,image,level,publishDate,description,type}:Booktype = jwt.decode(payload,process.env.JWT_SECRET!)
-        console.log({name,price,instructor,image,level,publishDate,description,type});
+  
         
         if(!price && !name && !instructor?.id && !image && !level && !publishDate && !description){
             return NextResponse.json({

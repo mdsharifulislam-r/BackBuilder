@@ -13,11 +13,11 @@ import { responseData } from "@/app/(pages)/register/page";
 import { redirect, useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Elsie_Swash_Caps } from "next/font/google";
+
 import { uploadImage } from "@/lib/Helper/imageUploader";
 import { useAppDispatch } from "@/lib/hooks/Hooks";
 import { setOTP, setTempUser } from "@/lib/Store/features/UserSclice";
-import {Resend} from "resend"
+
 import { sendOtp } from "@/lib/Helper/sendOtp";
 export interface register {
   name: string;

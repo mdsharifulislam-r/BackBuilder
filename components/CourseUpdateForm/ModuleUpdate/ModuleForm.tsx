@@ -12,7 +12,7 @@ import { updateCourse } from '@/lib/Helper/UpdateCourse';
 import toast from 'react-hot-toast';
 import { courseStatus } from './ModuleUpdate';
 export default function ModuleForm({courseId}:{courseId:string}) {
-    console.log(courseId);
+
     
     const [index,setindex]=useState(1)
     const [data,setData]=useState<ModuleLinkPropsType[]>([])

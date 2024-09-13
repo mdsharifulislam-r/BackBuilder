@@ -76,5 +76,7 @@ export interface OrderType{
     userId:string,
     orders:orderItem[],
     orderDate:string,
-    address:string
+    address:string,
+    price:number,
+    status:status
 }

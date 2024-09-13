@@ -16,6 +16,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useAppDispatch } from "@/lib/hooks/Hooks";
 import { signInUser } from "@/lib/Store/features/UserSclice";
 import { useRouter } from "next/navigation";
+import { setUpdateDiamon } from "../Common/Diamond/Diamond";
 
 export default function LoginForm({ response }: { response?: responseData }) {
   const dispatch = useAppDispatch();
@@ -53,6 +54,7 @@ export default function LoginForm({ response }: { response?: responseData }) {
       })
       .then((data) => {
         if (!data.isOk) {
+          setUpdateDiamon()
           toast.error(data.massage);
 
           SetLoading(false);

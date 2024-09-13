@@ -3,6 +3,7 @@ import DashBoard from '@/components/DashBoard/InstrutorDashBoard/DashBoard';
 import EnrollStudents from '@/components/DashBoard/InstrutorDashBoard/EnrollStudents';
 import MyCourse from '@/components/DashBoard/InstrutorDashBoard/MyCoursees/MyCourse';
 import Reviews from '@/components/DashBoard/InstrutorDashBoard/Reviews';
+import StudentOrders from '@/components/DashBoard/StudentOrders/StudentOrders';
 import UpdateForm from '@/components/DashBoard/UpdateForm';
 import React from 'react'
 
@@ -20,6 +21,8 @@ switch (text) {
         return <MyCourse id={id}/>
     case "courses":
         return <Courses id={id}/>
+    case "orders":
+        return <StudentOrders id={id}/>
 
     default:
         return <DashBoard/>

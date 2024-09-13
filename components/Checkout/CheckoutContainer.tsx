@@ -49,8 +49,13 @@ export default function CheckoutContainer({id}:{id:string}) {
 const [loading,setLoading]=useState(false)
 const address = useAppSelector(state=>state.cartReduicer.address)
 async  function placeOrder(){
+  console.log(
+    "click"
+  )
+  
   if(!address && bookExist){
     toast.error("Please add a address first")
+    return
   }
   if(cartdata?.length){
   setLoading(true)

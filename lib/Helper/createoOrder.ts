@@ -1,5 +1,6 @@
 "use server"
 import jwt from 'jwt-simple'
+import { revalidateTag } from 'next/cache'
 export async function createOrder(obj:any) {
     try {
         const payload = jwt.encode(obj,process.env.JWT_SECRET!)
@@ -10,6 +11,9 @@ export async function createOrder(obj:any) {
             })
         })
         const data = await res.json()
+        if(data?.isOk){
+            revalidateTag("singleOrder")
+        }
         return data
     } catch (error) {
         console.log(error);

@@ -142,7 +142,7 @@ export default function Cart() {
   </div>
   <div className="drawer-side">
     <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-    <ul className="menu bg-white text-base-content min-h-full w-96 p-4">
+    <ul className="menu bg-white text-base-content min-h-full md:w-96 w-[80%] p-4">
       <div className='text-lg font-bold pb-2 border-b'>
         Shopping Cart
       </div>

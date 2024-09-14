@@ -71,7 +71,7 @@ export interface Booktype{
 
 }
 export type status = "pending"|"shiping"|"deliverd"|"cencel"
-export type orderItem = cartItem | {orderId:string,orderDate:string,userId:string,status:status}
+export type orderItem = cartItem & {orderId?:string,orderDate?:string,userId?:string,status?:status}
 export interface OrderType{
     _id?:string,
     userId:string,
@@ -79,5 +79,6 @@ export interface OrderType{
     orderDate:string,
     address:string,
     price:number,
-    status:status
+    status:status,
+    orderId:number
 }

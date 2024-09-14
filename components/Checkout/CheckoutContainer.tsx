@@ -9,7 +9,7 @@ import { makePrice } from '../Common/Cart'
 import LoadingButton from '../Common/Button/Button'
 import { EnrollCourse } from '@/lib/Helper/EnrollCourse'
 import toast from 'react-hot-toast'
-import { OrderType } from '@/lib/Types/Types'
+import { orderItem, OrderType } from '@/lib/Types/Types'
 import { createOrder } from '@/lib/Helper/createoOrder'
 import { getStudentClient } from '@/lib/Helper/getStudentClient'
 import { UpdateStudentInfoObject } from '@/lib/Helper/UpdateStudentObject'
@@ -67,7 +67,7 @@ async  function placeOrder(){
   if(!paidItem?.length){
     return
   }
-    const newArr = paidItem?.map(item=>{
+    const newArr:orderItem | any = paidItem?.map(item=>{
       const obj = {
         orderId:Math.random().toString(),
         userId:user?._id,
@@ -86,7 +86,8 @@ userId:user?._id||"",
 orders:newArr,
 address:address,
 price:makePrice(cartdata),
-status:"pending"
+status:"pending",
+orderId:Math.floor(Math.random()*1000000)
   }
   const res = await createOrder(dataObj)
   if(res.isOk){

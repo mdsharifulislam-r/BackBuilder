@@ -9,5 +9,6 @@ export const OrderSchema = new Schema({
     orderDate:String,
     address:String,
     price:Number,
-    status:String
+    status:String,
+    orderId:Number
 })

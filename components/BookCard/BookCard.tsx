@@ -15,10 +15,10 @@ export default function BookCard({name,description,_id,instructor,price,image}:B
         <div className="absolute transition-all duration-500 flex justify-center   w-8 rotate-45 backdrop-blur-lg shadow-white  bg-white -top-16  left-0">
             Sale
         </div>
-        <Image src={image} alt='bookImage' width={1000} height={1000} className='drop-shadow-lg max-h-72 min-h-72 object-cover'/>
+        <Image src={image} alt='bookImage' width={1000} height={1000} className='drop-shadow-lg max-h-72 md:min-h-72 object-cover'/>
       </Link>
       <div className="textBox py-2">
-        <h1 className='text-xl font-semibold drop-shadow'>{name}</h1>
+        <h1 className='md:text-xl text-sm font-semibold drop-shadow'>{name}</h1>
         <span className='text-xs text-slate-500 font-light'>By {instructor.name}</span>
         <div className='flex place-items-center md:text-base text-xs gap-2'>
             <AvarageStar ratings={[{user:"",star:"4",desc:""}]}/>

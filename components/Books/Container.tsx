@@ -28,7 +28,7 @@ export default async function Container({searchData}:{searchData:searchObject}) 
   return (
     <div className='md:w-[75%]'>
       <Title heading='Our Books' tagline='Read books and learn more'/>
-      <div className='grid lg:grid-cols-3 grid-cols-2 gap-3 '>
+      <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-3 '>
        {books}
   
       </div>

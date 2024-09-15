@@ -18,7 +18,8 @@ export interface Student{
     intrestTypes:string[],
     completeVideos:string[],
     address?:string[],
-    diamond?:number
+    diamond?:number,
+    isAuthor?:boolean
 }
 export interface review{
     user?:string,
@@ -47,7 +48,8 @@ export interface InstructorType{
     socialLinks:socialLinks,
     students:string[],
     ratings:review[],
-    address?:string[]
+    address?:string[],
+    isAuthor?:boolean
 }
 
 export interface Booktype{

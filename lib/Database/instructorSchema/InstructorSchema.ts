@@ -45,6 +45,7 @@ export const InstructoScema = new Schema({
     },
     ratings:Array<Object>,
     students:Array<String>,
-    address:Array<String>
+    address:Array<String>,
+    isAuthor:Boolean
 })
 

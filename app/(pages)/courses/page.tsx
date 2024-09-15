@@ -3,7 +3,7 @@ import Title from '@/components/Common/Title'
 import CourseContainer from '@/components/Courses/CourseContainer'
 import { catagories, instructor, lavel } from '@/components/Courses/SideBar'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 interface props{
     searchParams:object
 }
@@ -66,7 +66,10 @@ export default function AboutPage({searchParams,params}:any) {
             <Header path='Courses'/>
             <div className="container">
                 <Title heading='Our Courses' tagline='Find Best courses'/>
+                <Suspense fallback={"Loading..."}>
                 <CourseContainer active={dataK.active} searchData={searchObject} />
+                </Suspense>
+      
             </div>
         </div>
     )

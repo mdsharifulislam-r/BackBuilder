@@ -33,6 +33,7 @@ export default async function Header({id,type}:{id:string,type:string}) {
        { type != 'student'&& <div>
           <Link href={`/dashboard/teacher/create-course?id=${id}&name=${user?.name}&type=${type}`} className='px-4   py-2 bg-primary rounded-md text-white'>Create Course </Link>
         </div>}
+        {!user?.isAuthor?   <Link href={``} className='px-4   py-2 bg-primary rounded-md text-white'>Became a Author</Link>:<Link href={``} className='px-4   py-2 bg-primary rounded-md text-white'>Create Course </Link>}
       </div>
     </div>
   )

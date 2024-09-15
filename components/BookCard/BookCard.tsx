@@ -7,7 +7,7 @@ import { getRandomClass } from '@/lib/colors/getRandomColor'
 import { Booktype } from '@/lib/Types/Types'
 import Link from 'next/link'
 import AddCartButton from './AddCartButton'
-export default function BookCard({name,description,_id,instructor,price,image}:Booktype) {
+export default function BookCard({name,description,_id,instructor,price,image,ratings}:Booktype) {
    const bg = getRandomClass()
   return (
     <div className='w-full p-4 bg-white group shadow-lg rounded-md'>
@@ -21,7 +21,7 @@ export default function BookCard({name,description,_id,instructor,price,image}:B
         <h1 className='md:text-xl text-sm font-semibold drop-shadow'>{name}</h1>
         <span className='text-xs text-slate-500 font-light'>By {instructor.name}</span>
         <div className='flex place-items-center md:text-base text-xs gap-2'>
-            <AvarageStar ratings={[{user:"",star:"4",desc:""}]}/>
+            <AvarageStar ratings={ratings||[]}/>
            <span className='md:text-xs text-[8px] text-slate-500'> 100% Positive Reviews </span>
         </div>
         <div className='flex pt-2 place-items-center justify-between'>

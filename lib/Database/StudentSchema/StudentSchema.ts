@@ -38,6 +38,7 @@ export const StudentSchema = new Schema({
     },
     completeVideos:Array<String>,
     address:Array<String>,
-    diamond:Number
+    diamond:Number,
+    isAuthor:Boolean
 
 })

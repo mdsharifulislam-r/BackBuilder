@@ -11,6 +11,7 @@ import LoadingButton from "../Common/Button/Button";
 import { useAppSelector } from "@/lib/hooks/Hooks";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { verifyOtp } from "@/lib/Helper/verifyOtp";
 function FocusInput(id: number) {
   document.getElementById(id.toString())?.focus();
 }
@@ -75,7 +76,8 @@ export default function OtpBox() {
   
   }
   async function Submit(){
-    if(otp.join("")==otpData.toString()){
+    const response = await verifyOtp(formData.email,otp.join(""),true)
+    if(response?.isOk){
       SetLoading(true)
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/${formData?.type=='student'?"student":"instructor"}`, {
             method: "POST",

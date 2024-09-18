@@ -65,8 +65,9 @@ export default function AboutPage({searchParams,params}:any) {
         <div>
             <Header path='Courses'/>
             <div className="container">
+                <label htmlFor="filter-drawer" className='bg-secondary md:hidden text-white cursor-pointer px-3 py-2 rounded-md'>Apply Filter</label>
                 <Title heading='Our Courses' tagline='Find Best courses'/>
-                <Suspense fallback={"Loading..."}>
+                <Suspense fallback={"Loading.."}>
                 <CourseContainer active={dataK.active} searchData={searchObject} />
                 </Suspense>
       

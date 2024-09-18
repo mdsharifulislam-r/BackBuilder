@@ -83,7 +83,7 @@ export default function SideBar({id,type}:{id:string,type:string}) {
     />
   })
   return (
-    <div className='px-7 py-5 bg-white border-primary min-h-[600px] border-2 rounded-md shadow-xl hidden md:block w-[25%]'>
+    <div className='px-7 py-5 bg-white w-full border-primary min-h-[600px] md:border-2 rounded-md shadow-xl '>
       {type=='teacher'?instructor:users}
     </div>
   )

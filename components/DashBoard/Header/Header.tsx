@@ -19,12 +19,12 @@ export default async function Header({id,type}:{id:string,type:string}) {
   const star = new Array(4).fill(<FaStar/>)
   return (
     <div className='bg-dark w-full relative flex justify-center py-7 place-items-end'>
-      <div className='bg-white p-10 w-[90%] container  rounded-md bg-gradient-to-r pb-10 from-indigo-200 to-yellow-100 '>
-        <div className='flex h-56 gap-3 place-items-center '>
+      <div className='bg-white p-10 w-[90%] container   rounded-md bg-gradient-to-r pb-10 from-indigo-200 to-yellow-100 '>
+        <div className='flex h-56 flex-col md:flex-row gap-3 place-items-center '>
         <ImageBox image={user?.image} userid={user?._id} type={type}/>
       
          <div>
-          <h1 className='text-4xl font-semibold'>{user?.name}</h1>
+          <h1 className='md:text-4xl text-xl font-semibold'>{user?.name}</h1>
           {type != 'student' ? <div> <p className='font-light text-sm py-3'>A {user?.title}</p>
           <div className='flex place-items-center gap-1 text-orange'>{star} <span className='text-black'>({user?.ratings?.length} Ratings)</span></div>
           </div>: <p className='font-light text-sm py-3'>A Learner and Student</p> }

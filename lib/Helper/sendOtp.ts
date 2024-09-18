@@ -1,9 +1,9 @@
 import jwt from 'jwt-simple'
-export async function sendOtp(email:string,otp:number,client?:boolean) {
+export async function sendOtp(email:string,client?:boolean) {
     const url =!client ? process.env.BASE_URL :  process.env.NEXT_PUBLIC_BASE_URL
     const secret = !client ? process.env.JWT_SECRET :  process.env.NEXT_PUBLIC_JWT_SECRET
     const payload = jwt.encode({
-        otp:otp,
+   
         email
     },secret!)
 

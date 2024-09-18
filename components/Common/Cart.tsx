@@ -46,7 +46,7 @@ function CartBox({name,_id,cartId,author,amount,image,price,type}:cartItem){
       position:"bottom-center"
     })
   }
-  return <div className='flex gap-2 p-3 border-b relative'>
+  return <div className='flex popUp gap-2 p-3 border-b relative'>
   <div className="absolute right-4 top-4">
     <button className='text-xl ' onClick={Delete}>x</button>
   </div>
@@ -129,11 +129,11 @@ export default function Cart() {
 
  const price = makePrice(data)
   return (
-    <li className='text-xl text-primary relative z-40'>
+    <div className='text-xl text-primary relative z-[1000]'>
   
     <div className="cart">
     <div className="drawer drawer-end">
-  <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+  <input id="my-drawer-4" type="checkbox" className="drawer-toggle hidden" />
   <div className="drawer-content">
     {/* Page content here */}
     <label htmlFor="my-drawer-4" className="drawer-button text-4xl relative"><MdOutlineShoppingCart/>
@@ -164,6 +164,6 @@ export default function Cart() {
 </div>
     </div>
 
-  </li>
+  </div>
   )
 }

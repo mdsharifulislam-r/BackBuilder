@@ -70,12 +70,12 @@ export default function Form({response}:{response?:responseData}) {
         }else{
           randId=randomOtp.toString()
         }
-        const res = await sendOtp(`${email}`,parseInt(randId),true)
+        const res = await sendOtp(`${email}`,true)
      if(res.isOk){
       
       toast.success(res.massage
       )
-      dispatch(setOTP(randomOtp))
+    
              
   if(dataK.type=='student'){
 

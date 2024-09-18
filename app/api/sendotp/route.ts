@@ -4,6 +4,7 @@ import { TbMassage } from "react-icons/tb"
 import { Resend } from "resend"
 import nodeMailer from 'nodemailer'
 import { InstructorModel, StudentModel } from "@/lib/Database/Models"
+let otps:{email:string,otp:string}[] = []
 const transport = nodeMailer.createTransport({
     host:"smtp.gmail.com",
     port:587,
@@ -16,7 +17,7 @@ const transport = nodeMailer.createTransport({
 export async function POST(Request:Request){
     try {
         const {payload}:{payload:string} = await Request.json()
-        const {otp,email}:{otp:number,email:string}= jwt.decode(payload,process.env.JWT_SECRET!)
+        const {email}:{otp:number,email:string}= jwt.decode(payload,process.env.JWT_SECRET!)
         const exist = await StudentModel.findOne({email:email}) || await InstructorModel.findOne({email:email})
         if(exist){
             return NextResponse.json({
@@ -24,7 +25,8 @@ export async function POST(Request:Request){
                 massage:"Account Already Registerd"
             })
         }
-        
+        let otp = Math.floor(Math.random()*1000000000000).toString().slice(0,4)
+
         const info = await transport.sendMail({
             from:process.env.ADMIN_EMAIL,
             to:email,
@@ -48,6 +50,7 @@ export async function POST(Request:Request){
   </div>`
         })
         if(info.accepted){
+            otps.push({email:email,otp:otp})
             return NextResponse.json({
                 isOk:true,
                 massage:"Email Send Successfully"
@@ -70,4 +73,38 @@ export async function POST(Request:Request){
         
     }
    
+}
+
+export async function PUT(Request:Request){
+    try {
+        const {payload} = await Request.json()
+        const {email,otp} = jwt.decode(payload,process.env.JWT_SECRET!)
+        const obj = otps.find(item=>item.email==email)
+        if(!obj){
+            return NextResponse.json({
+                isOk:false,
+                massage:"OTP Expired"
+            })
+        }
+        if(obj.otp==otp){
+            otps = otps.filter(item=>item.email != email)
+            return NextResponse.json({
+                isOk:true,
+                massage:"Otp Verified successfully"
+            })
+        }else{
+            return NextResponse.json({
+                isOk:false,
+                massage:"OTP not match"
+            })
+        }
+        
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({
+            isOk:false,
+            massage:"server error"
+        })
+    }
+
 }

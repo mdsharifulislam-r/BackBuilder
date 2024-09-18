@@ -27,6 +27,7 @@ export default async function Container({searchData}:{searchData:searchObject}) 
   })
   return (
     <div className='md:w-[75%]'>
+         <label htmlFor="book-drawer" className='bg-secondary md:hidden text-white cursor-pointer px-3 py-2 rounded-md'>Apply Filter</label>
       <Title heading='Our Books' tagline='Read books and learn more'/>
       <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-3 '>
        {books}

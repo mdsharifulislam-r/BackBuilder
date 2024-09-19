@@ -5,12 +5,19 @@ import { createSlice } from "@reduxjs/toolkit"
 const localData:Student|null = getStorLocal("user")
 const localRatings:review[]|null = getStorLocal("ratings")
 const localTempUser:Student | InstructorType = getStorLocal("tempUser")
+const localModuleData:{
+    courseId:string,
+    moduleId:string,
+    videoId:string
+}= getStorLocal("moduleData")
+
 const initialState = {
     user:localData,
     type:"student",
     ratings:localRatings,
     tempUser:localTempUser,
-    otp:0
+    otp:0,
+    moduleData:localModuleData
 }
 
 export const userSlice = createSlice({
@@ -35,9 +42,14 @@ export const userSlice = createSlice({
         },
         setOTP:(state,action)=>{
             state.otp = action.payload
+        },
+        setModuleData:(state,action)=>{
+            state.moduleData=action.payload
+            setStorLocal('moduleData',action.payload)
+        
         }
 
     }
 })
 
-export const {signInUser,Logout,setRatings,setTempUser,setOTP} = userSlice.actions
+export const {signInUser,Logout,setRatings,setTempUser,setOTP,setModuleData} = userSlice.actions

@@ -1,5 +1,5 @@
-
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import Module, { ModuleLinkPropsType, ModulePropsType } from "../SingleCourseDetails/Curriculum/Module";
 import SearchBar from "./SearchBar";
 import { LessonsProps } from "./Container";
@@ -8,7 +8,10 @@ import { getSingleCourse } from "@/lib/Helper/getSingleCourse";
 
 
 export default async function SideBar({courseId,videoId,moduleId}:LessonsProps){
-  const course:CourseType = await getSingleCourse(courseId)
+  const [course,setCourse]=useState<CourseType>()
+  useEffect(()=>{
+    getSingleCourse(courseId,true).then(res=>setCourse(res))
+  },[])
   const myModule:ModulePropsType[] = course?.module?.length? [{
     title:"Promo Video",
     moduleId:"promo_module",

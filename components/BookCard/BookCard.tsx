@@ -26,8 +26,8 @@ export default function BookCard({name,description,_id,instructor,price,image,ra
         </div>
         <div className='flex pt-2 place-items-center justify-between'>
             <div>
-            <span className='text-xl text-primary font-bold'> ${price}</span>
-            <span className=' text-slate-400 text-sm line-through font-bold'> $43</span>
+            <span className='md:text-xl text-sm text-primary font-bold'> ${price}</span>
+            <span className=' text-slate-400 text-xs line-through font-bold'> $43</span>
             </div>
          <AddCartButton name={name} _id={_id} instructor={instructor} price={price} image={image}/>
 

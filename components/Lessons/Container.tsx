@@ -1,18 +1,23 @@
-
+"use client"
 import { getSingleCourse } from "@/lib/Helper/getSingleCourse";
 import SendMassageBox from "./SendMassageBox";
 import Videoframe from "./Videoframe";
 import { CourseType } from "../Courses/CourseCard/CourseCard";
 import { ModuleLinkPropsType, ModulePropsType } from "../SingleCourseDetails/Curriculum/Module";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
 export interface LessonsProps{
   courseId:string,
   moduleId:string,
   videoId:string
 }
-export default async function Container({courseId,moduleId,videoId}:LessonsProps) {
-  const course:CourseType = await getSingleCourse(courseId)
+export default  function Container({courseId,moduleId,videoId}:LessonsProps) {
+
+  const [course,setCourse]=useState<CourseType>()
+  useEffect(()=>{
+    getSingleCourse(courseId,true).then(res=>setCourse(res))
+  },[])
   const myModule:ModulePropsType[]|undefined = course?.module
   let data:ModuleLinkPropsType | undefined = {courseId,moduleId,videoId,text:""}
   if(!myModule || myModule){

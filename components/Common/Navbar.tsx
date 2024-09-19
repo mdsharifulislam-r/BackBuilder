@@ -109,6 +109,7 @@ const user = useAppSelector(state=>state.userReduicer.user)
         <div className=" place-items-center bg-white px-4 mx-auto justify-between lg:max-w-7xl md:items-center md:flex md:px-8">
 <div className="logo w-16 mt-3 relative">
 <Image src={logo} alt="logo" width={1000} height={1000} priority={false} className=""/>
+
 </div>
 <div className="">
 <SearchBar/>
@@ -120,12 +121,12 @@ const user = useAppSelector(state=>state.userReduicer.user)
 </div>
 </div>
         </div>
-        <div ref={MyRef} className={`justify-between container transition-all duration-500 w-full top-0 left-0 bg-white z-[50] px-4 mx-auto ${extend ? "py-2 shadow-lg":""} md:items-center md:flex md:px-8`}>
+        <div ref={MyRef} className={`justify-between  transition-all duration-500 w-full top-0 left-0 bg-white z-[50] px-4 mx-auto ${extend ? "py-2 shadow-lg":""} md:items-center md:flex md:px-8`}>
           
         
-          <div className="w-full flex place-items-center">
+          <div className="w-full flex place-items-center container">
             <div
-              className={` pb-3 mt-8 flex justify-between place-items-center md:pb-0 md:mt-0 w-full  `}
+              className={` pb-3  flex justify-between place-items-center md:pb-0 md:mt-0 w-full  `}
             >
               <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                 {data}
@@ -142,7 +143,7 @@ const user = useAppSelector(state=>state.userReduicer.user)
                 {hydrated && (
                  <li className=" ">
                     {!isLogin ? (
-                      <div className="pb-5">
+                      <div className="">
                            <Link
                         className="px-3 py-2 bg-secondary text-white text-sm rounded-md "
                         href={"/login"}

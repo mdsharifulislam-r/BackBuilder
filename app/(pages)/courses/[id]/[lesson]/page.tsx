@@ -8,11 +8,8 @@ import { useRouter } from 'next/navigation'
 import React, { Suspense } from 'react'
 
 export default function page() {
-  const router = useRouter()
+
  const moduleData = useAppSelector(state=>state.userReduicer.moduleData)
- if(!moduleData?.courseId){
-  return router.back()
- }
 
   return (
     <div className='w-full min-h-screen flex lg:flex-row flex-col-reverse gap-3 py-3'>

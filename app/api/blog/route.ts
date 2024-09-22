@@ -3,6 +3,7 @@ import { BlogModel } from "@/lib/Database/Models";
 import { BlogType } from "@/lib/Types/Types";
 import { NextResponse } from "next/server";
 ConnectDB().then()
+export const dynamic = "force-dynamic"
 export async function POST(Request:Request){
     try {
         const {name,desc,publishDate,author,image,tags}:BlogType = await Request.json()
@@ -29,13 +30,13 @@ export async function POST(Request:Request){
     }
 }
 
-export async function GET(Reques:Request) {
+export async function GET(Request:Request) {
     try {
         const data = await BlogModel.find()
         if(!data){
             return NextResponse.json({
                 isOk:false,
-                message:"something wen wrong!"
+                message:"something went wrong!"
             })
         }
         return NextResponse.json({

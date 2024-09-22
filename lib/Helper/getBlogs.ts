@@ -1,4 +1,4 @@
-'use server'
+
 export async function getBlogs(){
   const res = await fetch(`${process.env.BASE_URL}/blog`,{
     next:{

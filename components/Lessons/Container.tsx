@@ -1,6 +1,6 @@
 "use client"
 import { getSingleCourse } from "@/lib/Helper/getSingleCourse";
-import SendmessageBox from "./SendmessageBox";
+import SendmessageBox from "./SendMassageBox";
 import Videoframe from "./Videoframe";
 import { CourseType } from "../Courses/CourseCard/CourseCard";
 import { ModuleLinkPropsType, ModulePropsType } from "../SingleCourseDetails/Curriculum/Module";

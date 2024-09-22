@@ -90,10 +90,10 @@ export default function OtpBox() {
 
             router.push("/login")
             SetLoading(false)
-            toast.success(dat.massage)
+            toast.success(dat.message)
           }else{
             SetLoading(false)
-            toast.error(dat.massage)
+            toast.error(dat.message)
           }
         
 

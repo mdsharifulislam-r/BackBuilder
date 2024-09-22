@@ -67,9 +67,9 @@ export default function AddVideo({courseId,moduleId}:{courseId:string,moduleId:s
             courseStatus()
             setData([])
             setIndex(1)
-            toast.success(res.massage)
+            toast.success(res.message)
         }else{
-            toast.error(res.massage)
+            toast.error(res.message)
         }
         
 

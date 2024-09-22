@@ -8,7 +8,7 @@ export async function createCourse(data:any) {
         if(!token){
             return {
                 isOk:false,
-                massage:"Session Expired Please login again"
+                message:"Session Expired Please login again"
             } 
         }
       
@@ -29,19 +29,19 @@ export async function createCourse(data:any) {
         if(dat.isOk){
             return {
                 isOk:true,
-                massage:dat.massage
+                message:dat.message
             }
         }else{
             return {
                 isOk:false,
-                massage:dat.massage
+                message:dat.message
             } 
         }
     }catch(error){
         console.log(error);
         return {
             isOk:false,
-            massage:"Somthing Went wrong"
+            message:"Somthing Went wrong"
         }
     }
    

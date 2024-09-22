@@ -2,7 +2,7 @@ import { ConnectDB } from "@/lib/Database/ConnectDB"
 import { OrderModel } from "@/lib/Database/Models"
 import { NextResponse } from "next/server"
 import jwt from "jwt-simple"
-ConnectDB()
+ConnectDB().then()
 export async function GET(Request:Request,{params}:{params:{id:string}}) {
     try {
         const {id} = params
@@ -10,20 +10,20 @@ export async function GET(Request:Request,{params}:{params:{id:string}}) {
         if(!data){
             return NextResponse.json({
                 isOk:false,
-                massage:"Data not found"
+                message:"Data not found"
             })
         }
         return NextResponse.json({
             isOk:true,
             data,
-            massage:"Data get successfully"
+            message:"Data get successfully"
         })
     } catch (error) {
         console.log(error);
         
         return NextResponse.json({
             isOk:false,
-            massage:"Something error"
+            message:"Something error"
         })
     }
 }
@@ -36,24 +36,24 @@ try {
     if(!orderId){
         return NextResponse.json({
             isOk:false,
-            massage:"Id is not valid"
+            message:"Id is not valid"
         })
     }
     const res = await OrderModel.findByIdAndDelete(orderId)
 if(!res){
     return NextResponse.json({
         isOk:false,
-        massage:"Something went wrong"
+        message:"Something went wrong"
     })
 }
 return NextResponse.json({
     isOk:true,
-    massage:"Order Cencel Successfully"
+    message:"Order Cencel Successfully"
 })
 } catch (error) {
     return NextResponse.json({
         isOk:false,
-        massage:"Something went wrong"
+        message:"Something went wrong"
     })
 }
     

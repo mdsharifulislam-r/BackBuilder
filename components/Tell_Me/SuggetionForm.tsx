@@ -33,7 +33,7 @@ export default function SuggetionForm() {
     <div className='py-5'>
       <div className='w-full min-h-20 flex gap-2 place-items-start flex-wrap border border-primary shadow-xl p-3 rounded-md'>
         {itemList}
-        <input onChange={addValue} list='list' type="text" className='focus:outline-none' placeholder='Select your intrested topics' />
+        <input onChange={addValue}  list='list' type="text" className='focus:outline-none' placeholder='Select your intrested topics' />
         <datalist id="list">
             {dataList}
         </datalist>

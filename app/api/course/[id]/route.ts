@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import jwt from "jwt-simple";
 import { CourseType } from "@/components/Courses/CourseCard/CourseCard";
 import { Student } from "@/lib/Types/Types";
-ConnectDB();
+ConnectDB().then()
 export async function GET(Request: Request, { params }: Params) {
   try {
     const { id } = params;
@@ -16,7 +16,7 @@ export async function GET(Request: Request, { params }: Params) {
           {
             isOk: true,
             data: singleCourse,
-            massage: "Course get successfully",
+            message: "Course get successfully",
           },
           {
             status: 200,
@@ -27,7 +27,7 @@ export async function GET(Request: Request, { params }: Params) {
           {
             isOk: false,
 
-            massage: "Course get faild",
+            message: "Course get faild",
           },
           {
             status: 400,
@@ -39,7 +39,7 @@ export async function GET(Request: Request, { params }: Params) {
         {
           isOk: false,
 
-          massage: "Invalid credintials",
+          message: "Invalid credintials",
         },
         {
           status: 400,
@@ -51,7 +51,7 @@ export async function GET(Request: Request, { params }: Params) {
       {
         isOk: false,
 
-        massage: "Invalid credintials",
+        message: "Invalid credintials",
       },
       {
         status: 400,
@@ -66,7 +66,7 @@ export async function PUT(Request: Request) {
     if (!payload) {
       return NextResponse.json({
         isOk: false,
-        massage: "invaild creditials",
+        message: "invaild creditials",
       });
     }
     const formData: { courseId: String; userId: string } = jwt.decode(
@@ -76,7 +76,7 @@ export async function PUT(Request: Request) {
     if (formData.courseId==undefined && formData.userId==undefined) {
       return NextResponse.json({
         isOk: false,
-        massage: "invaild creditials",
+        message: "invaild creditials",
       });
     }
   
@@ -90,13 +90,13 @@ export async function PUT(Request: Request) {
     if(course?.student && course?.courseStudents && course?.pendingStudents && (course?.student < course?.courseStudents?.length) && (course?.student < course?.pendingStudents.length)){
         return NextResponse.json({
             isOk: false,
-            massage: "Enrolled Limitation",
+            message: "Enrolled Limitation",
           });
     }
     if(course?.courseStudents && course?.pendingStudents && course?.courseStudents?.includes(formData.userId)||course?.pendingStudents?.includes(formData.userId) ){
         return NextResponse.json({
             isOk: false,
-            massage: "You already enrolled",
+            message: "You already enrolled",
           });
     }
     let Courseobj = {};
@@ -138,12 +138,12 @@ export async function PUT(Request: Request) {
     if (!res && !userRes) {
       return NextResponse.json({
         isOk: false,
-        massage: "Something Went wrong",
+        message: "Something Went wrong",
       });
     }else{
         return NextResponse.json({
             isOk: true,
-            massage: "Course Enroll Successfully",
+            message: "Course Enroll Successfully",
           });
     }
   
@@ -152,7 +152,7 @@ export async function PUT(Request: Request) {
     return NextResponse.json(
       {
         isOk: false,
-        massage: "Something went wrong",
+        message: "Something went wrong",
       },
       { status: 500 }
     );

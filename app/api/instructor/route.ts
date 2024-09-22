@@ -5,7 +5,7 @@ import { HashPassword } from "@/lib/Helper/HashPassword";
 import { InstructorType } from "@/lib/Types/Types";
 import jwt from 'jwt-simple'
 import { NextRequest, NextResponse } from "next/server";
-ConnectDB();
+ConnectDB().then()
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +17,7 @@ export async function GET(Request: Request) {
         {
           isOk: true,
           data: instructors,
-          massage: "Instructors Data get successfully",
+          message: "Instructors Data get successfully",
         },
         {
           status: 200,
@@ -27,7 +27,7 @@ export async function GET(Request: Request) {
       return NextResponse.json(
         {
           isOk: false,
-          massage: "Somthing Wen wrong",
+          message: "Somthing Wen wrong",
         },
         {
           status: 400,
@@ -37,7 +37,7 @@ export async function GET(Request: Request) {
   } catch (error) {
     return NextResponse.json({
       isOk:false,
-      massage:"Something went wrong"
+      message:"Something went wrong"
   },{status:400})
     console.log(error);
   }
@@ -65,7 +65,7 @@ export async function POST(Request: Request) {
         return NextResponse.json(
           {
             isOk: true,
-            massage: "Instructor Created Successfully",
+            message: "Instructor Created Successfully",
           },
           {
             status: 200,
@@ -75,7 +75,7 @@ export async function POST(Request: Request) {
         return NextResponse.json(
           {
             isOk: false,
-            massage: "Instructor Created Failed",
+            message: "Instructor Created Failed",
           },
           {
             status: 400,
@@ -86,7 +86,7 @@ export async function POST(Request: Request) {
       return NextResponse.json(
         {
           isOk: false,
-          massage: "Fill All the field",
+          message: "Fill All the field",
         },
         {
           status: 400,
@@ -97,7 +97,7 @@ export async function POST(Request: Request) {
     console.log(error);
     return NextResponse.json({
       isOk:false,
-      massage:"Something went wrong"
+      message:"Something went wrong"
   },{status:400})
 
   }
@@ -112,7 +112,7 @@ export async function PUT(Request:NextRequest){
   if(!formData._id){
     return NextResponse.json({
       isOk:false,
-      massage:"token expired"
+      message:"token expired"
     },{
       status:400
     })
@@ -120,7 +120,7 @@ export async function PUT(Request:NextRequest){
   if(!formData){
     return NextResponse.json({
       isOk:false,
-      massage:"invalid credintials"
+      message:"invalid credintials"
     },{
       status:400
     })
@@ -128,7 +128,7 @@ export async function PUT(Request:NextRequest){
   if(formData.secret!=="my-web"){
     return NextResponse.json({
       isOk:false,
-      massage:"Unauthorized try"
+      message:"Unauthorized try"
     },{
       status:400
     })
@@ -142,14 +142,14 @@ export async function PUT(Request:NextRequest){
           return NextResponse.json({
               isOk:true,
          
-              massage:"Instructor update successfully"
+              message:"Instructor update successfully"
           },{
               status:200
           })
       }else{
           return NextResponse.json({
               isOk:false,
-              massage:"Somthing went wrong"
+              message:"Somthing went wrong"
           },{
               status:400
           })
@@ -159,7 +159,7 @@ export async function PUT(Request:NextRequest){
   }else{
       return NextResponse.json({
           isOk:false,
-          massage:"Fill All data"
+          message:"Fill All data"
       },{
           status:400
       })
@@ -169,7 +169,7 @@ export async function PUT(Request:NextRequest){
     console.log(error);
     return NextResponse.json({
       isOk:false,
-      massage:"Something went wrong"
+      message:"Something went wrong"
   },{status:400})
       
       

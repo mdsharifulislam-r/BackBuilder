@@ -3,14 +3,14 @@ import { OrderModel } from "@/lib/Database/Models";
 import { OrderType } from "@/lib/Types/Types";
 import jwt from "jwt-simple"
 import { NextResponse } from "next/server";
-ConnectDB()
+ConnectDB().then()
 export async function POST(Request:Request) {
     try {
         const {payload}:{payload:string}= await Request.json()
         if(!payload){
             return NextResponse.json({
                 isOk:false,
-                massage:"invalid credintials"
+                message:"invalid credintials"
             })
         }
         
@@ -20,19 +20,19 @@ export async function POST(Request:Request) {
         if(!userId&& !orderDate && !orders.length){
             return NextResponse.json({
                 isOk:false,
-                massage:"invalid credintials"
+                message:"invalid credintials"
             })
         }
         const res = await OrderModel.create(data)
         if(res){
             return NextResponse.json({
                 isOk:true,
-                massage:"Order placed  Sucessfully"
+                message:"Order placed  Sucessfully"
             })
         }else{
             return NextResponse.json({
                 isOk:false,
-                massage:"something went wrong"
+                message:"something went wrong"
             })  
         }
 
@@ -40,7 +40,7 @@ export async function POST(Request:Request) {
         console.log(error);
         return NextResponse.json({
             isOk:false,
-            massage:"something went wrong"
+            message:"something went wrong"
         })  
     }
 }
@@ -51,7 +51,7 @@ export async function GET(Request:Request){
         if(data?.length){
             return NextResponse.json({
                 isOk:true,
-                massage:"Data get successfully",
+                message:"Data get successfully",
                 data
             })
         }
@@ -59,7 +59,7 @@ export async function GET(Request:Request){
         console.log(error);
         return NextResponse.json({
             isOk:false,
-            massage:"something went wrong"
+            message:"something went wrong"
         })  
     }
 }

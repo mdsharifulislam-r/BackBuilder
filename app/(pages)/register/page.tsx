@@ -1,6 +1,6 @@
 import RegisterContaianer from '@/components/Register/RegisterContaianer'
 import React from 'react'
-export interface responseData {massage:string,isOk:string,token?:string,type?:string} 
+export interface responseData {message:string,isOk:string,token?:string,type?:string} 
 export default function page({searchParams}:any) {
   const response:responseData=searchParams
  

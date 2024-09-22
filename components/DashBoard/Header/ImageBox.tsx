@@ -25,9 +25,9 @@ export default function ImageBox({image,userid,type}:{image:string,userid:string
             ...user,
             image:imageLink
            }))
-            toast.success(res.massage)
+            toast.success(res.message)
         }else{
-            toast.error(res.massage)
+            toast.error(res.message)
         }
 
     }

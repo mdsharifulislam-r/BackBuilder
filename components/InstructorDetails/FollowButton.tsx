@@ -60,7 +60,7 @@ export default function FollowButton({data}:{data:InstructorType}) {
   return (
     <div className="follow flex gap-3">
     <LoadingButton isLoading={loading} onClick={Follow} className="px-4 py-2 transition-all duration-300 hover:text-primary hover:bg-white hover:outline rounded-md bg-primary text-white">{students?.some(id=>id==user?._id)?"Leave as a Student":"Become a student"}</LoadingButton>
-    <button className="px-4 py-2 transition-all duration-300 hover:text-primary hover:bg-white hover:outline rounded-md bg-secondary text-white">Massage</button>
+    <button className="px-4 py-2 transition-all duration-300 hover:text-primary hover:bg-white hover:outline rounded-md bg-secondary text-white">message</button>
   </div>
   )
 }

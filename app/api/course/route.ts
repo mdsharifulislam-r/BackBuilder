@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 import { InstructoScema } from "@/lib/Database/instructorSchema/InstructorSchema";
 import { InstructorType } from "@/lib/Types/Types";
 import { revalidateTag } from "next/cache";
-ConnectDB()
+ConnectDB().then()
 export async function POST(Request: Request) {
   try {
     const token = cookies().get("token")?.value
@@ -15,14 +15,14 @@ export async function POST(Request: Request) {
     if(!token){
       return NextResponse.json({
         isOk:false,
-        massage:"Session Expired"
+        message:"Session Expired"
     },{status:400})
     }
     
     if(!payload){
       return NextResponse.json({
         isOk:false,
-        massage:"Invalid credintials"
+        message:"Invalid credintials"
     },{status:400})
     }
     const instructorId = jwt.decode(token,process.env.JWT_SECRET||"")
@@ -30,7 +30,7 @@ export async function POST(Request: Request) {
     if(!instructorData){
       return NextResponse.json({
         isOk:false,
-        massage:"Instructor Not exitst"
+        message:"Instructor Not exitst"
     },{status:404})
     }
     const data = jwt.decode(payload,process.env.JWT_SECRET||"")
@@ -90,12 +90,12 @@ export async function POST(Request: Request) {
           })
             return NextResponse.json({
                 isOk:true,
-                massage:"Course created successfully"
+                message:"Course created successfully"
             },{status:200})
         }else{
             return NextResponse.json({
                 isOk:false,
-                massage:"Something went wrong"
+                message:"Something went wrong"
             },{status:400})
         }
         
@@ -104,13 +104,13 @@ export async function POST(Request: Request) {
     }else{
         return NextResponse.json({
             isOk:false,
-            massage:"fill all the field"
+            message:"fill all the field"
         },{status:400})
     }
   } catch (error) {
     return NextResponse.json({
       isOk:false,
-      massage:"fill all the field"
+      message:"fill all the field"
   },{status:400})
   }
 }
@@ -121,12 +121,12 @@ export async function GET(Request: Request) {
         return NextResponse.json({
             isOk:true,
             data:allcourse,
-            massage:"All courses get successfully"
+            message:"All courses get successfully"
         },{status:200})
     }else{
         return NextResponse.json({
             isOk:false,
-            massage:"Something went wrong"
+            message:"Something went wrong"
         },{status:400})
     }
     
@@ -134,7 +134,7 @@ export async function GET(Request: Request) {
     console.log(error);
     return NextResponse.json({
       isOk:false,
-      massage:"Something went wrong"
+      message:"Something went wrong"
   },{status:400})
     
     
@@ -148,7 +148,7 @@ export async function PUT(Request:Request) {
     if(!payload && !id){
       return NextResponse.json({
         isOk:false,
-        massage:"Invalid credintials"
+        message:"Invalid credintials"
     },{status:200})
     }
     const data = jwt.decode(payload,process.env.JWT_SECRET||"")
@@ -157,19 +157,19 @@ export async function PUT(Request:Request) {
       revalidateTag("singleCourse")
       return NextResponse.json({
         isOk:true,
-        massage:"update successfully"
+        message:"update successfully"
     },{status:200})
     }else{
       return NextResponse.json({
         isOk:false,
-        massage:"Data not found"
+        message:"Data not found"
     },{status:404})
     }
   } catch (error) {
     console.log(error);
     return NextResponse.json({
       isOk:false,
-      massage:"Something went wrong"
+      message:"Something went wrong"
   },{status:400})
     
   }

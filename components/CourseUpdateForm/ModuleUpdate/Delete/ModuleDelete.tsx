@@ -24,7 +24,7 @@ export default function ModuleDelete({moduleId,courseId}:{moduleId:string,course
         courseStatus()
         myLabel.current?.click()
     }else{
-        toast.error(res.massage)
+        toast.error(res.message)
     }
     
     }

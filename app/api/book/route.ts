@@ -4,7 +4,7 @@ import { Booktype } from "@/lib/Types/Types";
 import jwt from "jwt-simple"
 import { NextResponse } from "next/server";
 
-ConnectDB()
+ConnectDB().then()
 export async function POST(Request:Request){
     try {
         const {payload}:{payload:string}= await Request.json()
@@ -14,7 +14,7 @@ export async function POST(Request:Request){
         if(!price && !name && !instructor?.id && !image && !level && !publishDate && !description){
             return NextResponse.json({
                 isOk:false,
-                massage:"invalid credintials"
+                message:"invalid credintials"
             },{
                 status:404
             })
@@ -24,21 +24,21 @@ export async function POST(Request:Request){
         if(!res){
             return NextResponse.json({
                 isOk:false,
-                massage:"something went wrong"
+                message:"something went wrong"
             },{
                 status:200
             })
         }
         return NextResponse.json({
             isOk:true,
-            massage:"Book created successfully"
+            message:"Book created successfully"
         })
         
     } catch (error) {
         console.log(error);
         return NextResponse.json({
             isOk:false,
-            massage:"something went wrong"
+            message:"something went wrong"
         },{
             status:500
         })
@@ -51,19 +51,19 @@ export async function GET(Request:Request){
         if(data==undefined){
             return NextResponse.json({
                 isOk:false,
-                massage:"Something went wrong"
+                message:"Something went wrong"
             })
         }
         return NextResponse.json({
             isOk:true,
             data:data,
-            massage:"Book Data get Successfully"
+            message:"Book Data get Successfully"
         })
     } catch (error) {
         console.log(error);
         return NextResponse.json({
             isOk:false,
-            massage:"something went wrong"
+            message:"something went wrong"
         },{
             status:500
         })

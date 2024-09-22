@@ -48,7 +48,7 @@ function Navlink({ pathname, link, text }: props) {
         <Link
           className={`text-sm  ${
             pathname == link ? "text-primary" : "text-gray-400"
-          } py-3 hover:border-b hover:border-primary hover:text-primary transition-all duration-1000`}
+          } py-1 hover:border-b hover:border-primary hover:text-primary transition-all duration-1000`}
           href={link}
         >
           {text}
@@ -121,7 +121,7 @@ const user = useAppSelector(state=>state.userReduicer.user)
 </div>
 </div>
         </div>
-        <div ref={MyRef} className={`justify-between  transition-all duration-500 w-full top-0 left-0 bg-white z-[50] px-4 mx-auto ${extend ? "py-2 shadow-lg":""} md:items-center md:flex md:px-8`}>
+        <div ref={MyRef} className={`justify-between  transition-all duration-500 w-full top-0 left-0 bg-white z-[50] px-4 mx-auto ${extend ? " shadow-lg":""} md:items-center md:flex md:px-8`}>
           
         
           <div className="w-full flex place-items-center container">

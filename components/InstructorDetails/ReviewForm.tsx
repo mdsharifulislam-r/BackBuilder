@@ -17,8 +17,8 @@ export default function ReviewForm({ id }: { id: string }) {
   useEffect(() => {
     getSingleInstructor(id, true).then((res:InstructorType) => {
       if (res) {
-        setReviews(res.ratings);
-      const data:review|undefined|0= res.ratings.length ? res.ratings.find(data=>data.user==user?._id):{desc:"",star:"",user:""}
+        setReviews(res?.ratings);
+      const data:review|undefined|0= res?.ratings?.length ? res.ratings.find(data=>data.user==user?._id):{desc:"",star:"",user:""}
       let str = data?.desc
       setDesc(str?.toString())
       setStar(parseInt(data?.star||""))
@@ -43,8 +43,8 @@ export default function ReviewForm({ id }: { id: string }) {
       user: user?._id,
     };
     if (instructor.ratings.some((item) => item?.user == user?._id)) {
-      const index = instructor.ratings.findIndex(data=>data.user==user?._id)
-      let rev = [...instructor.ratings]
+      const index = instructor?.ratings?.findIndex(data=>data.user==user?._id)
+      let rev = [...instructor?.ratings]
       rev[index]={
         ...obj,
         star:star.toString(),

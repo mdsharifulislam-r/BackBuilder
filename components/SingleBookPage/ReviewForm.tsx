@@ -43,9 +43,9 @@ useEffect(()=>{
       ratings:review
     },id,true)
     if(res.isOk){
-      toast.success(res.massage)
+      toast.success(res.message)
     }else{
-      toast.error(res.massage)
+      toast.error(res.message)
     }
 
   }

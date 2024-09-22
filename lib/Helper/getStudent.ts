@@ -9,7 +9,7 @@ export async function getStudentInfo(word?:string[]|undefined,id?:string) {
         if(!token){
             return {
                 isOk:false,
-                massage:"Token Expired"
+                message:"Token Expired"
             }
         }      
             const path = word?.toString()||'single'

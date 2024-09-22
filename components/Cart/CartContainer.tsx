@@ -59,12 +59,12 @@ export default function CartContainer() {
         .then(data=>{
           if(data.isOk){
 
-            toast.success(data.massage)
+            toast.success(data.message)
         
             
             setPrice(prev=>prev-data.discount)
           }else{
-            toast.error(data.massage)
+            toast.error(data.message)
           }
         })
       }

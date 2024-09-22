@@ -1,6 +1,6 @@
 import jwt from "jwt-simple"
 import { NextResponse } from "next/server"
-import { TbMassage } from "react-icons/tb"
+
 import { Resend } from "resend"
 import nodeMailer from 'nodemailer'
 import { InstructorModel, StudentModel } from "@/lib/Database/Models"
@@ -22,7 +22,7 @@ export async function POST(Request:Request){
         if(exist){
             return NextResponse.json({
                 isOk:false,
-                massage:"Account Already Registerd"
+                message:"Account Already Registerd"
             })
         }
         let otp = Math.floor(Math.random()*1000000000000).toString().slice(0,4)
@@ -53,12 +53,12 @@ export async function POST(Request:Request){
             otps.push({email:email,otp:otp})
             return NextResponse.json({
                 isOk:true,
-                massage:"Email Send Successfully"
+                message:"Email Send Successfully"
             })
         }else{
             return NextResponse.json({
                 isOk:false,
-                massage:"Something went wrong"
+                message:"Something went wrong"
             })
         }
         
@@ -67,7 +67,7 @@ export async function POST(Request:Request){
         console.log(error);
         return NextResponse.json({
             isOk:false,
-            massage:"Something went wrong"
+            message:"Something went wrong"
             
         })
         
@@ -83,19 +83,19 @@ export async function PUT(Request:Request){
         if(!obj){
             return NextResponse.json({
                 isOk:false,
-                massage:"OTP Expired"
+                message:"OTP Expired"
             })
         }
         if(obj.otp==otp){
             otps = otps.filter(item=>item.email != email)
             return NextResponse.json({
                 isOk:true,
-                massage:"Otp Verified successfully"
+                message:"Otp Verified successfully"
             })
         }else{
             return NextResponse.json({
                 isOk:false,
-                massage:"OTP not match"
+                message:"OTP not match"
             })
         }
         
@@ -103,7 +103,7 @@ export async function PUT(Request:Request){
         console.log(error);
         return NextResponse.json({
             isOk:false,
-            massage:"server error"
+            message:"server error"
         })
     }
 

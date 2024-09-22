@@ -55,11 +55,11 @@ export default function LoginForm({ response }: { response?: responseData }) {
       .then((data) => {
         if (!data.isOk) {
           setUpdateDiamon()
-          toast.error(data.massage);
+          toast.error(data.message);
 
           SetLoading(false);
         } else {
-          toast.success(data.massage);
+          toast.success(data.message);
 
           if (data.data?.intrestTypes?.length) {
             router.push("/");
@@ -131,7 +131,7 @@ export default function LoginForm({ response }: { response?: responseData }) {
                 response?.isOk == "true" ? "text-primary" : "text-red-400"
               }`}
             >
-              {response?.massage}
+              {response?.message}
             </span>
             <div className="pt-3">
               <LoadingButton

@@ -33,12 +33,12 @@ export async function UpdateSingleInstructor(data:any,id:string){
             revalidateTag("updateInstructor")
             return{
                 isOk:true,
-                massage:datak.massage
+                message:datak.message
             }
         }else{
             return {
                 isOk:false,
-                massage:datak.massage
+                message:datak.message
             }
         }
     

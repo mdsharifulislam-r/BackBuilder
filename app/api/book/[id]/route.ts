@@ -2,7 +2,7 @@ import { BookModel } from "@/lib/Database/Models";
 import { NextResponse } from "next/server";
 import jwt from "jwt-simple"
 import { ConnectDB } from "@/lib/Database/ConnectDB";
-ConnectDB()
+ConnectDB().then()
 export async function GET(Request:Request,{params}:{params:{id:string}}){
     try {
         const {id} = params
@@ -10,19 +10,19 @@ export async function GET(Request:Request,{params}:{params:{id:string}}){
         if(!data){
             return NextResponse.json({
                 isOk:false,
-                massage:"Data not found"
+                message:"Data not found"
             })
         }
         return NextResponse.json({
             isOk:true,
-            massage:"Data get Successfully",
+            message:"Data get Successfully",
             data:data
         })
     } catch (error) {
         console.log(error);
         return NextResponse.json({
             isOk:false,
-            massage:"Something went wrong"
+            message:"Something went wrong"
         },{
             status:500
         })
@@ -38,7 +38,7 @@ export async function PUT(Request:Request,{params}:{params:{id:string}}) {
         if(!isExist){
             return NextResponse.json({
                 isOk:false,
-                massage:"Data not found"
+                message:"Data not found"
             },{
                 status:404
             })
@@ -46,7 +46,7 @@ export async function PUT(Request:Request,{params}:{params:{id:string}}) {
         if(!payload){
             return NextResponse.json({
                 isOk:false,
-                massage:"Inavalid credintials"
+                message:"Inavalid credintials"
             },{
                 status:404
             })
@@ -56,14 +56,14 @@ export async function PUT(Request:Request,{params}:{params:{id:string}}) {
     if(!res){
         return NextResponse.json({
             isOk:false,
-            massage:"Something went wrong"
+            message:"Something went wrong"
         },{
             status:400
         })
     }
     return NextResponse.json({
         isOk:true,
-        massage:"Data update successfully"
+        message:"Data update successfully"
     },{
         status:200
     })
@@ -71,7 +71,7 @@ export async function PUT(Request:Request,{params}:{params:{id:string}}) {
         console.log(error);
         return NextResponse.json({
             isOk:false,
-            massage:"Something went wrong"
+            message:"Something went wrong"
         },{
             status:500
         })

@@ -32,10 +32,10 @@ export default function CreateCourseForm() {
         }
         const res = await createCourse(Obj)
         if(res.isOk){
-            toast.success(res.massage)
+            toast.success(res.message)
             myFormRef.current?.reset()
         }else{
-            toast.error(res.massage)
+            toast.error(res.message)
         }
         
         

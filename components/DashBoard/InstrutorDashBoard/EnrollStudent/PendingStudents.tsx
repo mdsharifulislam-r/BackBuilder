@@ -38,7 +38,7 @@ export function StudentItem({studentId,courseId,type}:{studentId:string,courseId
           </Link>
         </td>
         <td className="p-2 whitespace-nowrap">
-          <div className="text-lg text-center capitalize"><button className="text-sm bg-primary px-2 py-1 text-white rounded-md">{type=="pending"?"Accept":"Massage"}</button></div>
+          <div className="text-lg text-center capitalize"><button className="text-sm bg-primary px-2 py-1 text-white rounded-md">{type=="pending"?"Accept":"message"}</button></div>
         </td>
       </tr>  
     )

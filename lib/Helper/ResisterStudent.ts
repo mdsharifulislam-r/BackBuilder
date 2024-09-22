@@ -25,7 +25,7 @@ export async function SubmitData(e: FormData) {
 
         const user = await res.json();
         
-            return redirect(`/register?massage=${user.massage}&isOk=${user.isOk}`)
+            return redirect(`/register?message=${user.message}&isOk=${user.isOk}`)
         
       }
     }

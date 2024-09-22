@@ -6,7 +6,7 @@ import { Student } from "@/lib/Types/Types";
 import { hash } from "crypto";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-ConnectDB();
+ConnectDB().then()
 export async function GET(Requset: Request) {
   try {
     const data = await StudentModel.find(
@@ -19,7 +19,7 @@ export async function GET(Requset: Request) {
         {
           isOk: true,
           data: data,
-          massage: "Date get successfully",
+          message: "Date get successfully",
         },
         {
           status: 200,
@@ -69,7 +69,7 @@ export async function POST(Request: Request) {
               return NextResponse.json(
                 {
                   isOk: true,
-                  massage: "Account created Successfully",
+                  message: "Account created Successfully",
                 },
                 {
                   status: 200,
@@ -79,7 +79,7 @@ export async function POST(Request: Request) {
               return NextResponse.json(
                 {
                   isOk: false,
-                  massage: "Something went wrong",
+                  message: "Something went wrong",
                 },
                 {
                   status: 400,
@@ -91,7 +91,7 @@ export async function POST(Request: Request) {
           return NextResponse.json(
             {
               isOk: false,
-              massage: "Please fill all field",
+              message: "Please fill all field",
             },
             {
               status: 400,
@@ -111,13 +111,13 @@ export async function POST(Request: Request) {
           if (res) {
             return NextResponse.json({
               isOk: true,
-              massage: "Account Created Successfully",
+              message: "Account Created Successfully",
             });
           }else{
             return NextResponse.json(
               {
                 isOk: false,
-                massage: "Something went wrong",
+                message: "Something went wrong",
               },
               {
                 status: 200,
@@ -130,7 +130,7 @@ export async function POST(Request: Request) {
       return NextResponse.json(
         {
           isOk: false,
-          massage: "Account Already Registerd",
+          message: "Account Already Registerd",
         },
         {
           status: 200,
@@ -143,7 +143,7 @@ export async function POST(Request: Request) {
     return NextResponse.json(
       {
         isOk: false,
-        massage: error,
+        message: error,
       },
       { status: 500 }
     );

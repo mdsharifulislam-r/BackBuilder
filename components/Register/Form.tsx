@@ -73,7 +73,7 @@ export default function Form({response}:{response?:responseData}) {
         const res = await sendOtp(`${email}`,true)
      if(res.isOk){
       
-      toast.success(res.massage
+      toast.success(res.message
       )
     
              
@@ -109,7 +109,7 @@ export default function Form({response}:{response?:responseData}) {
   router.push('/otp')
      }else{
       SetLoading(false)
-      toast.error(res.massage)
+      toast.error(res.message)
      }
  
         

@@ -85,9 +85,9 @@ export default function UpdateForm({ id, type }: { id: string; type: string }) {
     const res =type !== 'student'? await UpdateInstructor(e) : await UpdateStudentInfo(e)
 
     if(res.isOk){
-      toast.success(res.massage)
+      toast.success(res.message)
     }else{
-      toast.error(res.massage)
+      toast.error(res.message)
     }
     
     

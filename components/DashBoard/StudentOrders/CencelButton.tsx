@@ -9,9 +9,9 @@ export default function CencelButton({orderId}:{orderId:string}) {
         const res = await cencelOrder(orderId||"")
         if(res.isOk){
             changeSingleOrders()
-            toast.success(res.massage)
+            toast.success(res.message)
         }else{
-            toast.error(res.massage)
+            toast.error(res.message)
         }
     }
   return (

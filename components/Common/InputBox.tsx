@@ -3,7 +3,7 @@ import React, { InputHTMLAttributes } from 'react'
 
 interface data{
     icon:any,
-    massage?:string
+    message?:string
 }
 type main = InputHTMLAttributes<HTMLInputElement> & data
 export default function InputBox(data:main) {
@@ -17,7 +17,7 @@ export default function InputBox(data:main) {
       <input className='focus:outline-none flex-grow py-2 focus:placeholder:text-black transition-all duration-300 text-sm translate-y-[1px]' {...data} />
      
     </div>
-    <span className='text-[10px] text-red-400'>{data.massage}</span>
+    <span className='text-[10px] text-red-400'>{data.message}</span>
     </>
   )
 }

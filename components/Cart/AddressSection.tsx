@@ -82,7 +82,7 @@ export default function AddressSection() {
             })
             setAdd(false)
         }else{
-            toast.error(res.massage)
+            toast.error(res.message)
         }
         
     }

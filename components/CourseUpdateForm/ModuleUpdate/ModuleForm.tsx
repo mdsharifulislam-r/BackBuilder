@@ -36,9 +36,9 @@ export default function ModuleForm({courseId}:{courseId:string}) {
         setData([])
         setindex(1)
         courseStatus()
-        toast.success(res.massage)
+        toast.success(res.message)
     }else{
-        toast.error(res.massage)
+        toast.error(res.message)
     }
  }
     

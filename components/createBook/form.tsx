@@ -38,9 +38,9 @@ export default function Form() {
      const res = await createBooks(obj,true)
      if(res?.isOk){
         formRef?.current?.reset()
-        toast.success(res?.massage)
+        toast.success(res?.message)
      }else{
-        toast.error(res?.massage)
+        toast.error(res?.message)
      }
        
         

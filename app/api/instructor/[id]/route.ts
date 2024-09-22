@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from 'jwt-simple'
 import { cookies } from "next/headers";
-ConnectDB()
+ConnectDB().then()
 export async function GET(Request: Request, { params }: {params:{id:string}}) {
   try {
     const { id } = params;
@@ -19,7 +19,7 @@ export async function GET(Request: Request, { params }: {params:{id:string}}) {
       return NextResponse.json(
         {
           isOk: false,
-          massage: "invalid credintials",
+          message: "invalid credintials",
         },
         {
           status: 400,
@@ -34,7 +34,7 @@ export async function GET(Request: Request, { params }: {params:{id:string}}) {
         {
           isOk: true,
           data: instructor,
-          massage: "instructor data get successfully",
+          message: "instructor data get successfully",
         },
         {
           status: 200,
@@ -44,7 +44,7 @@ export async function GET(Request: Request, { params }: {params:{id:string}}) {
       return NextResponse.json(
         {
           isOk: false,
-          massage: "Data not found",
+          message: "Data not found",
         },
         {
           status: 400,
@@ -55,7 +55,7 @@ export async function GET(Request: Request, { params }: {params:{id:string}}) {
     console.log(error);
     return NextResponse.json({
       isOk:false,
-      massage:"Something went wrong"
+      message:"Something went wrong"
   },{status:400})
     
   }
@@ -67,7 +67,7 @@ export async function PUT(Request:NextRequest){
     if(token==undefined){
       return NextResponse.json({
         isOk:false,
-        massage:"token expired"
+        message:"token expired"
       },{
         status:400
       })
@@ -79,7 +79,7 @@ export async function PUT(Request:NextRequest){
     if(!id){
       return NextResponse.json({
         isOk:false,
-        massage:"token expired"
+        message:"token expired"
       },{
         status:400
       })
@@ -87,7 +87,7 @@ export async function PUT(Request:NextRequest){
     if(!formData){
       return NextResponse.json({
         isOk:false,
-        massage:"invalid credintials"
+        message:"invalid credintials"
       },{
         status:400
       })
@@ -95,7 +95,7 @@ export async function PUT(Request:NextRequest){
     if(formData.secret!=="my-web"){
       return NextResponse.json({
         isOk:false,
-        massage:"Unauthorized try"
+        message:"Unauthorized try"
       },{
         status:400
       })
@@ -105,7 +105,7 @@ export async function PUT(Request:NextRequest){
     if(found && formData.email !== match.email){
       return NextResponse.json({
         isOk: false,
-        massage: "Email already used",
+        message: "Email already used",
       });
     }
     if(payload){
@@ -117,14 +117,14 @@ export async function PUT(Request:NextRequest){
             return NextResponse.json({
                 isOk:true,
                 data:instructor,
-                massage:"Instructor update successfully"
+                message:"Instructor update successfully"
             },{
                 status:200
             })
         }else{
             return NextResponse.json({
                 isOk:false,
-                massage:"Somthing went wrong"
+                message:"Somthing went wrong"
             },{
                 status:400
             })
@@ -134,7 +134,7 @@ export async function PUT(Request:NextRequest){
     }else{
         return NextResponse.json({
             isOk:false,
-            massage:"Fill All data"
+            message:"Fill All data"
         },{
             status:400
         })
@@ -144,7 +144,7 @@ export async function PUT(Request:NextRequest){
       console.log(error);
       return NextResponse.json({
         isOk:false,
-        massage:"Something went wrong"
+        message:"Something went wrong"
     },{status:400})
         
         
@@ -161,13 +161,13 @@ export async function POST(Requset:Request) {
     if(!data){
       return NextResponse.json({
         isOk:false,
-        massage:"Account not register yet"
+        message:"Account not register yet"
       })
     }
     if(!(email&&password&&isSocialLogin)){
       return NextResponse.json({
         isOk:false,
-        massage:"invalid crerdintials"
+        message:"invalid crerdintials"
       })
     }
     if(!isSocialLogin.status){
@@ -175,7 +175,7 @@ export async function POST(Requset:Request) {
     if(!match){
       return NextResponse.json({
         isOk:false,
-        massage:"invalid credintials"
+        message:"invalid credintials"
       })
     }
 
@@ -186,7 +186,7 @@ export async function POST(Requset:Request) {
     const response = NextResponse.json({
       isOk:true,
       data:instructorData,
-      massage:"Login Successfully"
+      message:"Login Successfully"
     })
     response.cookies.set("token",token)
     return response
@@ -195,7 +195,7 @@ export async function POST(Requset:Request) {
     console.log(error);
     return NextResponse.json({
       isOk:false,
-      massage:"something went wrong"
+      message:"something went wrong"
     },{
       status:500
     })

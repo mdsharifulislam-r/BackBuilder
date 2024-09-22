@@ -30,7 +30,7 @@ export default function VideoDelete({moduleId,courseId,videoId}:{moduleId:string
         courseStatus()
         myLabel.current?.click()
     }else{
-        toast.error(res.massage)
+        toast.error(res.message)
     }
     
     }

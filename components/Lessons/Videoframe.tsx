@@ -32,7 +32,7 @@ if(!userData?.completeVideos?.includes(videoId)){
   })
 
   if(!res.isOk){
-    toast.error(res.massage)
+    toast.error(res.message)
   }
   setUpdateDiamon()
   ChangeVideoStatus()

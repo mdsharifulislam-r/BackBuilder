@@ -84,3 +84,17 @@ export interface OrderType{
     status:status,
     orderId:number
 }
+
+export interface BlogType{
+    _id?:string,
+    name:string,
+    desc:string,
+    author:{
+        id:string,
+        name:string,
+    }
+    image:string,
+    publishDate:string,
+    tags:string[],
+    comments?:object[]
+}

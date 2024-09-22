@@ -42,3 +42,4 @@ export const StudentSchema = new Schema({
     isAuthor:Boolean
 
 })
+

@@ -41,12 +41,12 @@ export async function UpdateInstructor(formdata:FormData){
             
             return{
                 isOk:true,
-                massage:datak.massage
+                message:datak.message
             }
         }else{
             return {
                 isOk:false,
-                massage:datak.massage
+                message:datak.message
             }
         }
     

@@ -20,7 +20,7 @@ export async function UpdateStudentInfoObject(dataObject:any) {
     if(!token){
         return {
             isOk:false,
-            massage:"Token Expired Please Login again"
+            message:"Token Expired Please Login again"
         }
     }
     const res = await fetch(`${process.env.BASE_URL}/student/update`, {

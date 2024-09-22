@@ -42,10 +42,10 @@ export default function UpdateCourseForm({id}:{id:string}) {
         
         const res = await updateCourse(Obj,id,true)
         if(res.isOk){
-            toast.success(res.massage)
+            toast.success(res.message)
           
         }else{
-            toast.error(res.massage)
+            toast.error(res.message)
         }
         
         

@@ -21,7 +21,7 @@ export async function verifyOtp(email:string,otp:string,client?:boolean) {
         console.log(error);
         return {
             isOk:false,
-            massage:"Something went wrong"
+            message:"Something went wrong"
         }
     }
 

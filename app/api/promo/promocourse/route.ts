@@ -26,14 +26,14 @@ export async function POST(Request:Request){
                             return NextResponse.json({
                                 isOk:true,
                                 discount:promo.amount,
-                                massage:"Congragulatios you have get the dicount"
+                                message:"Congragulatios you have get the dicount"
                             },{
                                 status:200
                             })
                         }else{
                             return NextResponse.json({
                                 isOk:false,
-                                massage:"Discount limit end"
+                                message:"Discount limit end"
                             },{
                                 status:400
                             })
@@ -42,7 +42,7 @@ export async function POST(Request:Request){
                     }else{
                         return NextResponse.json({
                             isOk:false,
-                            massage:"Discount not found"
+                            message:"Discount not found"
                         },{
                             status:404
                         })
@@ -51,7 +51,7 @@ export async function POST(Request:Request){
             }else{
                 return NextResponse.json({
                     isOk:false,
-                    massage:"Course not found"
+                    message:"Course not found"
                 },{
                     status:404
                 })
@@ -60,7 +60,7 @@ export async function POST(Request:Request){
         }else{
             return NextResponse.json({
                 isOk:false,
-                massage:"Fill All data"
+                message:"Fill All data"
             },{
                 status:404
             })
@@ -70,7 +70,7 @@ export async function POST(Request:Request){
     } catch (error) {
         return NextResponse.json({
             isOk:false,
-            massage:"Fill All data"
+            message:"Fill All data"
         },{
             status:404
         })

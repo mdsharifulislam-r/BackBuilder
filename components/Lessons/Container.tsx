@@ -1,6 +1,6 @@
 "use client"
 import { getSingleCourse } from "@/lib/Helper/getSingleCourse";
-import SendMassageBox from "./SendMassageBox";
+import SendmessageBox from "./SendmessageBox";
 import Videoframe from "./Videoframe";
 import { CourseType } from "../Courses/CourseCard/CourseCard";
 import { ModuleLinkPropsType, ModulePropsType } from "../SingleCourseDetails/Curriculum/Module";
@@ -45,7 +45,7 @@ export default  function Container({courseId,moduleId,videoId}:LessonsProps) {
       <div className=""> <p className="text-slate-600 text-justify text-sm py-3">
          {data?.desc}
         </p></div>
-      <SendMassageBox/>
+      <SendmessageBox/>
     </div>
   );
 }

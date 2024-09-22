@@ -8,7 +8,7 @@ import jwt from "jwt-simple";
 import { NextApiResponse } from "next";
 import { revalidatePath } from "next/cache";
 
-ConnectDB();
+ConnectDB().then()
 export async function GET(Requset:NextRequest,{params}:{params:{id:string}}) {
   try {
     const {id}= params
@@ -22,23 +22,23 @@ export async function GET(Requset:NextRequest,{params}:{params:{id:string}}) {
     
     
     if (!id) {
-      return NextResponse.json({isOk: false,massage: "invalid credintials",},{status: 400,});
+      return NextResponse.json({isOk: false,message: "invalid credintials",},{status: 400,});
     }
     const data =!arr?.length ? await StudentModel.findOne({_id:Id},{password:0,isSocialLogin:0,_id:0}):await StudentModel.findOne({_id:Id}).select(arr)
 
-    if(!data) {return NextResponse.json({isok:false,massage:'data not found'},{status:400})}
+    if(!data) {return NextResponse.json({isok:false,message:'data not found'},{status:400})}
 
     const encryptData = jwt.encode(data,process.env.JWT_SECRET||"")
 
 
-    return NextResponse.json({isOk:true,data:encryptData,massage:'data get successfully'})
+    return NextResponse.json({isOk:true,data:encryptData,message:'data get successfully'})
   } catch (error) {
     console.log(error);
     
     return NextResponse.json(
       {
         isOk: false,
-        massage: "invalid credintialsrt",
+        message: "invalid credintialsrt",
       },
       {
         status: 404,
@@ -67,7 +67,7 @@ export async function POST(Request: Request) {
             isOk: true,
             data: newData,
             token:token,
-            massage: "Login Successfully",
+            message: "Login Successfully",
           });
 
           response.cookies.set("token", token, {
@@ -81,7 +81,7 @@ export async function POST(Request: Request) {
           return NextResponse.json({
             isOk: false,
 
-            massage: "Invalid credintials",
+            message: "Invalid credintials",
           });
         }
       } else {
@@ -100,7 +100,7 @@ export async function POST(Request: Request) {
           const response = NextResponse.json({
             isOk: true,
             data: newData,
-            massage: "Login Successfully",
+            message: "Login Successfully",
           });
        response.cookies.set("token", token, {
             httpOnly: true,
@@ -113,7 +113,7 @@ export async function POST(Request: Request) {
             {
               isOk: false,
 
-              massage: "invalid cradintials",
+              message: "invalid cradintials",
             },
             {
               status: 404,
@@ -125,7 +125,7 @@ export async function POST(Request: Request) {
       return NextResponse.json(
         {
           isOk: false,
-          massage: "Account Not Registered",
+          message: "Account Not Registered",
         },
         {
           status: 404,
@@ -136,7 +136,7 @@ export async function POST(Request: Request) {
     return NextResponse.json(
       {
         isOk: false,
-        massage: "Something went wrong",
+        message: "Something went wrong",
       },
       {
         status: 500,
@@ -152,13 +152,13 @@ export async function PUT(Request: NextRequest) {
     if (!token) {
       return NextResponse.json({
         isOk: false,
-        massage: "Token is expired",
+        message: "Token is expired",
       });
     }
     if (!payload) {
       return NextResponse.json({
         isOk: false,
-        massage: "invalid credintials",
+        message: "invalid credintials",
       });
     }
 
@@ -172,7 +172,7 @@ export async function PUT(Request: NextRequest) {
     if (data.from !== "my-web") {
       return NextResponse.json({
         isOk: false,
-        massage: "UnAuthorized try",
+        message: "UnAuthorized try",
       });
     }
     if(data.dataObject.email){
@@ -181,7 +181,7 @@ export async function PUT(Request: NextRequest) {
     if(found && (data.dataObject.email !== match.email)){
       return NextResponse.json({
         isOk: false,
-        massage: "Email already used",
+        message: "Email already used",
       });
     }
   }
@@ -193,7 +193,7 @@ export async function PUT(Request: NextRequest) {
       return NextResponse.json(
         {
           isOk: true,
-          massage: "Successfully data update",
+          message: "Successfully data update",
         },
         {
           status: 200,
@@ -205,7 +205,7 @@ export async function PUT(Request: NextRequest) {
       return NextResponse.json(
         {
           isOk: false,
-          massage: "Something went wrong",
+          message: "Something went wrong",
         },
         {
           status: 400,
@@ -218,7 +218,7 @@ export async function PUT(Request: NextRequest) {
     NextResponse.json(
       {
         isOk: false,
-        massage: "Something went wrong",
+        message: "Something went wrong",
       },
       {
         status: 500,
@@ -233,7 +233,7 @@ export async function DELETE(Requset: Request) {
     return NextResponse.json(
       {
         isOk: true,
-        massage: "Logout Successfully",
+        message: "Logout Successfully",
       },
       {
         status: 200,
@@ -245,7 +245,7 @@ export async function DELETE(Requset: Request) {
     return NextResponse.json(
       {
         isOK: false,
-        massage: "Something went wrong",
+        message: "Something went wrong",
       },
       {
         status: 500,

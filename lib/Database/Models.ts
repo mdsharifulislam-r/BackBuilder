@@ -4,6 +4,7 @@ import { courseSechema } from "./CourseSchema/CourseSchme";
 import { StudentSchema } from "./StudentSchema/StudentSchema";
 import { BookSchema } from "./BookSchema/BookSchema";
 import { OrderSchema } from "./OrderSchema/OrderSchema";
+import { blogSchema } from "./BlogSchema/BlogSchema";
 
 
 export const InstructorModel =models?.instructor || model('instructor',InstructoScema)
@@ -12,4 +13,5 @@ export const CourseModel = models?.course || model("course",courseSechema)
 export const StudentModel = models?.student || model("student",StudentSchema) 
 export const BookModel = models?.book || model("book",BookSchema ) 
 export const OrderModel = models?.order || model("order",OrderSchema ) 
+export const BlogModel = models?.blog || model("blog",blogSchema)
 

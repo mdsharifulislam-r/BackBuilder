@@ -38,11 +38,11 @@ export default function CheckoutContainer({id}:{id:string}) {
       if(res2?.isOk){
         setUpdateDiamon()
       }
-      toast.success(res.massage)
+      toast.success(res.message)
       dispatch(deleteCartData(data[0]?.cartId))
 
     }else{
-      toast.error(res.massage)
+      toast.error(res.message)
     }
     
   }
@@ -92,11 +92,11 @@ orderId:Math.floor(Math.random()*1000000)
   const res = await createOrder(dataObj)
   if(res.isOk){
     setLoading(false)
-    toast.success(res.massage)
+    toast.success(res.message)
     dispatch(clearCart())
   }else{
     setLoading(false)
-    toast.error(res.massage)
+    toast.error(res.message)
   }
 }
   }

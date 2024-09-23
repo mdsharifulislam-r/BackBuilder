@@ -3,7 +3,7 @@ import Loader from "@/components/Common/Loader/Loader";
 import Title from "@/components/Common/Title";
 import InstructorsContainer from "@/components/instructors/InstructorsContainer";
 import { Suspense } from "react";
-
+export const dynamic = "force-dynamic"
 export default function page() {
   return (
     <div>

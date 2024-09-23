@@ -124,7 +124,7 @@ export default function Form({response}:{response?:responseData}) {
   },[])
   return (
     <>
-      <div className="flex md:p-4 h-full w-full justify-center place-items-center flex-col">
+      <div className="flex p-4 h-full w-full justify-center place-items-center  flex-col">
        {hydred && <form onSubmit={SubmitData} className="w-full">
           <h1 className="text-4xl font-bold pb-5 text-darkBlack">Sign Up</h1>
           <div className="flex w-full ">

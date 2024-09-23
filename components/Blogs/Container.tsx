@@ -5,7 +5,7 @@ import { getBlogs } from '@/lib/Helper/getBlogs'
 
 export default async function Container() {
   const data:BlogType[] = await getBlogs()
-  const arr = data?.map(item=>(
+  const arr = data?.slice(0,9)?.reverse().map(item=>(
     <BlogCard blog={item} key={item?._id}/>
   ))
   return (

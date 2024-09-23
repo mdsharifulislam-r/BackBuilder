@@ -12,6 +12,8 @@ import { useAppSelector } from "@/lib/hooks/Hooks";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { verifyOtp } from "@/lib/Helper/verifyOtp";
+import { sendOtp } from "@/lib/Helper/sendOtp";
+import { tree } from "next/dist/build/templates/app-page";
 function FocusInput(id: number) {
   document.getElementById(id.toString())?.focus();
 }
@@ -31,6 +33,14 @@ export default function OtpBox() {
   const router = useRouter()
   const [loading,SetLoading]=useState(false)
   const [index, setIndex] = useState(1);
+  async function ResendOtp(){
+    const res = await sendOtp(formData?.email,true)
+    if(res?.isOk){
+      toast.success(res.message)
+    }else{
+      toast.error(res.message)
+    }
+  }
   const classNames =
     "md:w-28 w-14  md:h-28 h-14 focus:outline-none focus:shadow-xl invalid:bg-primary invalid:text-white transition-all duration-500 text-4xl text-center border rounded-md bg-dark";
 
@@ -163,6 +173,9 @@ export default function OtpBox() {
       </div>
     </div>
     <LoadingButton isLoading={loading} onClick={Submit} className='bg-primary py-2 text-lg text-white w-full rounded-md'>Verify</LoadingButton>
+    <div className="py-3">
+      otp not send? <button className="text-secondary underline" onClick={ResendOtp}>Resend Now</button>
+    </div>
     </div>
   );
 }

@@ -2,6 +2,7 @@
 import jwt from 'jwt-simple'
 import { CourseType } from "@/components/Courses/CourseCard/CourseCard";
 import { cookies } from "next/headers";
+import { revalidateTag } from 'next/cache';
 const token = cookies().get("token")?.value
 export async function createCourse(data:any) {
     try{
@@ -27,6 +28,7 @@ export async function createCourse(data:any) {
   
         
         if(dat.isOk){
+            revalidateTag("updateInstructor")
             return {
                 isOk:true,
                 message:dat.message

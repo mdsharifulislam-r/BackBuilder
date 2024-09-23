@@ -6,12 +6,7 @@ import jwt from 'jwt-simple'
 export async function getStudentInfo(word?:string[]|undefined,id?:string) {
     try {
         const token = cookies().get('token')?.value
-        if(!token){
-            return {
-                isOk:false,
-                message:"Token Expired"
-            }
-        }      
+             
             const path = word?.toString()||'single'
           
             

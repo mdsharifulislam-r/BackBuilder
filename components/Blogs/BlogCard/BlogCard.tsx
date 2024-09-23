@@ -6,11 +6,12 @@ import imageData from "@/assets/Home/PopulerCourse/course3.webp"
 import { BlogType, InstructorType, Student } from "@/lib/Types/Types";
 import { getStudentInfo } from "@/lib/Helper/getStudent";
 import { getSingleInstructor } from "@/lib/Helper/getSingleInstructor";
+import Link from "next/link";
 export default async function BlogCard({blog}:{blog:BlogType}) {
   const student = await getStudentInfo([],blog?.author?.id)
   const user:Student&InstructorType = student?.name ? student : await getSingleInstructor(blog?.author?.id)
   return (
-    <div className="rounded-md overflow-hidden shadow-xl h-full w-full cursor-pointer group">
+    <Link href={`/blog/${blog?._id}`} className="rounded-md overflow-hidden shadow-xl h-full w-full cursor-pointer group">
       <div className="imgBox w-full h-52 relative  overflow-hidden">
         <div className="shade z-10 absolute w-full h-full transition-all duration-500 opacity-0 group-hover:opacity-35 bg-black">
 
@@ -47,6 +48,6 @@ export default async function BlogCard({blog}:{blog:BlogType}) {
        {blog?.desc}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

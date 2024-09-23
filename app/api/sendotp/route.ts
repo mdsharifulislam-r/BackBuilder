@@ -4,7 +4,20 @@ import { NextResponse } from "next/server"
 import { Resend } from "resend"
 import nodeMailer from 'nodemailer'
 import { InstructorModel, StudentModel } from "@/lib/Database/Models"
+import { ConnectDB } from "@/lib/Database/ConnectDB"
+ConnectDB().then()
+
+
 let otps:{email:string,otp:string}[] = []
+
+setTimeout(()=>{
+    if(otps?.length){
+        const old = otps[0]
+        otps= otps.filter(otp=>otp.email != old.email)
+        
+        
+    }
+},60000)
 const transport = nodeMailer.createTransport({
     host:"smtp.gmail.com",
     port:587,
@@ -23,6 +36,12 @@ export async function POST(Request:Request){
             return NextResponse.json({
                 isOk:false,
                 message:"Account Already Registerd"
+            })
+        }
+        if(otps.some(item=>item.email==email)){
+            return NextResponse.json({
+                isOk:false,
+                message:"OTP Already sended"
             })
         }
         let otp = Math.floor(Math.random()*1000000000000).toString().slice(0,4)
@@ -50,7 +69,9 @@ export async function POST(Request:Request){
   </div>`
         })
         if(info.accepted){
+   
             otps.push({email:email,otp:otp})
+            console.log(otps);
             return NextResponse.json({
                 isOk:true,
                 message:"Email Send Successfully"
@@ -61,6 +82,7 @@ export async function POST(Request:Request){
                 message:"Something went wrong"
             })
         }
+       
         
       
     } catch (error) {

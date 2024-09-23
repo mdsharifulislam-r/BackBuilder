@@ -27,6 +27,7 @@ export default async function LatestPost() {
 image={item?.image}
 title={item?.name}
 date={item?.publishDate}
+key={item._id}
 />
   ))
   return (

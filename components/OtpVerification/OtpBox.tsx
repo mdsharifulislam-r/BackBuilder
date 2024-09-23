@@ -8,35 +8,46 @@ import React, {
 } from "react";
 
 import LoadingButton from "../Common/Button/Button";
-import { useAppSelector } from "@/lib/hooks/Hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks/Hooks";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { verifyOtp } from "@/lib/Helper/verifyOtp";
 import { sendOtp } from "@/lib/Helper/sendOtp";
 import { tree } from "next/dist/build/templates/app-page";
+import { setTempUser } from "@/lib/Store/features/UserSclice";
 function FocusInput(id: number) {
   document.getElementById(id.toString())?.focus();
 }
 
 const BackspaceKey = "Backspace";
 export default function OtpBox() {
+  
+  const dispatch = useAppDispatch()
     const otpData = useAppSelector(state=>state.userReduicer.otp)
     const formData = useAppSelector(state=>state.userReduicer.tempUser)
   const [otp, setOtp] = useState(["", "", "", ""]);
+  const router = useRouter()
+  console.log(formData?.name);
   
+  if(!(formData?.name)){
+router.back()
+console.log("Called");
+
+  }
   const optRef1 = useRef<any>();
   const optRef2 = useRef<any>();
   const optRef3 = useRef<any>();
   const optRef4 = useRef<any>();
 
   const myref = [optRef1, optRef2, optRef3, optRef4];
-  const router = useRouter()
+
   const [loading,SetLoading]=useState(false)
   const [index, setIndex] = useState(1);
   async function ResendOtp(){
     const res = await sendOtp(formData?.email,true)
     if(res?.isOk){
       toast.success(res.message)
+      dispatch(setTempUser({}))
     }else{
       toast.error(res.message)
     }

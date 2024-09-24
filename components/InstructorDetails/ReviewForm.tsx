@@ -18,7 +18,7 @@ export default function ReviewForm({ id }: { id: string }) {
     getSingleInstructor(id, true).then((res:InstructorType) => {
       if (res) {
         setReviews(res?.ratings);
-      const data:review|undefined|0= res?.ratings?.length ? res.ratings.find(data=>data.user==user?._id):{desc:"",star:"",user:""}
+      const data:review|undefined|0= res?.ratings?.length ? res.ratings?.find(data=>data.user==user?._id):{desc:"",star:"",user:""}
       let str = data?.desc
       setDesc(str?.toString())
       setStar(parseInt(data?.star||""))
@@ -134,7 +134,7 @@ export default function ReviewForm({ id }: { id: string }) {
        
       ></textarea>
       <LoadingButton className="bg-primary text-white rounded-md px-3 py-2">
-        {reviews.some(item=>item.user==user?._id)?"update":"submit"}
+        {reviews?.some(item=>item.user==user?._id)?"update":"submit"}
       </LoadingButton>
     </form>
   );

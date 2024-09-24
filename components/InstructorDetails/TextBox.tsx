@@ -5,7 +5,7 @@ import ReviewForm from "./ReviewForm";
 import { GetAvarageRating } from "@/lib/Helper/MakeAvarageeRatings";
 import FeaturedReview from "../SingleCourseDetails/Reviews/FeaturedReview";
 export default async function TextBox({data}:{data:InstructorType}) {
-  const ratings = await GetAvarageRating(data.ratings)
+  const ratings = await GetAvarageRating(data?.ratings)
 
   return (
     <div className="flex-[60%] py-5">
@@ -22,7 +22,7 @@ export default async function TextBox({data}:{data:InstructorType}) {
           </div>
           <div className="text-orange flex place-items-center">
             {new Array(Math.floor(ratings)).fill(<FaStar key={Date.now() * 3} />)}
-            <span className="text-slate-700">({data.ratings.length||0} ratings)</span>
+            <span className="text-slate-700">({data?.ratings.length||0} ratings)</span>
           </div>
         </div>
       </div>
@@ -40,10 +40,10 @@ export default async function TextBox({data}:{data:InstructorType}) {
         <p className="text-slate-700 pt-2">Phone:{data?.phone}</p>
       </div>
       <div>
-        <FeaturedReview reviews={data.ratings} id={data._id}/>
+        <FeaturedReview reviews={data.ratings} id={data?._id}/>
       </div>
       <div className="w-full block md:hidden">
-        <ReviewForm id={data._id}/>
+        <ReviewForm id={data?._id}/>
       </div>
     </div>
   );

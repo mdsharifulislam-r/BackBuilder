@@ -22,10 +22,11 @@ export function cn(...inputs: ClassValue[]) {
 interface props{
     icon:any,
     text:string,
-    color:string
+    color:string,
+    index:number
 }
 
-function Card({icon,text,color}:props){
+function Card({icon,text,color,index}:props){
     
     const colors={
         fill:`bg-${color}-100`,
@@ -36,7 +37,7 @@ function Card({icon,text,color}:props){
 
     
     return(
-        <div className='px-7 py-9 hover:shadow-lg rounded-md bg-white group flex flex-col place-items-center gap-5'>
+        <div data-aos="fade-up" data-aos-delay={`${index*100}`} className='px-7 py-9 hover:shadow-lg rounded-md bg-white group flex flex-col place-items-center gap-5'>
             <div className={cn(data)}>
                 {icon}
             </div>
@@ -101,12 +102,13 @@ export default function TopCatagories() {
             color:"rose"
         },
 
-    ].map(data=>{
+    ].map((data,index)=>{
         return <Card
         key={data.text}
         icon={data.icon}
         text={data.text}
         color={data.color}
+        index={index}
         />
     })
     

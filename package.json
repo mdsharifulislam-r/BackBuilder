@@ -17,6 +17,7 @@
     "@types/js-cookie": "^3.0.6",
     "@types/jwt-simple": "^0.5.36",
     "@vimeo/player": "^2.24.0",
+    "aos": "^2.3.4",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "bcrypt-ts": "^5.0.2",
@@ -49,6 +50,7 @@
     "tailwind-merge": "^2.4.0"
   },
   "devDependencies": {
+    "@types/aos": "^3.0.7",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.15",
     "@types/react": "^18",

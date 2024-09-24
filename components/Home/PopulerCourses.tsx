@@ -18,7 +18,7 @@ interface courseCardProps{
 export function CourseCard({image,name,star,price}:courseCardProps){
   const startArr = star.toString().includes(".") ? new Array(Math.floor(star)).fill(<FaStar key={Date.now()}/>):new Array(star).fill(<FaStar k1={Date.now()}/>)
     return (
-        <div className='flex gap-4 place-items-start  lg:p-9 md:p-5 p-2 bg-white rounded-md group hover:bg-primary transition-all duration-500'>
+        <div data-aos="zoom-in-up" className='flex gap-4 place-items-start  lg:p-9 md:p-5 p-2 bg-white rounded-md group hover:bg-primary transition-all duration-500'>
             <div className="imageBox w-[80%] h-full relative min-h-40 rounded-md overflow-hidden">
               <div className="lessen z-10 bg-orange absolute p-2 md:text-sm text-[10px] rounded-lg text-white gap-2 top-3 left-3 flex place-items-center">
                 <FaClock/> 12 Weeks

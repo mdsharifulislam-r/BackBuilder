@@ -6,7 +6,7 @@ export default function SmaillDetails() {
   return (
     <div className=' py-10'>
       <div className="container grid gap-5 lg:grid-cols-2 md:grid-cols-2 grid-cols-1">
-        <div className="image p-5 rounded-md gap-2 grid grid-cols-2 shadow-2xl  ">
+        <div className="image p-5 rounded-md gap-2 grid grid-cols-2 shadow-2xl  " data-aos="fade-right">
             <div className="textBox">
               <div className="box w-[70%] py-3">
                 <div className="area p-2  md:text-sm text-[10px] border rounded-full flex justify-center place-items-center">
@@ -25,7 +25,7 @@ export default function SmaillDetails() {
                 <Image src={image1} className='absolute w-full h-full object-cover ' alt='image' width={300} height={300} />
             </div>
         </div>
-        <div className="textbox w-full p-5 h-full shadow-2xl rounded-md">
+        <div className="textbox w-full p-5 h-full shadow-2xl rounded-md" data-aos="fade-left">
         <div className="box py-3">
                 <div className="area p-2 text-sm w-1/3  border rounded-full flex justify-center place-items-center">
                   Top Teacher

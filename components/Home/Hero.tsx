@@ -27,15 +27,17 @@ export default function Hero () {
       <div className="container w-full flex flex-col gap-3 lg:flex-row md:flex-row lg:justify-center md:justify-center lg:place-items-center md:place-items-center">
       <div className="textBox z-10 lg:w-[60%] md:w-1/2 w-full relative">
   
-        <h1 className='lg:text-6xl md:text-5xl text-5xl font-bold leading-[1.2] text-darkBlack'>Get  <span className='text-primary'>2500+</span> Best Online Courses From <span className='text-secondary'>Coursify</span> </h1>
-        <p className='text-xl py-3 text-slate-600 '>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit.</p>
-        <div className="button">
+        <h1 className='lg:text-6xl md:text-5xl text-5xl font-bold leading-[1.2] text-darkBlack' data-aos="fade-right">Get  <span className='text-primary'>2500+</span> Best Online Courses From <span className='text-secondary'>Coursify</span> </h1>
+        <p className='text-xl py-3 text-slate-600 ' data-aos="fade-left">Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit.</p>
+        <div className="button" data-aos="fade-right">
             <button className=' rounded-md gap-4 bg-primary text-white text-lg px-7 py-4 flex justify-center place-items-center'>Find Course <FaArrowRight/></button>
         </div>
       </div>
-      <div className="imageBox lg:w-[40%] md:w-1/2 w-full h-full z-[2] relative">
+      <div className="imageBox lg:w-[40%] md:w-1/2 w-full h-full z-[2] relative " >
      
-        <Image priority={false} width={5000} height={5000} src={girlImage} className='w-[130%]' alt='girl pic'/>
+        <Image data-aos="fade-down"
+     data-aos-easing="linear"
+     data-aos-duration="1500" priority={false} width={5000} height={5000} src={girlImage} className='w-[130%]' alt='girl pic'/>
       </div>
       </div>
     

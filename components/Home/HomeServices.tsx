@@ -10,7 +10,7 @@ interface Services{
 function ServicCard({icon,desc}:Services){
     const textArr:string[] = desc.split(' ')
     return (
-        <div className='flex place-items-center gap-3 text-white'>
+        <div data-aos="flip-right" className='flex place-items-center gap-3 text-white'>
             <div className="iconbox text-4xl bg-teal-500 p-5 rounded-full transition-all duration-1000 group-hover:scale-105">
                 {icon}
             </div>

@@ -3,7 +3,7 @@ import { FaArrowRightLong,FaRegClock } from "react-icons/fa6";
 import half from "@/assets/Home/half.webp"
 function Card(){
   return (
-    <div className="p-10 shadow-2xl bg-white rounded-md hover:scale-105 transition-all duration-500">
+    <div data-aos="zoom-in-up" className="p-10 shadow-2xl bg-white rounded-md hover:scale-105 transition-all duration-500">
       <div className="date flex place-items-center gap-2 text-sm text-slate-500 ">
         <FaRegClock/> 
         20 March 2024

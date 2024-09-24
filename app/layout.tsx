@@ -6,6 +6,7 @@ import Navbar from "@/components/Common/Navbar";
 import StoreProvider from "./StoreProvider";
 import { Toaster } from "react-hot-toast";
 import SmallNavabar from "@/components/Common/SmallNavabar";
+import { AOSInit } from "./aos";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,8 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="light">
+      <AOSInit/>
       <body className={inter.className}>
         <StoreProvider>
+          
           <SmallNavabar/>
           <Navbar />
 

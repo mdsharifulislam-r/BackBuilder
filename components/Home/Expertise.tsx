@@ -35,6 +35,7 @@ export default function Expertise() {
           <div className="image w-full h-full flex flex-col gap-3 ">
             <div className="img w-full h-full rounded-md overflow-hidden">
               <Image
+              data-aos="zoom-out-right"
                 className=""
                 src={pic1}
                 alt="girlpic"
@@ -48,6 +49,7 @@ export default function Expertise() {
             <div className="img w-full h-full rounded-md overflow-hidden">
               <Image
                 className=""
+              data-aos="zoom-out-left"
                 src={pic2}
                 alt="girlpic"
                 height={500}
@@ -57,6 +59,7 @@ export default function Expertise() {
             <div className="img w-full h-full rounded-md overflow-hidden">
               <Image
                 className=""
+                data-aos="zoom-out-up"
                 src={pic3}
                 alt="girlpic"
                 height={500}
@@ -65,7 +68,7 @@ export default function Expertise() {
             </div>
           </div>
         </div>
-        <div className="textBox lg:w-1/2 md:w-1/2 w-full">
+        <div className="textBox lg:w-1/2 md:w-1/2 w-full" data-aos="zoom-in-up">
           <div className="py-5">
             <HederTitle className="text-4xl  text-primary">
              

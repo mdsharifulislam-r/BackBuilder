@@ -16,7 +16,7 @@ interface cardprops{
 }
 export function InstructorCard({image,name,title,desc,id}:cardprops){
     return (
-    <div className='flex justify-center group lg:max-w-full place-items-center flex-col gap-4'>
+    <div data-aos="zoom-in-up" className='flex justify-center group lg:max-w-full place-items-center flex-col gap-4'>
         <div  className="imageBox  w-full flex justify-center translate-y-24">
             <div className="div w-[80%] min-h-64 rounded-xl overflow-hidden relative ">
                 <div className="sade opacity-0 absolute w-full h-full top-0 left-0 bg-primary transition-all duration-500 z-20 group-hover:opacity-50 ">

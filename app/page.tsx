@@ -13,7 +13,7 @@ import LeatestNews from "@/components/Home/LeatestNews";
 import SubscribeSection from "@/components/Home/SubscribeSection";
 export default function App():ReactNode{
   return <>
-  <div className="">
+  <div className=" overflow-x-hidden">
     <Hero/>
     <HomeServices/>
     <Expertise/>

@@ -27,13 +27,15 @@ export default function OtpBox() {
     const formData = useAppSelector(state=>state.userReduicer.tempUser)
   const [otp, setOtp] = useState(["", "", "", ""]);
   const router = useRouter()
-  console.log(formData?.name);
-  
+useEffect(()=>{
   if(!(formData?.name)){
-router.back()
-console.log("Called");
+    router.back()
+    console.log("Called");
+    
+      }
+},[])
+  
 
-  }
   const optRef1 = useRef<any>();
   const optRef2 = useRef<any>();
   const optRef3 = useRef<any>();

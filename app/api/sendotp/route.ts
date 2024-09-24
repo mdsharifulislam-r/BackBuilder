@@ -41,7 +41,7 @@ export async function POST(Request:Request){
         if(otps.some(item=>item.email==email)){
             return NextResponse.json({
                 isOk:false,
-                message:"OTP Already sended"
+                message:"OTP Already sended please 1 minutes for new otp"
             })
         }
         let otp = Math.floor(Math.random()*1000000000000).toString().slice(0,4)
@@ -101,6 +101,8 @@ export async function PUT(Request:Request){
     try {
         const {payload} = await Request.json()
         const {email,otp} = jwt.decode(payload,process.env.JWT_SECRET!)
+        
+        
         const obj = otps.find(item=>item.email==email)
         if(!obj){
             return NextResponse.json({

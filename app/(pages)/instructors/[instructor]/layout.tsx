@@ -9,17 +9,17 @@ let nam = ""
 
 type Props = {
   params: { instructor: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+
 }
 
 export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent?: ResolvingMetadata
+  { params}: Props,
+ 
 ): Promise<Metadata> {
 
   const blog:BlogType = await getSingleInstructor(params?.instructor)
   return {
-    title: "Coursify | Blog | "+blog?.name,
+    title: "Coursify | Instructor | "+blog?.name,
    
   }
 }

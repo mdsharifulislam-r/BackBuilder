@@ -5,14 +5,14 @@ import type { Metadata, ResolvingMetadata } from "next";
 
 let nam = ""
 
-type Props = {
+type props = {
   params: { id: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+ 
 }
 
 export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent?: ResolvingMetadata
+  { params}: props,
+
 ): Promise<Metadata> {
 
   const blog:BlogType = await getSingleBlog(params?.id)

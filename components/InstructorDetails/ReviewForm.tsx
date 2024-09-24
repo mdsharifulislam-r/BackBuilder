@@ -42,12 +42,12 @@ export default function ReviewForm({ id }: { id: string }) {
       ...data,
       user: user?._id,
     };
-    if (instructor.ratings.some((item) => item?.user == user?._id)) {
+    if (instructor.ratings?.some((item) => item?.user == user?._id)) {
       const index = instructor?.ratings?.findIndex(data=>data.user==user?._id)
       let rev = [...instructor?.ratings]
       rev[index]={
         ...obj,
-        star:star.toString(),
+        star:star?.toString(),
         desc:desc,
       date:new Date().toDateString() 
 

@@ -28,10 +28,10 @@ export default function FollowButton({data}:{data:InstructorType}) {
         let obj = {
           students:students?.length ?[...students,user?._id]:[user?._id]
         }
-        if(instructor?.students.some(id=> id==user?._id)){
+        if(instructor?.students?.some(id=> id==user?._id)){
           setLoading(true)
           let obj = {
-            students:students?.length && students.filter(id=>id!==user?._id)
+            students:students?.length && students?.filter(id=>id!==user?._id)
             
           }
           const res = await UpdateSingleInstructor(obj,data._id)

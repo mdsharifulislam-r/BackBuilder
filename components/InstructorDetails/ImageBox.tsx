@@ -15,7 +15,7 @@ export default function ImageBox({data}:{data:InstructorType}) {
   return (
     <div className="md:w-[40%] w-full flex justify-center flex-col place-items-center p-5">
       <div className="imageBox md:w-80 md:h-80 w-44 h-44 relative rounded-full overflow-hidden">
-        <Image src={data.image} alt="image" className="absolute w-full h-full object-cover" width={1000} height={1000} />
+        <Image src={data?.image} alt="image" className="absolute w-full h-full object-cover" width={1000} height={1000} />
       </div>
       <div className="iconBox flex gap-4 place-items-center py-4">
         <IconBox
@@ -30,7 +30,7 @@ export default function ImageBox({data}:{data:InstructorType}) {
       </div>
      <FollowButton data={data}/>
       <div className="w-full hidden md:block">
-        <ReviewForm id={data._id}/>
+        <ReviewForm id={data?._id}/>
       </div>
     </div>
   )

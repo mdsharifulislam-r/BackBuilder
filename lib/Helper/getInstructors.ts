@@ -1,3 +1,7 @@
+'use server'
+
+import { revalidatePath, revalidateTag } from "next/cache";
+
 export async function getInstructors(){
     try{
     const response = await fetch(`${process.env.BASE_URL}/instructor`,{
@@ -12,4 +16,8 @@ export async function getInstructors(){
         
         return []
     }
+}
+
+export async function reavalidateInstructor(){
+    revalidateTag("AllInstructorTag")
 }

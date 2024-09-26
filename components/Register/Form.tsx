@@ -34,9 +34,10 @@ export default function Form({response}:{response?:responseData}) {
   const [imageFormData,setImageFormData]=useState<string>("")
   async function GetImage(e:ChangeEvent<HTMLInputElement>){
     const file = e.target.files
+    
     if(file){
       const formData = new FormData()
-      const dataK = await uploadImage(file[0])
+      const dataK = await uploadImage(file)
       setImageFormData(dataK)
       
       

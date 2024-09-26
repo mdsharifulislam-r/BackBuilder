@@ -4,19 +4,27 @@ import Accordian from './SideBar/Accordian'
 import Price from './SideBar/Price'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { getInstructors } from '@/lib/Helper/getInstructors'
+import { InstructorType } from '@/lib/Types/Types'
 
 // import Price from './SideBar/Price'
+
 export const instructor = ["Learn With Sumit","Jhankar Mahbub","Hitesh","Anisur Rahman","Procoder"]
 export const catagories=["Business","Cooking","Digital Marketing","Fitness","Motivation","Online Art","Photography","Programming","Yoga"]
 export const lavel = ["All Level","Beginner","Intermatiade","Expert"]
-export default function SideBar({type="courses",handle}:{type?:string,handle:(e: FormData) => Promise<never>}) {
+export default async function SideBar({type="courses",handle}:{type?:string,handle:(e: FormData) => Promise<never>}) {
+const instructos:InstructorType[] = await getInstructors()
+
+const data:string[] = instructos?.map(item=>item.name)||instructor
+
+
 
   
   return (
     <div className='w-full bg-white  shadow-xl p-7'>
        <form className='' action={handle} >
       <Accordian title='Catagories' data={catagories} />
-      <Accordian title={type!='courses'?"Author":"Instructor"} data={instructor} />
+      <Accordian title={type!='courses'?"Author":"Instructor"} data={data} />
       <Accordian title='Level' data={lavel} />
       <Price/>
       <div>

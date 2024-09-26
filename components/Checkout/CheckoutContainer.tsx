@@ -14,6 +14,7 @@ import { createOrder } from '@/lib/Helper/createoOrder'
 import { getStudentClient } from '@/lib/Helper/getStudentClient'
 import { UpdateStudentInfoObject } from '@/lib/Helper/UpdateStudentObject'
 import { setUpdateDiamon } from '../Common/Diamond/Diamond'
+import PlaseLogin from './PlaseLogin'
 
 export default function CheckoutContainer({id}:{id:string}) {
     const cartdata = useAppSelector(state=>state.cartReduicer.cartData)
@@ -49,9 +50,7 @@ export default function CheckoutContainer({id}:{id:string}) {
 const [loading,setLoading]=useState(false)
 const address = useAppSelector(state=>state.cartReduicer.address)
 async  function placeOrder(){
-  console.log(
-    "click"
-  )
+
   
   if(!address && bookExist){
     toast.error("Please add a address first")
@@ -102,7 +101,7 @@ orderId:Math.floor(Math.random()*1000000)
   }
   return (
     <div className='container'>
-    <div className=' flex md:flex-row flex-col-reverse gap-4'>
+   {user?.name ? <div className=' flex md:flex-row flex-col-reverse gap-4'>
       <div className='Payment w-full '>
         <textarea name="" id="" className='w-full min-h-32 p-4 rounded-md border shadow-xl focus:outline-primary' placeholder='Note for Teacher'></textarea>
         <div className="method pt-5">
@@ -116,7 +115,7 @@ orderId:Math.floor(Math.random()*1000000)
         </div>
       </div>
      <Details data={data}/>
-    </div>
+    </div>:<PlaseLogin/>}
     </div>
     
   )

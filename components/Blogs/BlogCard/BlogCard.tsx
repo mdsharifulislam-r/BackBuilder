@@ -11,7 +11,7 @@ export default async function BlogCard({blog}:{blog:BlogType}) {
   const student = await getStudentInfo([],blog?.author?.id)
   const user:Student&InstructorType = student?.name ? student : await getSingleInstructor(blog?.author?.id)
   return (
-    <Link href={`/blog/${blog?._id}`} className="rounded-md overflow-hidden shadow-xl h-full w-full cursor-pointer group">
+    <Link href={`/blog/${blog?._id}`} data-aos="zoom-in-up" className="rounded-md overflow-hidden shadow-xl h-full w-full cursor-pointer group">
       <div className="imgBox w-full h-52 relative  overflow-hidden">
         <div className="shade z-10 absolute w-full h-full transition-all duration-500 opacity-0 group-hover:opacity-35 bg-black">
 

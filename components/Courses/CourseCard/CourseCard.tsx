@@ -46,7 +46,7 @@ export default function CourseCard({image,name,desc,ratings,duration,type,_id,pr
 
   
   return (
-    <div className='w-full h-full max-h-[500px]  grid popUp grid-cols-1 group shadow-lg overflow-hidden transition-all rounded-md duration-700 cursor-pointer'>
+    <div data-aos="zoom-in-up" className='w-full h-full max-h-[500px] popUp  grid grid-cols-1 group shadow-lg overflow-hidden transition-all rounded-md duration-700 cursor-pointer'>
       <Link href={`/courses/${_id}`} className="imageBox w-full min-h-48 relative ">
         <div className="shade absolute opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none z-[3] w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.4)]">
             

@@ -15,6 +15,7 @@ setTimeout(()=>{
         const old = otps[0]
         otps= otps.filter(otp=>otp.email != old.email)
         
+        console.log(otps);
         
     }
 },60000)
@@ -71,7 +72,7 @@ export async function POST(Request:Request){
         if(info.accepted){
    
             otps.push({email:email,otp:otp})
-            console.log(otps);
+           
             return NextResponse.json({
                 isOk:true,
                 message:"Email Send Successfully"
@@ -101,10 +102,11 @@ export async function PUT(Request:Request){
     try {
         const {payload} = await Request.json()
         const {email,otp} = jwt.decode(payload,process.env.JWT_SECRET!)
-        
+
         
         const obj = otps.find(item=>item.email==email)
-        if(!obj){
+   
+        if(obj==undefined){
             return NextResponse.json({
                 isOk:false,
                 message:"OTP Expired"

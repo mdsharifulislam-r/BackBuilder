@@ -15,9 +15,8 @@ import { verifyOtp } from "@/lib/Helper/verifyOtp";
 import { sendOtp } from "@/lib/Helper/sendOtp";
 import { tree } from "next/dist/build/templates/app-page";
 import { setTempUser } from "@/lib/Store/features/UserSclice";
-function FocusInput(id: number) {
-  document.getElementById(id.toString())?.focus();
-}
+import { revalidateTag } from "next/cache";
+import { reavalidateInstructor } from "@/lib/Helper/getInstructors";
 
 const BackspaceKey = "Backspace";
 export default function OtpBox() {
@@ -49,7 +48,7 @@ useEffect(()=>{
     const res = await sendOtp(formData?.email,true)
     if(res?.isOk){
       toast.success(res.message)
-      dispatch(setTempUser({}))
+      
     }else{
       toast.error(res.message)
     }
@@ -110,7 +109,8 @@ useEffect(()=>{
             body: JSON.stringify(formData)})
           const dat= await res.json()
           if(dat?.isOk){
-
+            await reavalidateInstructor()
+            dispatch(setTempUser({}))
             router.push("/login")
             SetLoading(false)
             toast.success(dat.message)

@@ -66,7 +66,7 @@ function CartBox({
     );
   }
   return (
-    <div className="flex popUp gap-2 p-3 border-b relative">
+    <div data-aos="zoom-in-up" className="flex gap-2 p-3 border-b relative">
       <div className="absolute right-4 top-4">
         <button className="text-xl " onClick={Delete}>
           x

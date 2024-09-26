@@ -21,7 +21,7 @@ export default async function TextBox({data}:{data:InstructorType}) {
             <span>{data.students.length} students |</span>
           </div>
           <div className="text-orange flex place-items-center">
-            {new Array(Math.floor(ratings)).fill(<FaStar key={Date.now() * 3} />)}
+            {new Array(Math.floor(ratings||1)).fill(<FaStar key={Date.now() * 3} />)}
             <span className="text-slate-700">({data?.ratings.length||0} ratings)</span>
           </div>
         </div>

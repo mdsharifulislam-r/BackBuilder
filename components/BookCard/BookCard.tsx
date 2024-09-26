@@ -10,7 +10,7 @@ import AddCartButton from './AddCartButton'
 export default function BookCard({name,description,_id,instructor,price,image,ratings}:Booktype) {
    const bg = getRandomClass()
   return (
-    <div className='w-full p-4 bg-white group shadow-lg rounded-md'>
+    <div data-aos="zoom-in-up" className='w-full p-4 bg-white group shadow-lg rounded-md'>
       <Link href={`/book/${_id}`} className={`w-full block md:p-10 p-4 ${bg}  rounded-md relative  cursor-pointer overflow-hidden`}>
         <div className="absolute transition-all duration-500 flex justify-center   w-8 rotate-45 backdrop-blur-lg shadow-white  bg-white -top-16  left-0">
             Sale

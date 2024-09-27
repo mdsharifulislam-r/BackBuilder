@@ -6,12 +6,7 @@ import { revalidateTag } from 'next/cache';
 const token = cookies().get("token")?.value
 export async function createCourse(data:any) {
     try{
-        if(!token){
-            return {
-                isOk:false,
-                message:"Session Expired Please login again"
-            } 
-        }
+ 
       
         
         const encrptedData = jwt.encode(data,process.env.JWT_SECRET||"")

@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { CartSlice } from './features/CartSlice'
+import { ProjectSlice } from './features/CartSlice'
 import { userSlice } from './features/UserSclice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-        cartReduicer:CartSlice.reducer,
+        cartReduicer:ProjectSlice.reducer,
         userReduicer:userSlice.reducer
     }
   })

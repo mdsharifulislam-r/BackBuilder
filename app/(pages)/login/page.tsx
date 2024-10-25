@@ -1,11 +1,10 @@
-import RegisterContaianer from "@/components/Register/RegisterContaianer";
-import { responseData } from "../register/page";
+import LoginContainer from '@/components/Login/LoginContainer'
+import React from 'react'
 
-export default function page({searchParams}:any) {
-  const response:responseData = searchParams
+export default function page() {
   return (
     <div>
-      <RegisterContaianer login={true} response={response}/>
+      <LoginContainer/>
     </div>
   )
 }

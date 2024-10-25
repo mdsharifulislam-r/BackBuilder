@@ -19,7 +19,10 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "typeRoots":[
+      "./node_modules/@mysql"
+    ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/Tell_Me/TellMeAbouttsx"],
   "exclude": ["node_modules"]

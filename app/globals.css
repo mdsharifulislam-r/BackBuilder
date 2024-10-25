@@ -5,7 +5,7 @@
 @layer components{
     .container{
         width: 100%;
-        max-width: 1280px;
+        max-width: 1200px;
         margin: 0 auto;
         padding: 20px;
     }
@@ -31,26 +31,23 @@
         z-index: -1;
       }
       
-     .bounce-one{
-      @apply animate-bounce;
-      animation-iteration-count: 2;
-     }
+     
     .box-animation{
         animation: box_animation 3s ease-in-out infinite ;
-    }
-    .popUp{
-      animation: popup 0.4s  ease-in-out 1 ;
     }
 }
 
 
-@keyframes popup{
-   0%{
-    transform: scale(0.4);
-   }
-   100%{
-    transform: scale(1);
-   }
+@keyframes box_animation{
+    0%{
+        transform: translateX(20px) ;
+    }
+    50%{
+        transform: translateX(0px);
+    }
+    100%{
+        transform: translateX(-20px);
+    }
 }
 @keyframes pulse {
     0% {

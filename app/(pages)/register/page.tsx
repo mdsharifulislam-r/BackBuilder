@@ -1,13 +1,10 @@
-import RegisterContaianer from '@/components/Register/RegisterContaianer'
+import RegisterContainer from '@/components/Register/RegisterContainer'
 import React from 'react'
-export interface responseData {message:string,isOk:string,token?:string,type?:string} 
-export default function page({searchParams}:any) {
-  const response:responseData=searchParams
- 
-  
+
+export default function page() {
   return (
-    <div className='bg-dark'>
-      <RegisterContaianer response={response}/>
+    <div>
+      <RegisterContainer/>
     </div>
   )
 }

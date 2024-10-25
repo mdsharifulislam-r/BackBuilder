@@ -1,11 +1,7 @@
-import { ConnectDB } from "@/lib/Database/ConnectDB";
-import { NextApiRequest } from "next";
-import { NextRequest, NextResponse } from "next/server";
-ConnectDB().then()
-export async function GET(Request:Request) {
-    
+import { NextResponse } from "next/server";
+
+export function GET(){
     return NextResponse.json({
-        msg:"server runnig"
+        msg:"Server is Running"
     })
-    
 }

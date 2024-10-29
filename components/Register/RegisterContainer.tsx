@@ -50,17 +50,15 @@ export default function RegisterContainer() {
       toast.error("Password must be up to 8 character")
       return
     }
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/otp`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users`,{
       method:"POST",
-      body:JSON.stringify({
-        email:formData.email
-      })
+      body:JSON.stringify(formData)
   })
 
 
   const data = await res.json()
   if(data?.success){
-    dispatch(setTempData(formData))
+    
       setFormData({
         name:"",
         email:"",
@@ -70,7 +68,7 @@ export default function RegisterContainer() {
       })
       toast.success(data?.message)
       formRef.current?.reset()
-      router.push("/otp")
+      router.push("/login")
   
   }else{
     toast.error(data?.message)

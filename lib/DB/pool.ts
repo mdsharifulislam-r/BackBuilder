@@ -1,10 +1,10 @@
 import mysql from "mysql2/promise"
 
 export  const pool = mysql.createPool({
-    host:process.env.MYSQL_HOST,
-    password:'ghQWeKSbRA',
-    user:'sql12741506',
-    database:'sql12741506',
+    host:'mysql.railway.internal',
+    password:'wbYCBMWhMnnaigAbnORiNuFpultabNeM',
+    user:'root',
+    database:'railway',
     port:3306
 })
 

@@ -6,8 +6,8 @@ import React from 'react'
 export default function page() {
    
   return (
-    <div className='w-[75%] bg-blue-50 p-4 h-screen overflow-y-auto'>
-      <Header/>
+    <div className='w-[75%] bg-blue-50 p-4 md:h-screen md:overflow-y-auto'>
+      <Header project_id={0}/>
       <MainContainer/>
     </div>
   )

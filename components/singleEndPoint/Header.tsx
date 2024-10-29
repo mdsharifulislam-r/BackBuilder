@@ -14,10 +14,19 @@ import { CiSettings } from "react-icons/ci";
 import { RxCross1 } from "react-icons/rx";
 import SchemaTable from "./Table/SchemaTable";
 import PopUp from "./PopUp/PopUp";
+import DeletePopUp from "./DeletePopUp/DeletePopUp";
+import { useRouter } from "next/navigation";
 export default function Header({name}:{name:string}) {
   
   const cookie = useCookies()
   const token = cookie.get('token')
+
+  const router = useRouter()
+  useEffect(()=>{
+    if(!token){
+      router.push('/')
+    }
+  },[])
   const user_id = JWT.decode(token||"",process.env.NEXT_PUBLIC_JWT_SECRET!)
   const project_id = useAppSelector(state=>state.cartReduicer.project_id)
   const endpoint_id = useAppSelector(state=>state.cartReduicer.endpoint_id)
@@ -32,9 +41,10 @@ export default function Header({name}:{name:string}) {
    }
 
    const [show,setShow]=useState(false)
+   const [deleteShow,setDeleteShow]=useState(false)
   return (
     <div className="flex place-items-center">
-      <div className="textBox w-1/2">
+      <div className="textBox md:w-1/2 w-full">
         <h1 className="text-4xl font-bold text-blue-600">
           Endpoint <span className="text-orange">/{name}</span>
         </h1>
@@ -61,7 +71,7 @@ export default function Header({name}:{name:string}) {
               Configure
             </span>
           </button>
-          <button className="flex place-items-center gap-1 bg-red-600 text-white px-3 py-1 rounded-md">
+          <button onClick={()=>setDeleteShow(!deleteShow)} className="flex place-items-center gap-1 bg-red-600 text-white px-3 py-1 rounded-md">
             <span>
               <RxCross1/>
             </span>
@@ -72,9 +82,12 @@ export default function Header({name}:{name:string}) {
         </div>
       </div>
       {
-        show?<Suspense fallback={"Loading..."}><PopUp setShow={setShow}/></Suspense>:""
+        show?<Suspense fallback={"Loading..."}><PopUp endpoint_name={name} setShow={setShow}/></Suspense>:""
       }
-      <div className="imageBox w-[40%]">
+      {
+        deleteShow? <DeletePopUp name={name} setHide={setDeleteShow}/>:""
+}
+      <div className="imageBox w-[40%] md:block hidden">
         <Image src={pic} alt="" />
       </div>
     </div>

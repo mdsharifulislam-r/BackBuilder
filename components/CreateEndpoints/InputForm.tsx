@@ -67,9 +67,8 @@ export default function InputForm({setFieldData}:{setFieldData:React.Dispatch<Re
       }
     })
     setFormValues({
-      name:"",
-      required:false,
-      type:""
+      ...formValues,
+      name:""
     })
   };
   return (

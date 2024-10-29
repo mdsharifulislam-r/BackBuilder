@@ -14,10 +14,10 @@ export default function ProjectCard({project}:{project:ProjectType}) {
   }
   return (
     <div onClick={sendProjectId}>
-      <Link href={`/projects/${project?.project_id}`} className='w-full h-52 bg-white p-5 rounded-md shadow-lg hover:scale-105 block transition-all duration-500 cursor-pointer relative text-wrap '>
+      <Link href={`/projects/${project?.project_id}`} className='w-full md:h-52 bg-white p-5 rounded-md shadow-lg hover:scale-105 block transition-all duration-500 cursor-pointer relative text-wrap '>
           <h1 className='text-2xl text-slate-600  w-full text-nowrap overflow-hidden'>{project.project_name}</h1>
           <span className='text-slate-500'>{project?.project_id}</span>
-         <div className='absolute bottom-5 left-5 text-2xl'>
+         <div className='absolute bottom-5 left-5 text-2xl hidden md:block'>
             <FaCode/>
          </div>
         </Link>

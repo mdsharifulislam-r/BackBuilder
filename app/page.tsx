@@ -1,9 +1,24 @@
+import Blogs from '@/components/Home/Blogs'
+import Features from '@/components/Home/Features'
+import FrameWorks from '@/components/Home/FrameWorks'
+import Hero from '@/components/Home/Hero'
+import Pricing from '@/components/Home/Pricing'
+import Sabscibe from '@/components/Home/Sabscibe'
+import Services from '@/components/Home/Services'
+import Testmonials from '@/components/Home/Testmonials'
 import React from 'react'
 
 export default function page() {
   return (
     <div>
-      <h1>Server is Runnig</h1>
+      <Hero/>
+      <Services/>
+      <Blogs/>
+      <Pricing/>
+      <FrameWorks/>
+      <Features/>
+      <Testmonials/>
+      <Sabscibe/>
     </div>
   )
 }

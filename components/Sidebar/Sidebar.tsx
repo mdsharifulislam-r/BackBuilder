@@ -24,12 +24,14 @@ useEffect(()=>{
             }
         })
 },[])
+const [isShow,setIsShow]=useState(false)
     const showData= projectsData?.map(item=>(
-        <DropDown content={item}/>
+        <DropDown key={item?.project_id} setShow={setIsShow} page={page} content={item}/>
     ))
-    
+   
   return (
-    <div className='w-[25%] h-screen bg-indigo-400 p-5 relative'>
+    <>
+    <div className={`md:w-[25%] transition-all duration-500 ${isShow?"translate-x-0":"-translate-x-full md:translate-x-0"} w-[80%] fixed h-screen bg-indigo-400 p-5 md:relative z-40`}>
         <div className='logo flex justify-center text-white text-2xl font-bold'>
             Backbuilder
         </div>
@@ -50,5 +52,13 @@ useEffect(()=>{
             </Link>
         </div>
     </div>
+    <button onClick={()=>setIsShow(prev=>!prev)} className={`fixed top-20 left-0 ${isShow?"hidden":"block"} z-40 bg-blue-600 md:hidden text-white px-1  py-5 text-xl rounded-md shadow-md`}>
+        {">"}
+    </button>
+    <div  onClick={()=>setIsShow(prev=>!prev)} className={`fixed bg-black opacity-35 w-full h-full md:hidden ${isShow?"block":"hidden"} top-0 left-0 cursor-pointer z-20`}>
+
+    </div>
+    </>
+    
   )
 }

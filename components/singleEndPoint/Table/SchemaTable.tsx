@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 
 export default function SchemaTable() {
   const endpoint_id = useAppSelector(state=>state.cartReduicer.endpoint_id)
+  const changePoint = useAppSelector(state=>state.cartReduicer.dataChange)
   const [fieldData,setFieldData]=useState<endpoint[]>()
   useEffect(()=>{
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/schema/${endpoint_id}`)
@@ -19,7 +20,7 @@ export default function SchemaTable() {
           toast.error(data?.message)
         }
       })
-  },[])
+  },[changePoint])
   const showTable = fieldData?.map((item,index)=>(
     <TableRow
     key={item.primary_id}

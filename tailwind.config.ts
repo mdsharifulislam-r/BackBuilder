@@ -6,6 +6,7 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+     './node_modules/preline/preline.js'
   ],
   theme: {
     extend: {
@@ -15,10 +16,19 @@ const config: Config = {
         darkBlack:"#181818",
         secondary:"#EE4A62",
         orange:"#F8B81F"
-      }
+      },
+      animation: {
+        'bounce-up-down': 'bounce-up-down 5s infinite',
+      },
+      keyframes: {
+        'bounce-up-down': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+      },
     },
   },
-  plugins: [daisyui,require('tailwind-scrollbar')],
+  plugins: [daisyui,require('tailwind-scrollbar'), require('preline/plugin')],
   daisyui: {
     themes: ["light"], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: "light", // name of one of the included themes for dark mode

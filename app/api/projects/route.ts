@@ -19,6 +19,7 @@ export async function POST(Request:Request) {
             status:400
         })
       }
+      await pool.query('CREATE TABLE IF NOT EXISTS projects (project_id int not null AUTO_INCREMENT PRIMARY KEY,user_id int,project_name varchar(256), description varchar(256),origins varchar(256))')
       const user_id = jwt.decode(token,process.env.JWT_SECRET!)
       if(!project_name){
         return NextResponse.json({

@@ -6,7 +6,7 @@ import React from 'react'
 export default function page({params}:{params:{id:string}}) {
     const {id}=params
   return (
-    <div className='w-[75%] bg-blue-50 p-4 h-screen overflow-y-scroll'>
+    <div className='md:w-[75%] w-full bg-blue-50 p-4 md:h-screen md:overflow-y-scroll'>
       <Header project_id={parseInt(id)}/>
       <MainContainer/>
     </div>

@@ -4,8 +4,12 @@ import { RxCross1 } from 'react-icons/rx'
 import toast from 'react-hot-toast'
 
 import { revalidateTag } from 'next/cache'
+import { useAppDispatch, useAppSelector } from '@/lib/hooks/hooks'
+import { changeDataChange } from '@/lib/Store/features/CartSlice'
 
-export default function TableRow({content,index,setChange}:{content:endpoint,index:number,setChange:React.Dispatch<React.SetStateAction<boolean>>}) {
+export default function TableRow({content,index,setChange,endpoint_name}:{content:endpoint,index:number,setChange:React.Dispatch<React.SetStateAction<boolean>>,endpoint_name:string}) {
+  const Dispatch = useAppDispatch()
+  const project_id = useAppSelector(state=>state.cartReduicer.project_id)
     const [formData,setFormData]=useState({
         schema_id:0,
         name:"",
@@ -23,12 +27,18 @@ export default function TableRow({content,index,setChange}:{content:endpoint,ind
 
     const deletRow = async ()=>{
       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/schema/${content.schema_id}`,{
-        method:"DELETE"
+        method:"DELETE",
+        body:JSON.stringify({
+          project_id,
+          schma_name:content.name,
+          endpoint_name:endpoint_name
+        })
       })
       const data = await res.json()
       if(data.success){
         toast.success(data.message)
-   
+        setChange(prev=>!prev)
+        Dispatch(changeDataChange())
       }else{
         toast.error(data.message)
       }

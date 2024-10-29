@@ -1,5 +1,5 @@
 import React from 'react'
-export interface endpoint{name:string,primary_id:number,type:string,required:boolean,schema_id:number}
+export interface endpoint{name:string,primary_id:number,type:string,required:boolean,schema_id:number,is_user?:boolean}
 export default function TableRow({content,index}:{content:endpoint,index:number}) {
   return (
     <tr className="bg-white border-b">

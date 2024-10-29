@@ -4,16 +4,13 @@ import { UserType } from "@/lib/Types/types"
 import { createSlice } from "@reduxjs/toolkit"
 
 const localData:UserType|null = getStorLocal("user")
+const TempData:UserType|null = getStorLocal("tempUser")
 
-const localModuleData:{
-    courseId:string,
-    moduleId:string,
-    videoId:string
-}= getStorLocal("moduleData")
+
 
 const initialState = {
     user:localData,
-   
+    tempUser:TempData
 }
 
 export const userSlice = createSlice({
@@ -28,9 +25,13 @@ export const userSlice = createSlice({
             state.user=null
             setStorLocal('user',null)
         },
+        setTempData:(state,action)=>{
+            state.tempUser=action.payload
+            setStorLocal('tempUser',action.payload)
+        }
        
 
     }
 })
 
-export const {signInUser,Logout} = userSlice.actions
+export const {signInUser,Logout,setTempData} = userSlice.actions

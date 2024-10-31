@@ -6,7 +6,7 @@ import { pool } from "@/lib/DB/pool";
 import { UserType } from "@/lib/Types/types";
 import { validateHeaderValue } from "http";
 import { cookies } from "next/headers";
-
+import JWT from 'jwt-simple'
 export async function POST(Request:Request) {
     try {
         const {email,password,social_login}:{email:string,password:string,social_login:boolean}=await Request.json()
@@ -121,5 +121,30 @@ export async function DELETE(Request:Request) {
             status:500
         })
         
+    }
+}
+export async function PUT(Request:Request) {
+    try {
+        const {newPassword,oldPassword}:{newPassword:string,oldPassword:string}= await Request.json()
+        const token = cookies().get('token')?.value
+    if(!token){
+      return NextResponse.json({
+        success:false,
+        message:"Token Expired"
+      },{
+        status:404
+      })
+    }
+    const user_id = JWT.decode(token!,process.env.JWT_SECRET!)
+    const [data]:any[]=await pool.query('SELECT password FROM users WHERE user_id=?',[user_id])
+ 
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({
+            success:false,
+            message:"Something went wrong"
+        },{
+            status:500
+        })
     }
 }

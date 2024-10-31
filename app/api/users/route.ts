@@ -6,6 +6,7 @@ import { pool } from "@/lib/DB/pool";
 import { NormalizeError } from "next/dist/shared/lib/utils";
 import { error } from "console";
 import { cookies } from "next/headers";
+import JWT from 'jwt-simple'
 export async function POST(Request: Request) {
   try {
     const { name, email, password, confirm_password, social_login }: UserType =
@@ -122,16 +123,41 @@ console.log(error);
 
 export async function GET() {
     try {
+      const token = cookies().get('token')?.value
+      if(!token){
+        return NextResponse.json({
+          success:false,
+          message:"Token Expired"
+        },{
+          status:404
+        })
+      }
+      const user_id = JWT.decode(token!,process.env.JWT_SECRET!)
+      const [data]:any[]= await pool.query('SELECT * FROM users WHERE user_id=?',[user_id])
+      if(data?.length){
         return NextResponse.json(
-            {
-              success: true,
-              message: "data get successfully",
-              data:user_data
-            },
-            {
-              status: 200,
-            }
-          );
+          {
+            success: true,
+            message: "data get successfully",
+            data:data[0]
+          },
+          {
+            status: 200,
+          }
+        );
+      }else{
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Data not found",
+     
+          },
+          {
+            status: 400,
+          }
+        );
+      }
+    
     } catch (error) {
         return NextResponse.json(
             {
@@ -151,6 +177,50 @@ export async function DELETE(Request:Request) {
     return NextResponse.json({
       success:true,
       message:"Logout Successfull"
+    })
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Something went wrong",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+export async function PUT(Request:Request) {
+  try {
+    const {email,name}:{email:string,name:string}=await Request.json()
+    if(!email || !name){
+      return NextResponse.json({
+        success:false,
+        message:"Inavalid credintials"
+      })
+    }
+    const token = cookies().get('token')?.value
+    if(!token){
+      return NextResponse.json({
+        success:false,
+        message:"Token Expired"
+      },{
+        status:404
+      })
+    }
+    const user_id = JWT.decode(token!,process.env.JWT_SECRET!)
+    const [exist]:any[] = await pool.query('SELECT * FROM users WHERE user_id !=? AND email=?',[user_id,email])
+    if(exist?.length){
+      return NextResponse.json({
+        success:false,
+        message:"Email already exist"
+      })
+    }
+    await pool.query('UPDATE users SET name=?,email=? WHERE user_id=?',[name,email,user_id])
+    return NextResponse.json({
+      success:true,
+      message:"Data update successfully"
     })
   } catch (error) {
     return NextResponse.json(

@@ -40,7 +40,8 @@ export async function GET() {
         
         return NextResponse.json({
             success:false,
-            message:"Something went wrong"
+            message:"Something went wrong",
+            error:error
         },{
             status:500
         })

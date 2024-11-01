@@ -41,7 +41,7 @@ export async function DELETE(Request:Request,{params}:{params:{id:string}}) {
        // Delete The schema
        const ka = await pool.execute('DELETE FROM `scheme` WHERE primary_id=?',[id])
        // Delete The Database
-       const sa = await Dbpool.execute(`DROP TABLE ${name+project_id}`)
+       const sa = await DbPool.execute(`DROP TABLE ${name+project_id}`)
        return NextResponse.json({
         success:true,
         message:"Enpoint Delete Successfully"

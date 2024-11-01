@@ -55,7 +55,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
             },401)  
          }
         const {sql,values}:any = await generateInserSqlForRegister(request,userinfo[2]+userinfo[1])  
-        const [rows]= await Dbpool.execute(sql,values)
+        const [rows]= await DbPool.execute(sql,values)
         return MyResponse({
             success:true,
             message:"Data add successfully"

@@ -56,10 +56,10 @@ if(!match){
                 message:"Endpoint not found"
             },404) 
         }
-        const [data]= await Dbpool.execute(`SELECT * FROM ${userinfo[2]+userinfo[1]}`)
+        const [data]= await DbPool.execute(`SELECT * FROM ${userinfo[2]+userinfo[1]}`)
         //Single query selector
         if(userinfo[3]){
-            const [obj]:any = await Dbpool.execute(`SELECT * FROM ${userinfo[2]+userinfo[1]} WHERE primary_id=?`,[userinfo[3]])
+            const [obj]:any = await DbPool.execute(`SELECT * FROM ${userinfo[2]+userinfo[1]} WHERE primary_id=?`,[userinfo[3]])
             if(!obj[0]?.primary_id){
                 return MyResponse({
                     success:false,
@@ -136,7 +136,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
             },404)
         }
         const {sql,values}:any = await generateInserSql(request,userinfo[2]+userinfo[1])  
-        const [rows]= await Dbpool.execute(sql,values)
+        const [rows]= await DbPool.execute(sql,values)
         return NextResponse.json({
             success:true,
             message:"Data add successfully"
@@ -198,7 +198,7 @@ export async function PUT(Request:Request,{params}:{params:{info:string[]}}) {
          const {sql,values}:any=await generateUpdateSql(request,userinfo[2]+userinfo[1],userinfo[3])
 
          
-         const [rows]= await Dbpool.execute(sql,values)
+         const [rows]= await DbPool.execute(sql,values)
         return MyResponse({
             success:true,
             message:"Data Update successfully"
@@ -253,7 +253,7 @@ export async function DELETE(Request:Request,{params}:{params:{info:string[]}}) 
              },404) 
          }
          
-         const [rows]= await Dbpool.execute(`DELETE FROM ${userinfo[2]+userinfo[1]} WHERE primary_id=?`,[userinfo[3]])
+         const [rows]= await DbPool.execute(`DELETE FROM ${userinfo[2]+userinfo[1]} WHERE primary_id=?`,[userinfo[3]])
         return MyResponse({
             success:true,
             message:"Data Delete successfully"

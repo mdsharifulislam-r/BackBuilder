@@ -35,7 +35,7 @@ export async function POST(Request:Request) {
         })
         const tableName = name+project_id.toString()
         const user_db_sql = await generateTableSyntex(schmea,tableName)
-        const [rowsd] = await Dbpool.execute(user_db_sql!) 
+        const [rowsd] = await DbPool.execute(user_db_sql!) 
         return NextResponse.json({
             success:true,
             message:"Endpoint Create Successfully"

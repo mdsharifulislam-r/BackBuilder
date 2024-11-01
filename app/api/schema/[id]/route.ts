@@ -36,7 +36,7 @@ export async function DELETE(Request:Request,{params}:{params:{id:string}}) {
     try {
         const {id}= params
         const {project_id,schma_name,endpoint_name}:{project_id:number,schma_name:string,endpoint_name:string} = await Request.json()
-        const [datas]= await Dbpool.execute(`ALTER TABLE ${endpoint_name+project_id} DROP COLUMN ${schma_name}`)
+        const [datas]= await DbPool.execute(`ALTER TABLE ${endpoint_name+project_id} DROP COLUMN ${schma_name}`)
         const [rows] = await pool.execute('DELETE FROM `scheme` WHERE schema_id=?',[id])
         return NextResponse.json({
             success:true,
@@ -95,7 +95,7 @@ export async function POST(Request:Request) {
             console.log(sql);
             
             
-            const [rowsss] = await Dbpool.execute(sql)
+            const [rowsss] = await DbPool.execute(sql)
         }
         return NextResponse.json({
             success:true,

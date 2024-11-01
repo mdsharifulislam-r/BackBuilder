@@ -62,7 +62,7 @@ export async function CheackLogin(request:any,tableName:string) {
         const EmailIndex = keys.findIndex(item=>item=='email')
         const password = values[passIndex]
         const email = values[EmailIndex]
-        const [rows]:any[] = await Dbpool.execute(`SELECT * FROM ${tableName} WHERE email = ?`,[email])
+        const [rows]:any[] = await DbPool.execute(`SELECT * FROM ${tableName} WHERE email = ?`,[email])
         if(rows?.length){
             const hashpass = rows[0]?.password
             const match = await bcrypt.compare(password,hashpass)

@@ -8,11 +8,19 @@ import { useCookies } from 'next-client-cookies'
 import JWT from "jwt-simple"
 import Image from 'next/image'
 import pic from '@/assets/images/nodata.gif'
+import { useRouter } from 'next/navigation'
 
 export default function MainContainer({name}:{name:string}) {
   const project_id = useAppSelector(state=>state.cartReduicer.project_id)
   const cookie = useCookies()
   const token = cookie.get('token')
+  const router = useRouter()
+  useEffect(()=>{
+    if(!token){
+      router.push('/')
+      
+    }
+  },[])
   const user_id = JWT.decode(token||"",process.env.NEXT_PUBLIC_JWT_SECRET!)
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/user/${user_id}/${project_id}/${name}`
   console.log(url);

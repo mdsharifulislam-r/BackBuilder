@@ -26,7 +26,7 @@ export default function Header({name}:{name:string}) {
       router.push('/')
       
     }
-  },[token])
+  },[])
   if(!token){
     router.push('/')
   }

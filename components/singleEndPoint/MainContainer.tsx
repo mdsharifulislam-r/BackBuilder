@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Post from './Post'
 import { useCookies } from 'next-client-cookies'
 import JWT from "jwt-simple"
@@ -10,9 +10,17 @@ import Get from './Get'
 import Put from './Put'
 import Delete from './Delete'
 import Register from './Register'
+import { useRouter } from 'next/navigation'
 export default function MainContainer({name}:{name:string}) {
     const cookie = useCookies()
     const token = cookie.get('token')
+    const router = useRouter()
+    useEffect(()=>{
+      if(!token){
+        router.push('/')
+        
+      }
+    },[])
     const user_id = JWT.decode(token||"",process.env.NEXT_PUBLIC_JWT_SECRET!)
     const project_id = useAppSelector(state=>state.cartReduicer.project_id)
     const isAccount = useAppSelector(state=>state.cartReduicer.account)

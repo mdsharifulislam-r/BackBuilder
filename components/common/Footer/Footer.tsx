@@ -13,10 +13,10 @@ export default function Footer() {
             href="#"
             aria-label="Brand"
           >
-            Brand
+            BackBuilder
           </a>
           <p className="mt-3 text-xs sm:text-sm text-gray-600 eretext-neutral-400">
-            © 2024 Preline Labs.
+            © Made By MD Shariful Islam.
           </p>
         </div>
         {/* End Col */}

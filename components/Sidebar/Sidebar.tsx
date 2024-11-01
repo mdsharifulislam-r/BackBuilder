@@ -45,7 +45,7 @@ const [isShow,setIsShow]=useState(false)
                 </div>
             </div>
         </div>
-        <div className=' absolute bottom-5 flex justify-center left-0 w-[90%]  '>
+        <div className=' absolute md:bottom-5 bottom-28 flex justify-center left-0 w-[90%]  '>
             <Link href={`/${page=='database'?'console':"database"}`} className='flex place-items-center gap-4 transition-all duration-500 hover:bg-blue-800 text-slate-200 bg-blue-700 px-5 py-3 rounded-md '>
             <span>Switch to {page=="database"?"Console":"Database"}</span>
             <span><TbArrowRight/></span>

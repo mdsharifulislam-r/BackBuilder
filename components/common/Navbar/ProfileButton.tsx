@@ -83,9 +83,9 @@ export default function ProfileButton() {
           </svg>
           Console
         </Link>
-        <a
+        <Link
           className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 eretext-neutral-400 erehover:bg-neutral-700 erehover:text-neutral-300 erefocus:bg-neutral-700 erefocus:text-neutral-300"
-          href="#"
+          href="/personal_info"
         >
           <svg
             className="shrink-0 size-4"
@@ -103,8 +103,8 @@ export default function ProfileButton() {
             <path d="M3 6h18" />
             <path d="M16 10a4 4 0 0 1-8 0" />
           </svg>
-          Purchases
-        </a>
+          Personal Information
+        </Link>
         <a
           className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 eretext-neutral-400 erehover:bg-neutral-700 erehover:text-neutral-300 erefocus:bg-neutral-700 erefocus:text-neutral-300"
           href="#"

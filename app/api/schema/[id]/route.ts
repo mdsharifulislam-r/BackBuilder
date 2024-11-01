@@ -56,7 +56,7 @@ export async function DELETE(Request:Request,{params}:{params:{id:string}}) {
 export async function POST(Request:Request) {
     try {
         const {name,type,required,primary_id,project_id}:endpoint&{project_id:number} = await Request.json()
-        await pool.execute('CREATE TABLE IF NOT EXISTS scheme (schema_id int not NULL AUTO_INCREMENT PRIMARY KEY,primary_id INT,name varchar(256),type varchar(256),required boolean)')
+     
         if(!(name&&type&&primary_id)){
             return NextResponse.json({
                 success:false,

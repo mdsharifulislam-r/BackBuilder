@@ -12,7 +12,7 @@ export async function POST(Request:Request) {
             })
         }
        await pool.execute('CREATE TABLE IF NOT EXISTS endpoints (primary_id int not null AUTO_INCREMENT PRIMARY KEY,name varchar(256),project_id int,is_user boolean)')
-        
+       await pool.execute('CREATE TABLE IF NOT EXISTS scheme (schema_id int not NULL AUTO_INCREMENT PRIMARY KEY,primary_id INT,name varchar(256),type varchar(256),required boolean)')
         const existpoint = 'SELECT name FROM `endpoints` WHERE project_id=? AND name=?'
         const [datas]:any=await pool.execute(existpoint,[project_id,name])
         if(datas.length){
@@ -27,6 +27,7 @@ export async function POST(Request:Request) {
         const [rows]=await pool.execute(makeEndPoint,[name,project_id,is_user])
         const getendpointId = 'SELECT MAX(primary_id) AS id FROM `endpoints` '
         const [ids]:any=await pool.execute(getendpointId)
+        
         const endpoint_id = ids[0]?.id
         schmea.forEach(async item=>{
             const sql = 'INSERT INTO `scheme`( `primary_id`, `name`, `type`, `required`) VALUES (?,?,?,?)'

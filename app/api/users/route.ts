@@ -11,7 +11,7 @@ export async function POST(Request: Request) {
   try {
     const { name, email, password, confirm_password, social_login }: UserType =
       await Request.json();
-      await pool.query('CREATE TABLE IF NOT EXISTS users (user_id int not null AUTO_INCREMENT PRIMARY KEY,name varchar(256),email varchar(256),password varchar(256),member varchar(256),social_login boolean)')
+      await pool.execute('CREATE TABLE IF NOT EXISTS users (user_id int not null AUTO_INCREMENT PRIMARY KEY,name varchar(256),email varchar(256),password varchar(256),member varchar(256),social_login boolean)')
     if (!social_login) {
       if (!(name && email && password && confirm_password)) {
         return NextResponse.json(
@@ -36,7 +36,7 @@ export async function POST(Request: Request) {
         );
       }
       const sqlite = 'SELECT * FROM `users` WHERE email= ?'
-      const [rows]:any =await pool.query(sqlite,[email])
+      const [rows]:any =await pool.execute(sqlite,[email])
        const exist =rows[0]
       if(exist?.email){
         return NextResponse.json(
@@ -56,7 +56,7 @@ export async function POST(Request: Request) {
 
 
       const VALUES = [null,name,email,'basic',hashpassowrd,false]
-   const data=await pool.query(sql,VALUES)
+   const data=await pool.execute(sql,VALUES)
       
       
       return NextResponse.json(
@@ -90,7 +90,7 @@ export async function POST(Request: Request) {
 
 
       const VALUES = [null,name,email,'basic',true]
-   const data=await pool.query(sql,VALUES)
+   const data=await pool.execute(sql,VALUES)
       
       
       return NextResponse.json(

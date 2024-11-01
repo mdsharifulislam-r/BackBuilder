@@ -1,6 +1,8 @@
 
+import Loader from "@/components/common/Loader/Loader";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 
 
@@ -16,8 +18,11 @@ export default function RootLayout({
 }>) {
   return (
   <div className="flex">
-   <Sidebar page="console"/>
+    <Suspense fallback={<Loader/>}>
+    <Sidebar page="console"/>
     {children}
+    </Suspense>
+ 
   </div>
   );
 }

@@ -3,6 +3,8 @@ import Image from 'next/image'
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import pic from "@/assets/images/console.png"
 import toast from 'react-hot-toast'
+import ChangePassword from './ChangePassword'
+import AccountDelete from './AccountDelete'
 export default function UserInfo() {
     const [formData,setFormData]=useState({
         email:"",
@@ -47,6 +49,8 @@ export default function UserInfo() {
             toast.error(data?.message)
         }
     }
+    const [show,setShow]=useState(false)
+    const [deleteShow,setDeleteShow]=useState(false)
   return (
     <div className='flex place-items-center'>
       <div className="form md:w-1/2 w-full">
@@ -65,13 +69,13 @@ export default function UserInfo() {
             </div>
             <div className='my-5 flex gap-4'>
                 <button className='px-3 py-2 bg-blue-600 hover:bg-blue-800 text-white rounded-md'>Update</button>
-                <button type='button' className='px-3 py-2 bg-red-600 hover:bg-red-800 text-white rounded-md'>Change Password</button>
+                <button onClick={()=>setShow(!show)} type='button' className='px-3 py-2 bg-red-600 hover:bg-red-800 text-white rounded-md'>Change Password</button>
             </div>
         </div>
       </form>
       <div className='mt-10'>
         <h1 className='text-red-500 text-2xl'>Denger Zone</h1>
-        <button className='px-3 py-2 bg-red-600 hover:bg-red-800 text-white my-5 rounded-md'>Delete My Account</button>
+        <button onClick={()=>setDeleteShow(!deleteShow)} className='px-3 py-2 bg-red-600 hover:bg-red-800 text-white my-5 rounded-md'>Delete My Account</button>
     
       </div>
       </div>
@@ -83,6 +87,8 @@ export default function UserInfo() {
         height={1000}
         />
       </div>
+     {show? <ChangePassword setShow={setShow}/>:""}
+     {deleteShow? <AccountDelete setShow={setDeleteShow}/>:""}
     </div>
   )
 }

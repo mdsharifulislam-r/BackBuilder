@@ -1,20 +1,28 @@
 import mysql from "mysql2/promise"
 
 export  const pool = mysql.createPool({
-    host:'sql12.freemysqlhosting.net',
-    database:'sql12741506',
-    user:"sql12741506",
-    password:"ghQWeKSbRA",
-    port:3306,
+    host:'bft3srjqp2zpfjqcdf7e-mysql.services.clever-cloud.com',
+    database:'bft3srjqp2zpfjqcdf7e',
+    user:"udqeefhb02vmeyaa",
+    password:"LSZfim4eQZdxue7HBJz",
+    port:21830,
     
     waitForConnections:true
 })
 export  const DbPool = mysql.createPool({
-    host:'localhost',
-    database:'user_database',
-    user:"root",
-    password:"",
-    
-    waitForConnections:true
+   
+  host:'bft3srjqp2zpfjqcdf7e-mysql.services.clever-cloud.com',
+  database:'bft3srjqp2zpfjqcdf7e',
+  user:"udqeefhb02vmeyaa",
+  password:"LSZfim4eQZdxue7HBJz",
+  port:21830,
+  
+  waitForConnections:true
 })
 
+pool.on('connection', (connection) => {
+    console.log('DB connection established');
+  });
+  
+
+  

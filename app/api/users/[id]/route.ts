@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import user_data from "@/lib/tempData/user.json"
-import { compare, compareSync } from "bcrypt";
+import { compare, compareSync, hash } from "bcrypt";
 import jwt from "jwt-simple"
 import { pool } from "@/lib/DB/pool";
 import { UserType } from "@/lib/Types/types";
@@ -106,10 +106,31 @@ export async function POST(Request:Request) {
 
 export async function DELETE(Request:Request) {
     try {
-        cookies().delete("token")
-        return NextResponse.json({
+        const token = cookies().get('token')?.value
+        if(!token){
+          return NextResponse.json({
             success:false,
-            message:"Successfully Logout"
+            message:"Token Expired"
+          },{
+            status:404
+          })
+        }
+        const user_id = JWT.decode(token!,process.env.JWT_SECRET!)
+        const [project]:any[] = await pool.query('SELECT project_id FROM projects WHERE user_id = ?',[user_id])
+
+        if(project?.length){
+            const items:{project_id:number}[] = project
+            items?.forEach(async item=>{
+                await fetch(`${process.env.BASE_URL}/projects/${item?.project_id}`,{
+                    method:"DELETE"
+                })
+            })
+        }
+        await pool.query('DELETE FROM users WHERE user_id=?',[user_id])
+        cookies().delete('token')
+        return NextResponse.json({
+            success:true,
+            message:"Account Deleted Successfully"
         })
         
     } catch (error) {
@@ -137,6 +158,21 @@ export async function PUT(Request:Request) {
     }
     const user_id = JWT.decode(token!,process.env.JWT_SECRET!)
     const [data]:any[]=await pool.query('SELECT password FROM users WHERE user_id=?',[user_id])
+    if(data?.length){
+        const match = await compare(oldPassword,data[0]?.password)
+        if(!match){
+            return NextResponse.json({
+                success:false,
+                message:"Password not match"
+            })
+        }
+        const hashpass = await hash(newPassword,10)
+        await pool.query('UPDATE users SET password=? WHERE user_id=?',[hashpass,user_id])
+    }
+    return NextResponse.json({
+        success:true,
+        message:"Password Change Successfully"
+    })
  
     } catch (error) {
         console.log(error);

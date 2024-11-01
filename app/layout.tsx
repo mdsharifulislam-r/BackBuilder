@@ -13,8 +13,8 @@ const roboto = Roboto({
   subsets: ['latin'], // Specify subsets like latin, latin-ext, etc.
 });
 export const metadata: Metadata = {
-  title: "Coursify",
-  description: "Next step i a Learning Way",
+  title: "BackBuilder",
+  description: "Create your free api",
 };
 
 export default function RootLayout({

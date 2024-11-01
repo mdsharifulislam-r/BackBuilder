@@ -1,12 +1,11 @@
 
-import Sidebar from "@/components/Sidebar/Sidebar";
 import type { Metadata } from "next";
 
 
 
 export const metadata: Metadata = {
-  title: "BackBuilder | Console",
-  description: "This is for Developers",
+  title: "Backbuikder | Personal Information",
+  description: "Login and create your api",
 };
 
 export default function RootLayout({

@@ -1,5 +1,4 @@
 
-import Sidebar from "@/components/Sidebar/Sidebar";
 import type { Metadata } from "next";
 
 
@@ -16,11 +15,10 @@ export async function generateMetadata(
 
   
   return {
-    title: `Backbuilder | Endpoint | ${params?.name}`,
+    title: `Backbuilder | Databse | ${params?.name}`,
    
   }
 }
-
 
 export default function RootLayout({
   children,
@@ -28,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-  <div className="flex">
-   <Sidebar page="console"/>
+  <div className="">
+ 
     {children}
   </div>
   );

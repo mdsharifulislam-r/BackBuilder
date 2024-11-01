@@ -1,4 +1,4 @@
-import { DbPool, pool } from "@/lib/DB/pool";
+import { pool } from "@/lib/DB/pool";
 import { compareFields } from "@/lib/helper/compareFields";
 import { CheackLogin, generateInserSql, generateInserSqlForRegister } from "@/lib/helper/generateInserSql";
 import { MyResponse } from "@/lib/helper/MyResponse";
@@ -55,7 +55,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
             },401)  
          }
         const {sql,values}:any = await generateInserSqlForRegister(request,userinfo[2]+userinfo[1])  
-        const [rows]= await DbPool.execute(sql,values)
+        const [rows]= await pool.execute(sql,values)
         return MyResponse({
             success:true,
             message:"Data add successfully"

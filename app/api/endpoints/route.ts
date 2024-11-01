@@ -1,4 +1,4 @@
-import { DbPool, pool } from "@/lib/DB/pool";
+import { pool } from "@/lib/DB/pool";
 import { generateTableSyntex } from "@/lib/helper/generateTableSyntex";
 import { NextResponse } from "next/server";
 
@@ -35,7 +35,7 @@ export async function POST(Request:Request) {
         })
         const tableName = name+project_id.toString()
         const user_db_sql = await generateTableSyntex(schmea,tableName)
-        const [rowsd] = await DbPool.execute(user_db_sql!) 
+        const [rowsd] = await pool.execute(user_db_sql!) 
         return NextResponse.json({
             success:true,
             message:"Endpoint Create Successfully"

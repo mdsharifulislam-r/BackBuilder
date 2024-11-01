@@ -9,16 +9,6 @@ export  const pool = mysql.createPool({
     
     waitForConnections:true
 })
-export  const DbPool = mysql.createPool({
-   
-  host:'bft3srjqp2zpfjqcdf7e-mysql.services.clever-cloud.com',
-  database:'bft3srjqp2zpfjqcdf7e',
-  user:"udqeefhb02vmeyaa",
-  password:"LSZfim4eQZdxue7HBJz",
-  port:21830,
-  
-  waitForConnections:true
-})
 
 pool.on('connection', (connection) => {
     console.log('DB connection established');

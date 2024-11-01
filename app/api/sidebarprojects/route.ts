@@ -5,10 +5,6 @@ import { pool } from "@/lib/DB/pool";
 export async function GET() {
     try {
         const token = cookies().get('token')?.value
-        
-       
-        
-        
         if(!token){
             return NextResponse.json({
                 success:false,

@@ -1,4 +1,4 @@
-import { DbPool, pool } from "@/lib/DB/pool";
+import { pool } from "@/lib/DB/pool";
 import { NextResponse } from "next/server";
 
 export async function GET(Request:Request,{params}:{params:{id:string}}) {
@@ -41,7 +41,7 @@ export async function DELETE(Request:Request,{params}:{params:{id:string}}) {
        // Delete The schema
        const ka = await pool.execute('DELETE FROM `scheme` WHERE primary_id=?',[id])
        // Delete The Database
-       const sa = await DbPool.execute(`DROP TABLE ${name+project_id}`)
+       const sa = await pool.execute(`DROP TABLE ${name+project_id}`)
        return NextResponse.json({
         success:true,
         message:"Enpoint Delete Successfully"

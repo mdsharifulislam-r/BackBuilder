@@ -1,5 +1,5 @@
 import { endpoint } from "@/components/singleEndPoint/Table/TableRow"
-import { DbPool, pool } from "@/lib/DB/pool"
+import { pool } from "@/lib/DB/pool"
 import { NextResponse } from "next/server"
 
 export async function  GET(Request:Request,{params}:{params:{id:string}}) {
@@ -36,7 +36,7 @@ export async function DELETE(Request:Request,{params}:{params:{id:string}}) {
     try {
         const {id}= params
         const {project_id,schma_name,endpoint_name}:{project_id:number,schma_name:string,endpoint_name:string} = await Request.json()
-        const [datas]= await DbPool.execute(`ALTER TABLE ${endpoint_name+project_id} DROP COLUMN ${schma_name}`)
+        const [datas]= await pool.execute(`ALTER TABLE ${endpoint_name+project_id} DROP COLUMN ${schma_name}`)
         const [rows] = await pool.execute('DELETE FROM `scheme` WHERE schema_id=?',[id])
         return NextResponse.json({
             success:true,
@@ -95,7 +95,7 @@ export async function POST(Request:Request) {
             console.log(sql);
             
             
-            const [rowsss] = await DbPool.execute(sql)
+            const [rowsss] = await pool.execute(sql)
         }
         return NextResponse.json({
             success:true,
@@ -107,7 +107,8 @@ export async function POST(Request:Request) {
         
         return NextResponse.json({
             success:false,
-            message:'Something went wrong'
+            message:'Something went wrong',
+            error:error
         },{
             status:500
         })

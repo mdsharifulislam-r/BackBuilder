@@ -1,5 +1,5 @@
 import bcrypt, { compare } from 'bcrypt'
-import { DbPool } from '../DB/pool'
+import { pool } from '../DB/pool'
 export async function generateInserSql(request:any,tableName:string) {
     try {
       
@@ -62,7 +62,7 @@ export async function CheackLogin(request:any,tableName:string) {
         const EmailIndex = keys.findIndex(item=>item=='email')
         const password = values[passIndex]
         const email = values[EmailIndex]
-        const [rows]:any[] = await DbPool.execute(`SELECT * FROM ${tableName} WHERE email = ?`,[email])
+        const [rows]:any[] = await pool.execute(`SELECT * FROM ${tableName} WHERE email = ?`,[email])
         if(rows?.length){
             const hashpass = rows[0]?.password
             const match = await bcrypt.compare(password,hashpass)

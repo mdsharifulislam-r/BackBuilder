@@ -35,7 +35,7 @@ export default function AccountDelete({setShow}:{setShow:React.Dispatch<React.Se
   return (
     <div className='fixed w-full h-screen top-0 left-0 flex justify-center place-items-center'>
       <div onClick={()=>setShow(prev=>!prev)}  className="absolute w-full h-screen cursor-pointer top-0 left-0 bg-black opacity-40 z-0"></div>
-      <form onSubmit={submitHandle} className="w-[30%] bg-white  rounded-md relative z-30 p-5">
+      <form onSubmit={submitHandle} className="md:w-[30%] w-[80%] bg-white  rounded-md relative z-30 p-5">
         <h1 className='text-2xl font-semibold text-blue-600 p-4 text-center'>Are You sure want delete your <span className='text-orange'>Account?</span></h1>
         <p className='text-sm font-light my-2'>If you delete your account you will deleted all your data from the database</p>
         <div>

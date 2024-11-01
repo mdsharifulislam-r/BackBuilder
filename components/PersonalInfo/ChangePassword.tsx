@@ -41,7 +41,7 @@ export default function ChangePassword({setShow}:{setShow:React.Dispatch<React.S
   return (
     <div className='fixed w-full h-screen top-0 left-0 flex justify-center place-items-center'>
       <div onClick={()=>setShow(prev=>!prev)}  className="absolute w-full h-screen cursor-pointer top-0 left-0 bg-black opacity-40 z-0"></div>
-      <form onSubmit={submitHandle} className="w-[30%] bg-white  rounded-md relative z-30 p-5">
+      <form onSubmit={submitHandle} className="md:w-[30%] w-[80%] bg-white  rounded-md relative z-30 p-5">
         <h1 className='text-2xl font-semibold text-blue-600 p-4 text-center'><span className='text-orange'>Change </span>Password</h1>
         <div>
             <div className='flex flex-col'>

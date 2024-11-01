@@ -70,7 +70,7 @@ export async function POST(Request: Request) {
       );
     }else{
       const sqlite = 'SELECT * FROM `users` WHERE email= ?'
-      const [rows]:any =await pool.query(sqlite,[email])
+      const [rows]:any =await pool.execute(sqlite,[email])
        const exist =rows[0]
       if(exist?.email){
         return NextResponse.json(
@@ -133,7 +133,7 @@ export async function GET() {
         })
       }
       const user_id = JWT.decode(token!,process.env.JWT_SECRET!)
-      const [data]:any[]= await pool.query('SELECT * FROM users WHERE user_id=?',[user_id])
+      const [data]:any[]= await pool.execute('SELECT * FROM users WHERE user_id=?',[user_id])
       if(data?.length){
         return NextResponse.json(
           {
@@ -210,14 +210,14 @@ export async function PUT(Request:Request) {
       })
     }
     const user_id = JWT.decode(token!,process.env.JWT_SECRET!)
-    const [exist]:any[] = await pool.query('SELECT * FROM users WHERE user_id !=? AND email=?',[user_id,email])
+    const [exist]:any[] = await pool.execute('SELECT * FROM users WHERE user_id !=? AND email=?',[user_id,email])
     if(exist?.length){
       return NextResponse.json({
         success:false,
         message:"Email already exist"
       })
     }
-    await pool.query('UPDATE users SET name=?,email=? WHERE user_id=?',[name,email,user_id])
+    await pool.execute('UPDATE users SET name=?,email=? WHERE user_id=?',[name,email,user_id])
     return NextResponse.json({
       success:true,
       message:"Data update successfully"

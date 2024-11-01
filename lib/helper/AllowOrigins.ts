@@ -4,7 +4,7 @@ import { pool } from "../DB/pool";
 export async function CheckOrigin(Request:Request,project_id:string) {
     try {
         const origin = Request.headers.get("origin")
-        const [rows]:any[] = await pool.query('SELECT origins FROM projects WHERE project_id=?',[project_id])
+        const [rows]:any[] = await pool.execute('SELECT origins FROM projects WHERE project_id=?',[project_id])
         const data:{origins:string}[]=rows
         const item = data[0]?.origins
         if(item){

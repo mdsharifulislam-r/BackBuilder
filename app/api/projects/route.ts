@@ -19,7 +19,7 @@ export async function POST(Request:Request) {
             status:400
         })
       }
-      await pool.query('CREATE TABLE IF NOT EXISTS projects (project_id int not null AUTO_INCREMENT PRIMARY KEY,user_id int,project_name varchar(256), description varchar(256),origins varchar(256))')
+      await pool.execute('CREATE TABLE IF NOT EXISTS projects (project_id int not null AUTO_INCREMENT PRIMARY KEY,user_id int,project_name varchar(256), description varchar(256),origins varchar(256))')
       const user_id = jwt.decode(token,process.env.JWT_SECRET!)
       if(!project_name){
         return NextResponse.json({
@@ -31,7 +31,7 @@ export async function POST(Request:Request) {
       }
      const sql = 'INSERT INTO `projects`(`user_id`, `project_name`, `description`) VALUES (?,?,?)'
      const values = [user_id,project_name,description?description:""]
-     const [rows]:any = await pool.query(sql,values)
+     const [rows]:any = await pool.execute(sql,values)
      if(!rows){
         return NextResponse.json({
             success:false,
@@ -71,7 +71,7 @@ export async function GET() {
         console.log(user_id);
         
         const sql = 'SELECT * FROM `projects` WHERE user_id= ?'
-        const [rows]:any =await pool.query(sql,[user_id])
+        const [rows]:any =await pool.execute(sql,[user_id])
    
             return NextResponse.json({
                 success:true,

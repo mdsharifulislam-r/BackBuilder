@@ -11,10 +11,10 @@ export async function POST(Request:Request) {
                 message:"Please Fill All the required filed"
             })
         }
-       await pool.query('CREATE TABLE IF NOT EXISTS endpoints (primary_id int not null AUTO_INCREMENT PRIMARY KEY,name varchar(256),project_id int,is_user boolean)')
+       await pool.execute('CREATE TABLE IF NOT EXISTS endpoints (primary_id int not null AUTO_INCREMENT PRIMARY KEY,name varchar(256),project_id int,is_user boolean)')
         
         const existpoint = 'SELECT name FROM `endpoints` WHERE project_id=? AND name=?'
-        const [datas]:any=await pool.query(existpoint,[project_id,name])
+        const [datas]:any=await pool.execute(existpoint,[project_id,name])
         if(datas.length){
             return NextResponse.json({
                 success:false,
@@ -24,18 +24,18 @@ export async function POST(Request:Request) {
         
        
         const makeEndPoint = 'INSERT INTO `endpoints`( `name`, `project_id`,`is_user`) VALUES (?,?,?)'
-        const [rows]=await pool.query(makeEndPoint,[name,project_id,is_user])
+        const [rows]=await pool.execute(makeEndPoint,[name,project_id,is_user])
         const getendpointId = 'SELECT MAX(primary_id) AS id FROM `endpoints` '
-        const [ids]:any=await pool.query(getendpointId)
+        const [ids]:any=await pool.execute(getendpointId)
         const endpoint_id = ids[0]?.id
         schmea.forEach(async item=>{
             const sql = 'INSERT INTO `scheme`( `primary_id`, `name`, `type`, `required`) VALUES (?,?,?,?)'
             const values = [endpoint_id,item.name,item.type,item.required]
-            const [rows]= await pool.query(sql,values)
+            const [rows]= await pool.execute(sql,values)
         })
         const tableName = name+project_id.toString()
         const user_db_sql = await generateTableSyntex(schmea,tableName)
-        const [rowsd] = await DbPool.query(user_db_sql!) 
+        const [rowsd] = await Dbpool.execute(user_db_sql!) 
         return NextResponse.json({
             success:true,
             message:"Endpoint Create Successfully"

@@ -20,7 +20,7 @@ export async function GET(Request:Request,{params}:{params:{id:string}}) {
         
         
         const sql = 'SELECT * FROM `projects` WHERE user_id=? AND project_id=?'
-        const [rows]:any=await pool.query(sql,[user_id,id])
+        const [rows]:any=await pool.execute(sql,[user_id,id])
         if(rows){
             return NextResponse.json({
                 success:true,
@@ -45,7 +45,7 @@ export async function GET(Request:Request,{params}:{params:{id:string}}) {
 export async function DELETE(request:Request,{params}:{params:{id:string}}){
     try {
         const {id}=params
-        const [rows]:any[]=await pool.query('SELECT primary_id,name FROM endpoints WHERE project_id=?',[id])
+        const [rows]:any[]=await pool.execute('SELECT primary_id,name FROM endpoints WHERE project_id=?',[id])
         const data:{primary_id:number,name:string}[] = rows
         if(rows){
             data?.forEach(async item=>{
@@ -58,7 +58,7 @@ export async function DELETE(request:Request,{params}:{params:{id:string}}){
                 })
             })
         }
-        const [rosws]= await pool.query('DELETE FROM projects WHERE project_id=?',[id])
+        const [rosws]= await pool.execute('DELETE FROM projects WHERE project_id=?',[id])
         return NextResponse.json({
             success:true,
             message:"Successfully data deleted"
@@ -84,15 +84,15 @@ export async function POST(Request:Request,{params}:{params:{id:string}}) {
                 message:"Domain is not provided"
             })
         }
-        const [data]:any[]= await pool.query('SELECT * FROM projects WHERE project_id=?',[id])
+        const [data]:any[]= await pool.execute('SELECT * FROM projects WHERE project_id=?',[id])
       
         
         if(data[0]?.project_id){
             if(data[0]?.origins){
                 const origindata = data[0]?.origins+`,${domain}`
-                const [rows]= await pool.query('UPDATE `projects` SET origins=? WHERE project_id = ?',[origindata,id])
+                const [rows]= await pool.execute('UPDATE `projects` SET origins=? WHERE project_id = ?',[origindata,id])
             }else{
-                const [rows]= await pool.query('UPDATE `projects` SET origins=? WHERE project_id = ?',[domain,id])
+                const [rows]= await pool.execute('UPDATE `projects` SET origins=? WHERE project_id = ?',[domain,id])
             }
         }else{
             return NextResponse.json({
@@ -125,14 +125,14 @@ export async function PUT(Request:Request,{params}:{params:{id:string}}) {
                 message:"Domain is not provided"
             })
         }
-        const [data]:any[]= await pool.query('SELECT * FROM projects WHERE project_id=?',[id])
+        const [data]:any[]= await pool.execute('SELECT * FROM projects WHERE project_id=?',[id])
       
         
         if(data[0]?.project_id){
             if(data[0]?.origins){
                 const origindata:string = data[0]?.origins
                 const stringData = origindata?.split(",").filter(item=>item!=domain).toString()
-                const [rows]= await pool.query('UPDATE `projects` SET origins=? WHERE project_id=?',[stringData,id])
+                const [rows]= await pool.execute('UPDATE `projects` SET origins=? WHERE project_id=?',[stringData,id])
             }else{
                 return MyResponse({
                     success:false,

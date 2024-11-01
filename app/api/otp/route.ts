@@ -14,7 +14,7 @@ const transport = nodeMailer.createTransport({
 export async function POST(Request:Request) {
     try {
         const {email}:{email:string}= await Request.json()
-      await pool.query('CREATE TABLE IF NOT EXISTS otps (email varchar(256),otp INT)')
+      await pool.execute('CREATE TABLE IF NOT EXISTS otps (email varchar(256),otp INT)')
         
         if(!email){
             return NextResponse.json({
@@ -57,12 +57,12 @@ export async function POST(Request:Request) {
             console.log('come');
             
             const check = 'SELECT * FROM otps WHERE email=?'
-            const [emails]:any[] = await pool.query(check,[email])
+            const [emails]:any[] = await pool.execute(check,[email])
             if(emails?.length){
-                const [rowsData]= await pool.query('UPDATE `otps` SET `otp`=? WHERE emai=?',[otp,email])
+                const [rowsData]= await pool.execute('UPDATE `otps` SET `otp`=? WHERE emai=?',[otp,email])
             }else{
                 const sql = 'INSERT INTO `otps`(`email`, `otp`) VALUES (?,?)'
-                const [rows] = await pool.query(sql,[email,otp])
+                const [rows] = await pool.execute(sql,[email,otp])
             }
            
             return NextResponse.json({
@@ -99,9 +99,9 @@ export async function DELETE(Request:Request) {
         if(!email || !otp){
             return NextResponse.json('invalid credintials')
         }
-        const [rows]:any[] = await pool.query('SELECT * FROM otps WHERE email=? AND otp=?',[email,otp])
+        const [rows]:any[] = await pool.execute('SELECT * FROM otps WHERE email=? AND otp=?',[email,otp])
         if(rows?.length){
-            await pool.query('DELETE FROM otps WHERE email=?',[email])
+            await pool.execute('DELETE FROM otps WHERE email=?',[email])
             return NextResponse.json({
                 success:true,
                 message:"Verification Successfully"

@@ -7,7 +7,7 @@ export async function GET(Request:Request,{params}:{params:{id:string}}) {
         console.log(id);
         
         const sql = 'SELECT * FROM `endpoints` WHERE project_id=?'
-        const [rows]= await pool.query(sql,[id])
+        const [rows]= await pool.execute(sql,[id])
         console.log(rows);
         
         return NextResponse.json({
@@ -37,11 +37,11 @@ export async function DELETE(Request:Request,{params}:{params:{id:string}}) {
         })
        }
        // Delete The endpoint
-       const da = await pool.query('DELETE FROM `endpoints` WHERE primary_id=?',[id])
+       const da = await pool.execute('DELETE FROM `endpoints` WHERE primary_id=?',[id])
        // Delete The schema
-       const ka = await pool.query('DELETE FROM `scheme` WHERE primary_id=?',[id])
+       const ka = await pool.execute('DELETE FROM `scheme` WHERE primary_id=?',[id])
        // Delete The Database
-       const sa = await DbPool.query(`DROP TABLE ${name+project_id}`)
+       const sa = await Dbpool.execute(`DROP TABLE ${name+project_id}`)
        return NextResponse.json({
         success:true,
         message:"Enpoint Delete Successfully"

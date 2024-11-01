@@ -19,10 +19,10 @@ export async function GET() {
        
         
         const sql = 'SELECT project_id,project_name FROM `projects` WHERE user_id =?'
-        const [rows]:any = await pool.query(sql,[id])
+        const [rows]:any = await pool.execute(sql,[id])
         const items:{project_id:number,project_name:string}[] = rows
         const sql2 = 'SELECT * FROM `endpoints`'
-        const [datas]:any=await pool.query(sql2)
+        const [datas]:any=await pool.execute(sql2)
         const data:{primary_id:number,name:string,project_id:number}[] = datas
         const itemData = items.map(item=>{
             const endpoints = data.filter(it=>it.project_id==item.project_id)

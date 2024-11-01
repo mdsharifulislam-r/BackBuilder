@@ -21,7 +21,7 @@ export async function POST(Request:Request) {
         }
         const sql = 'SELECT * FROM `users` WHERE email= ?'
         
-        const [rows]:any =await pool.query(sql,[email])
+        const [rows]:any =await pool.execute(sql,[email])
        const user =rows[0]
         
 
@@ -65,7 +65,7 @@ export async function POST(Request:Request) {
         }
         const sql = 'SELECT * FROM `users` WHERE email= ?'
         
-        const [rows]:any =await pool.query(sql,[email])
+        const [rows]:any =await pool.execute(sql,[email])
        const user =rows[0]
         
 
@@ -116,7 +116,7 @@ export async function DELETE(Request:Request) {
           })
         }
         const user_id = JWT.decode(token!,process.env.JWT_SECRET!)
-        const [project]:any[] = await pool.query('SELECT project_id FROM projects WHERE user_id = ?',[user_id])
+        const [project]:any[] = await pool.execute('SELECT project_id FROM projects WHERE user_id = ?',[user_id])
 
         if(project?.length){
             const items:{project_id:number}[] = project
@@ -126,7 +126,7 @@ export async function DELETE(Request:Request) {
                 })
             })
         }
-        await pool.query('DELETE FROM users WHERE user_id=?',[user_id])
+        await pool.execute('DELETE FROM users WHERE user_id=?',[user_id])
         cookies().delete('token')
         return NextResponse.json({
             success:true,
@@ -157,7 +157,7 @@ export async function PUT(Request:Request) {
       })
     }
     const user_id = JWT.decode(token!,process.env.JWT_SECRET!)
-    const [data]:any[]=await pool.query('SELECT password FROM users WHERE user_id=?',[user_id])
+    const [data]:any[]=await pool.execute('SELECT password FROM users WHERE user_id=?',[user_id])
     if(data?.length){
         const match = await compare(oldPassword,data[0]?.password)
         if(!match){
@@ -167,7 +167,7 @@ export async function PUT(Request:Request) {
             })
         }
         const hashpass = await hash(newPassword,10)
-        await pool.query('UPDATE users SET password=? WHERE user_id=?',[hashpass,user_id])
+        await pool.execute('UPDATE users SET password=? WHERE user_id=?',[hashpass,user_id])
     }
     return NextResponse.json({
         success:true,

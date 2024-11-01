@@ -23,7 +23,7 @@ import { MyResponse } from "@/lib/helper/MyResponse";
         const userinfo = params.info
     
        // Checkeing User Existence
-        const [user]:any = await pool.query('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
+        const [user]:any = await pool.execute('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
         
         
         if(!user[0]?.user_id){
@@ -34,7 +34,7 @@ import { MyResponse } from "@/lib/helper/MyResponse";
         }
 
         // Checking procject Existence
-        const [project]:any = await pool.query('SELECT * FROM `projects` WHERE project_id=? AND user_id=?',[userinfo[1],userinfo[0]])
+        const [project]:any = await pool.execute('SELECT * FROM `projects` WHERE project_id=? AND user_id=?',[userinfo[1],userinfo[0]])
         if(!project[0]?.project_id){
             return MyResponse({
                 success:false,
@@ -49,17 +49,17 @@ if(!match){
         message:"origin not allowed"
     },401)
 }
-        const [endpoint]:any = await pool.query('SELECT * FROM `endpoints` WHERE name=? AND project_id=?',[userinfo[2],userinfo[1]])
+        const [endpoint]:any = await pool.execute('SELECT * FROM `endpoints` WHERE name=? AND project_id=?',[userinfo[2],userinfo[1]])
         if(!endpoint[0]?.primary_id){
             return MyResponse({
                 success:false,
                 message:"Endpoint not found"
             },404) 
         }
-        const [data]= await DbPool.query(`SELECT * FROM ${userinfo[2]+userinfo[1]}`)
+        const [data]= await Dbpool.execute(`SELECT * FROM ${userinfo[2]+userinfo[1]}`)
         //Single query selector
         if(userinfo[3]){
-            const [obj]:any = await DbPool.query(`SELECT * FROM ${userinfo[2]+userinfo[1]} WHERE primary_id=?`,[userinfo[3]])
+            const [obj]:any = await Dbpool.execute(`SELECT * FROM ${userinfo[2]+userinfo[1]} WHERE primary_id=?`,[userinfo[3]])
             if(!obj[0]?.primary_id){
                 return MyResponse({
                     success:false,
@@ -99,7 +99,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
         const userinfo = params.info
     
         // Checkeing User Existence
-         const [user]:any = await pool.query('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
+         const [user]:any = await pool.execute('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
          
          
          if(!user[0]?.user_id){
@@ -110,7 +110,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
          }
  
          // Checking procject Existence
-         const [project]:any = await pool.query('SELECT * FROM `projects` WHERE project_id=? AND user_id=?',[userinfo[1],userinfo[0]])
+         const [project]:any = await pool.execute('SELECT * FROM `projects` WHERE project_id=? AND user_id=?',[userinfo[1],userinfo[0]])
          if(!project[0]?.project_id){
              return MyResponse({
                  success:false,
@@ -119,14 +119,14 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
          }
          // Checking Endpoint
  
-         const [endpoint]:any = await pool.query('SELECT * FROM `endpoints` WHERE name=? AND project_id=?',[userinfo[2],userinfo[1]])
+         const [endpoint]:any = await pool.execute('SELECT * FROM `endpoints` WHERE name=? AND project_id=?',[userinfo[2],userinfo[1]])
          if(!endpoint[0]?.primary_id){
              return MyResponse({
                  success:false,
                  message:"Endpoint not found"
              },404) 
          }
-         const [schmea]:any = await pool.query('SELECT * FROM `scheme` WHERE primary_id = ?',[endpoint[0]?.primary_id])
+         const [schmea]:any = await pool.execute('SELECT * FROM `scheme` WHERE primary_id = ?',[endpoint[0]?.primary_id])
          const request = await Request.json()
          const compare = await compareFields(request,schmea)
          if(!compare){
@@ -136,7 +136,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
             },404)
         }
         const {sql,values}:any = await generateInserSql(request,userinfo[2]+userinfo[1])  
-        const [rows]= await DbPool.query(sql,values)
+        const [rows]= await Dbpool.execute(sql,values)
         return NextResponse.json({
             success:true,
             message:"Data add successfully"
@@ -167,7 +167,7 @@ export async function PUT(Request:Request,{params}:{params:{info:string[]}}) {
             },404)
            }
         // Checkeing User Existence
-         const [user]:any = await pool.query('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
+         const [user]:any = await pool.execute('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
          
          
          if(!user[0]?.user_id){
@@ -178,7 +178,7 @@ export async function PUT(Request:Request,{params}:{params:{info:string[]}}) {
          }
  
          // Checking procject Existence
-         const [project]:any = await pool.query('SELECT * FROM `projects` WHERE project_id=? AND user_id=?',[userinfo[1],userinfo[0]])
+         const [project]:any = await pool.execute('SELECT * FROM `projects` WHERE project_id=? AND user_id=?',[userinfo[1],userinfo[0]])
          if(!project[0]?.project_id){
              return MyResponse({
                  success:false,
@@ -187,7 +187,7 @@ export async function PUT(Request:Request,{params}:{params:{info:string[]}}) {
          }
          // Checking Endpoint
  
-         const [endpoint]:any = await pool.query('SELECT * FROM `endpoints` WHERE name=? AND project_id=?',[userinfo[2],userinfo[1]])
+         const [endpoint]:any = await pool.execute('SELECT * FROM `endpoints` WHERE name=? AND project_id=?',[userinfo[2],userinfo[1]])
          if(!endpoint[0]?.primary_id){
              return MyResponse({
                  success:false,
@@ -198,7 +198,7 @@ export async function PUT(Request:Request,{params}:{params:{info:string[]}}) {
          const {sql,values}:any=await generateUpdateSql(request,userinfo[2]+userinfo[1],userinfo[3])
 
          
-         const [rows]= await DbPool.query(sql,values)
+         const [rows]= await Dbpool.execute(sql,values)
         return MyResponse({
             success:true,
             message:"Data Update successfully"
@@ -225,7 +225,7 @@ export async function DELETE(Request:Request,{params}:{params:{info:string[]}}) 
             },404)
            }
         // Checkeing User Existence
-         const [user]:any = await pool.query('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
+         const [user]:any = await pool.execute('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
          
          
          if(!user[0]?.user_id){
@@ -236,7 +236,7 @@ export async function DELETE(Request:Request,{params}:{params:{info:string[]}}) 
          }
  
          // Checking procject Existence
-         const [project]:any = await pool.query('SELECT * FROM `projects` WHERE project_id=? AND user_id=?',[userinfo[1],userinfo[0]])
+         const [project]:any = await pool.execute('SELECT * FROM `projects` WHERE project_id=? AND user_id=?',[userinfo[1],userinfo[0]])
          if(!project[0]?.project_id){
              return MyResponse({
                  success:false,
@@ -245,7 +245,7 @@ export async function DELETE(Request:Request,{params}:{params:{info:string[]}}) 
          }
          // Checking Endpoint
  
-         const [endpoint]:any = await pool.query('SELECT * FROM `endpoints` WHERE name=? AND project_id=?',[userinfo[2],userinfo[1]])
+         const [endpoint]:any = await pool.execute('SELECT * FROM `endpoints` WHERE name=? AND project_id=?',[userinfo[2],userinfo[1]])
          if(!endpoint[0]?.primary_id){
              return MyResponse({
                  success:false,
@@ -253,7 +253,7 @@ export async function DELETE(Request:Request,{params}:{params:{info:string[]}}) 
              },404) 
          }
          
-         const [rows]= await DbPool.query(`DELETE FROM ${userinfo[2]+userinfo[1]} WHERE primary_id=?`,[userinfo[3]])
+         const [rows]= await Dbpool.execute(`DELETE FROM ${userinfo[2]+userinfo[1]} WHERE primary_id=?`,[userinfo[3]])
         return MyResponse({
             success:true,
             message:"Data Delete successfully"

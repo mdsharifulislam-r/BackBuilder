@@ -14,12 +14,15 @@ import microCors from 'micro-cors';
 import { middleware } from "@/lib/middlewares/AllowedOrigin";
 import { CheckOrigin } from "@/lib/helper/AllowOrigins";
 import { MyResponse } from "@/lib/helper/MyResponse";
+import { request } from "http";
+import { runCors } from "@/lib/helper/cors";
 
 export const dynamic = 'force-dynamic'
 
- export async function GET(Request:NextRequest,{params}:{params:{info:string[]}}) {
+ export async function GET(Request:NextApiRequest,{params}:{params:{info:string[]}}) {
     try {
 
+   
      
         const userinfo = params.info
     
@@ -160,6 +163,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
 }
 export async function PUT(Request:Request,{params}:{params:{info:string[]}}) {
     try {
+        await runCors(Request,Response)
         const userinfo = params.info
         if(!userinfo[3]){
             return MyResponse({

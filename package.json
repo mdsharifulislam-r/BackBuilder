@@ -29,6 +29,7 @@
     "cookie-cutter": "^0.2.0",
     "cookies": "^0.9.1",
     "cookies-next": "^4.2.1",
+    "cors": "^2.8.5",
     "fast-querystring": "^1.1.2",
     "firebase": "^11.0.1",
     "js-cookie": "^3.0.5",
@@ -62,6 +63,7 @@
   },
   "devDependencies": {
     "@types/aos": "^3.0.7",
+    "@types/cors": "^2.8.17",
     "@types/micro-cors": "^0.1.5",
     "@types/mysql": "^2.15.26",
     "@types/node": "^20",

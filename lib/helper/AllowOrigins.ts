@@ -1,7 +1,7 @@
 import { Rethink_Sans } from "next/font/google";
 import { pool } from "../DB/pool";
 
-export async function CheckOrigin(Request:Request,project_id:string) {
+export async function CheckOrigin(Request:any,project_id:string) {
     try {
         const origin = Request.headers.get("origin")
         const [rows]:any[] = await pool.execute('SELECT origins FROM projects WHERE project_id=?',[project_id])

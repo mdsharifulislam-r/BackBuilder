@@ -15,6 +15,7 @@ import { middleware } from "@/lib/middlewares/AllowedOrigin";
 import { CheckOrigin } from "@/lib/helper/AllowOrigins";
 import { MyResponse } from "@/lib/helper/MyResponse";
 
+export const dynamic = 'force-dynamic'
 
  export async function GET(Request:NextRequest,{params}:{params:{info:string[]}}) {
     try {

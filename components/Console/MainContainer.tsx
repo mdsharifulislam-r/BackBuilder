@@ -17,6 +17,10 @@ export default function MainContainer() {
       router.push('/')
     }
   },[])
+  if(!token){
+    router.push('/')
+    return <></>
+  }
   const [projects,setProjects]=useState<ProjectType[]>()
   useEffect(()=>{
     getProjects().then(data=>{

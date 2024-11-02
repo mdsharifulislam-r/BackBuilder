@@ -20,6 +20,10 @@ export default function EndForm() {
       router.push('/')
     }
   },[])
+  if(!token){
+    router.push('/')
+    return <></>
+  }
   const [isLoading,setisLoading]=useState(false)
   const [fieldData,setFieldData]=useState<{name:string,type:string,required:boolean}[]>([])
   const project_id =useAppSelector(state=>state.cartReduicer.project_id)

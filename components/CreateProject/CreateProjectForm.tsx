@@ -16,6 +16,10 @@ export default function CreateProjectForm() {
       router.push('/')
     }
   },[])
+  if(!token){
+    router.push('/')
+    return <></>
+  }
     const ref = useRef<HTMLFormElement|null>(null)
  
     const SubmitHandle = async (e:FormEvent<HTMLFormElement>)=>{

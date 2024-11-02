@@ -21,6 +21,10 @@ export default function MainContainer({name}:{name:string}) {
         
       }
     },[])
+    if(!token){
+      router.push('/')
+      return <></>
+    }
     const user_id = JWT.decode(token||"",process.env.NEXT_PUBLIC_JWT_SECRET!)
     const project_id = useAppSelector(state=>state.cartReduicer.project_id)
     const isAccount = useAppSelector(state=>state.cartReduicer.account)

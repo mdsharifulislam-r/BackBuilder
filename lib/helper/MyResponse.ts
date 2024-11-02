@@ -1,8 +1,7 @@
 import { Number } from "mongoose";
 import { NextResponse } from "next/server";
 
-export const MyResponse = (body:any,status?:number)=>new Response(JSON.stringify(body),{
-  status:status,
+export const MyResponse = (body:any,status?:number)=>Response.json(body,{status:status,
   headers: {
       'Access-Control-Allow-Origin': "*",
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',

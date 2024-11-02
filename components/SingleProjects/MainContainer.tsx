@@ -21,10 +21,7 @@ export default  function MainContainer() {
      router.push('/')
    }
  },[])
- if(!token){
-  router.push('/')
-  return <></>
-}
+
   const [endpoints,setEndpoints]=useState<Endpoints[]>([])
   useEffect(()=>{
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/endpoints/${project_id}`)

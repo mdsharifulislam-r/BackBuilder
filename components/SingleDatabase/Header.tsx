@@ -26,11 +26,8 @@ export default function Header({name}:{name:string}) {
       router.push('/')
       
     }
-  },[])
-  if(!token){
-    router.push('/')
-    return <></>
-  }
+  },[token])
+  
   const user_id = JWT.decode(token||"",process.env.NEXT_PUBLIC_JWT_SECRET!)
   const project_id = useAppSelector(state=>state.cartReduicer.project_id)
 const id = isNaN(project_id!)?1:project_id

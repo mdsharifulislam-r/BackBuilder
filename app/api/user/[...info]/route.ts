@@ -11,11 +11,13 @@ import { generateUpdateSql } from "@/lib/helper/generateUpdateSql";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import microCors from 'micro-cors';
-import { middleware } from "@/lib/middlewares/AllowedOrigin";
+
 import { CheckOrigin } from "@/lib/helper/AllowOrigins";
 import { MyResponse } from "@/lib/helper/MyResponse";
 import { request } from "http";
 import { runCors } from "@/lib/helper/cors";
+import { AllowedOrigin } from "@/lib/middlewares/AllowdCors";
+import { AllowedOriginCors } from "@/lib/middlewares/AllowedOrigin";
 
 export const dynamic = 'force-dynamic'
 
@@ -168,7 +170,7 @@ if(!match){
 export async function PUT(Request:Request,{params}:{params:{info:string[]}}) {
     try {
       
-       
+       await AllowedOrigin(Request,Response)
         const userinfo = params.info
         if(!userinfo[3]){
             return MyResponse({
@@ -282,12 +284,13 @@ export async function DELETE(Request:Request,{params}:{params:{info:string[]}}) 
 }
 export async function OPTIONS(Request:Request) {
     try {
-       
-        
+   
+     
        return MyResponse({
         success:false,
         message:"Method not allowed"
-       },401)
+       },200)
+
     } catch (error) {
         console.log(error);
         

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextCors from 'nextjs-cors';
-export async function AllowedOrigin(Request:NextApiRequest,Response:NextApiResponse) {
+export async function AllowedOrigin(Request:any,Response:any) {
     try {
         await NextCors(Request, Response, {
             // Options

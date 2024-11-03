@@ -1,13 +1,13 @@
 import mysql from "mysql2/promise"
 
 export  const pool = mysql.createPool({
- host:'localhost',
-database:'backbuilder',
-user:"root",
-password:"",
-
-
-waitForConnections:true
+  host:'bft3srjqp2zpfjqcdf7e-mysql.services.clever-cloud.com',
+  database:'bft3srjqp2zpfjqcdf7e',
+  user:"udqeefhb02vmeyaa",
+  password:"LSZfim4eQZdxue7HBJz",
+  port:21830,
+  
+  waitForConnections:true
 })
 
 pool.on('connection', (connection) => {

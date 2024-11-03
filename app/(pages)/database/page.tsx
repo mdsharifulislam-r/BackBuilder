@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function page() {
   return (
-    <div className='md:w-[70%] w-full'>
+    <div className='md:w-[75%] w-full'>
       <Header/>
       <MainContainer/>
     </div>

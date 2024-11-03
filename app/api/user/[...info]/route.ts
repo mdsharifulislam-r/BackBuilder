@@ -19,11 +19,9 @@ import { runCors } from "@/lib/helper/cors";
 
 export const dynamic = 'force-dynamic'
 
- export async function GET(Request:NextApiRequest,{params}:{params:{info:string[]}}) {
+ export async function GET(Request:Request,{params}:{params:{info:string[]}}) {
     try {
-
-   
-     
+       
         const userinfo = params.info
     
        // Checkeing User Existence
@@ -104,7 +102,13 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
     
         // Checkeing User Existence
          const [user]:any = await pool.execute('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
-         
+         const match = await CheckOrigin(Request,userinfo[1])
+if(!match){
+    return MyResponse({
+        success:false,
+        message:"origin not allowed"
+    },401)
+}
          
          if(!user[0]?.user_id){
              return MyResponse({
@@ -163,7 +167,8 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
 }
 export async function PUT(Request:Request,{params}:{params:{info:string[]}}) {
     try {
-        await runCors(Request,Response)
+      
+       
         const userinfo = params.info
         if(!userinfo[3]){
             return MyResponse({
@@ -174,7 +179,8 @@ export async function PUT(Request:Request,{params}:{params:{info:string[]}}) {
         // Checkeing User Existence
          const [user]:any = await pool.execute('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
          
-         
+         Request.headers.set("origin","http://localhost:3000")
+         console.log(Request.headers.get("origin"));
          if(!user[0]?.user_id){
              return MyResponse({
                  success:false,
@@ -274,3 +280,21 @@ export async function DELETE(Request:Request,{params}:{params:{info:string[]}}) 
     }
     
 }
+export async function OPTIONS(Request:Request) {
+    try {
+       
+        
+       return MyResponse({
+        success:false,
+        message:"Method not allowed"
+       },401)
+    } catch (error) {
+        console.log(error);
+        
+        return MyResponse({
+            success:false,
+            message:"Something went wrong"
+        },200)
+    }
+}
+

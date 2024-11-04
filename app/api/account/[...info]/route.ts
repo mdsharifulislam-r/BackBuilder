@@ -9,6 +9,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
     try {
         const userinfo = params.info
     
+    
         // Checkeing User Existence
          const [user]:any = await pool.execute('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
          
@@ -19,6 +20,8 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
                  message:"User not found"
              },404)
          }
+         
+         
  
          // Checking procject Existence
          const [project]:any = await pool.execute('SELECT * FROM `projects` WHERE project_id=? AND user_id=?',[userinfo[1],userinfo[0]])
@@ -29,7 +32,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
              },404)  
          }
          // Checking Endpoint
- 
+        
          const [endpoint]:any = await pool.execute('SELECT * FROM `endpoints` WHERE name=? AND project_id=?',[userinfo[2],userinfo[1]])
          if(!endpoint[0]?.primary_id){
              return MyResponse({
@@ -43,7 +46,9 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
                 message:"No action here"
             },401)
          }
+        
          const request = await Request.json()
+         console.log('comed')
          if(userinfo[3]=='register'){
          const [schmea]:any = await pool.execute('SELECT * FROM `scheme` WHERE primary_id = ?',[endpoint[0]?.primary_id])
          
@@ -77,12 +82,12 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
         },401)
     }
     } catch (error) {
-        console.log(error);
+
         
         return MyResponse({
             success:false,
             message:"Something went wrong"
-        },404)
+        },500)
     }
     
 }

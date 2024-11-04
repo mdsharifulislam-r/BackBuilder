@@ -38,7 +38,7 @@ export default function Get({url}:{url:string}) {
             <div>
                 <p className='text-slate-500 text-sm mt-4'>
                     Using this api url you can access data of database And you can use it in future.
-                    You can customize this endpoint by customize the name and field. you can get signle data using primay_id. pass primay id as paramiter after the endpoint
+                    You can customize this endpoint by customize the name and field. you can get signle data using primay_id. pass primay id as paramiter after the endpoint. you can also get data using search params. Example endpoint?name=sharif&age=22.
                 </p>
             </div>
         </div>

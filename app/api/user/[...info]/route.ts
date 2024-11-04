@@ -18,12 +18,18 @@ import { request } from "http";
 import { runCors } from "@/lib/helper/cors";
 import { AllowedOrigin } from "@/lib/middlewares/AllowdCors";
 import { AllowedOriginCors } from "@/lib/middlewares/AllowedOrigin";
+import { useSearchParams } from "next/navigation";
+import { URLSearchParams } from "url";
+import { generateQuerySearch } from "@/lib/helper/gemerateQuerySearch";
 
 export const dynamic = 'force-dynamic'
 
- export async function GET(Request:Request,{params}:{params:{info:string[]}}) {
+ export async function GET(Request:NextRequest,{params}:{params:{info:string[]}}) {
     try {
-       
+      
+      const search =new URLSearchParams(Request.nextUrl.searchParams)
+      const searchParams = Object.fromEntries(search.entries())
+            
         const userinfo = params.info
     
        // Checkeing User Existence
@@ -75,6 +81,24 @@ if(!match){
                 message:"Successfully Get Data ",
                 data:obj[0]
             },200)
+        }
+        if(Object.keys(searchParams)?.length){
+            const {sql,values}:any = await generateQuerySearch(userinfo[2]+userinfo[1],searchParams)
+           const [queryData]:any[] = await pool.execute(sql,values)
+           if(queryData?.length){
+            return MyResponse({
+                success:true,
+                message:"Data get successfully",
+                data:queryData
+            },200)
+           }else{
+            return MyResponse({
+                success:false,
+                message:"Cant find data by this querys"
+            })
+           }
+            
+            
         }
         return MyResponse({
             success:true,

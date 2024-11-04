@@ -180,9 +180,9 @@ export async function PUT(Request:Request,{params}:{params:{info:string[]}}) {
            }
         // Checkeing User Existence
          const [user]:any = await pool.execute('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
-         
-         Request.headers.set("origin","http://localhost:3000")
-         console.log(Request.headers.get("origin"));
+         const url = process.env.BASE_URL
+         Request.headers.set("origin",url?.slice(0,url.length-4)!)
+     
          if(!user[0]?.user_id){
              return MyResponse({
                  success:false,

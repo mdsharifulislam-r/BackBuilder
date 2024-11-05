@@ -85,18 +85,13 @@ if(!match){
         if(Object.keys(searchParams)?.length){
             const {sql,values}:any = await generateQuerySearch(userinfo[2]+userinfo[1],searchParams)
            const [queryData]:any[] = await pool.execute(sql,values)
-           if(queryData?.length){
+      
             return MyResponse({
                 success:true,
                 message:"Data get successfully",
                 data:queryData
             },200)
-           }else{
-            return MyResponse({
-                success:false,
-                message:"Cant find data by this querys"
-            })
-           }
+       
             
             
         }

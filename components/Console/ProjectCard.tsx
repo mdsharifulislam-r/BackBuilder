@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 export default function ProjectCard({project}:{project:ProjectType}) {
   const dispatch = useDispatch()
   const sendProjectId=()=>{
-    console.log('called');
+    
     
     dispatch(getProjectId(project.project_id))
   }

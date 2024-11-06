@@ -14,7 +14,7 @@ export default function GoogleSignInButton() {
    
           const result = await signInWithPopup(auth, GoogleProvider);
           const user = result.user;
-          console.log(user);
+          
           
           const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/login`,{
             method:"POST",

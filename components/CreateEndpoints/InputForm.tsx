@@ -45,7 +45,7 @@ export default function InputForm({setFieldData}:{setFieldData:React.Dispatch<Re
    
     
     const {name,required,type} = formValues
-    console.log(name[0]);
+
     if(("1234567890~`!@#%^&*()_-+={}[]|:'?><,./".includes(name[0]))){
       toast.error("name first character cant be number or symbol")
       return

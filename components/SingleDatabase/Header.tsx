@@ -36,7 +36,7 @@ const id = isNaN(project_id!)?1:project_id
       await copy(`${process.env.NEXT_PUBLIC_BASE_URL}/user/${user_id}/${id}/${name}`)
       toast.success('URL copy successfully')
     } catch (error) {
-      console.log(error);
+  
       
     }
    }

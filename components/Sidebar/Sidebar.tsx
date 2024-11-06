@@ -15,7 +15,7 @@ useEffect(()=>{
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/sidebarprojects`)
         .then(res=>res.json())
         .then(data=>{
-            console.log(data);
+        
             
             if(data.success){
                 setProjectsData(data.data)

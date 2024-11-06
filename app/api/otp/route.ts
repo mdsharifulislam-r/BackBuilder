@@ -54,7 +54,7 @@ export async function POST(Request:Request) {
    
         
         if(info.accepted){
-            console.log('come');
+         
             
             const check = 'SELECT * FROM otps WHERE email=?'
             const [emails]:any[] = await pool.execute(check,[email])
@@ -70,7 +70,7 @@ export async function POST(Request:Request) {
                 message:"Email Send Successfully"
             })
         }else{
-            console.log('come');
+            
             
             return NextResponse.json({
                 success:false,

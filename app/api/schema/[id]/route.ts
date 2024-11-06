@@ -92,8 +92,7 @@ export async function POST(Request:Request) {
                 temp+='varchar(256) ' 
             }
             const sql = `ALTER TABLE ${data[0]?.name+project_id} ADD COLUMN ${name} ${temp} `
-            console.log(sql);
-            
+          
             
             const [rowsss] = await pool.execute(sql)
         }

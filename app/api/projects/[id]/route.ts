@@ -15,7 +15,7 @@ export async function GET(Request:Request,{params}:{params:{id:string}}) {
             })
         }
         const token = cookies().get("token")?.value
-        console.log(token);
+     
         const user_id = JWT.decode(token!,process.env.JWT_SECRET!)
         
         

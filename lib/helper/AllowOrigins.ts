@@ -6,8 +6,11 @@ export async function CheckOrigin(Request:any,project_id:string) {
         const origin = Request.headers.get("origin")
         const same = Request.headers.get("sec-fetch-site")
 
-      console.log(Request);
-      
+        if(same=='same-origin'){
+            
+            
+            return true
+        }
         const [rows]:any[] = await pool.execute('SELECT origins FROM projects WHERE project_id=?',[project_id])
         const data:{origins:string}[]=rows
         const item = data[0]?.origins

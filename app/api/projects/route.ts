@@ -68,7 +68,7 @@ export async function GET() {
           })
         }
         const user_id = jwt.decode(token,process.env.JWT_SECRET!)
-        console.log(user_id);
+       
         
         const sql = 'SELECT * FROM `projects` WHERE user_id= ?'
         const [rows]:any =await pool.execute(sql,[user_id])

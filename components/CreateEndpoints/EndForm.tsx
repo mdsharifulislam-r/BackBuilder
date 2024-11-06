@@ -25,7 +25,7 @@ export default function EndForm() {
   const [fieldData,setFieldData]=useState<{name:string,type:string,required:boolean}[]>([])
   const project_id =useAppSelector(state=>state.cartReduicer.project_id)
   const isUser = useAppSelector(state=>state.cartReduicer.is_user)
-  console.log(isUser);
+
   
   const showItem = fieldData.map(item=>(
     <ShowItem

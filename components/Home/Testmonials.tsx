@@ -17,8 +17,7 @@ export default function Testmonials() {
     <Swiper
       spaceBetween={50}
       slidesPerView={1}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
+    
       modules={[Autoplay]}
       autoplay={{
         delay: 5000,

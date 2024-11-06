@@ -48,7 +48,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
          }
         
          const request = await Request.json()
-         console.log('comed')
+     
          if(userinfo[3]=='register'){
          const [schmea]:any = await pool.execute('SELECT * FROM `scheme` WHERE primary_id = ?',[endpoint[0]?.primary_id])
          
@@ -67,7 +67,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
         },200)
     }
     const {isOk,data}:any = await CheackLogin(request,userinfo[2]+userinfo[1])
-    console.log(isOk,data);
+  
     
     if(isOk){
         return MyResponse({

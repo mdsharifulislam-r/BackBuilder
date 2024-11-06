@@ -24,8 +24,7 @@ export default function MainContainer({name}:{name:string}) {
 
   const user_id = JWT.decode(token||"",process.env.NEXT_PUBLIC_JWT_SECRET!)
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/user/${user_id}/${project_id}/${name}`
-  console.log(url);
-  
+ 
   const change = useAppSelector(state=>state.cartReduicer.dataChange)
   
   const [data,setData]=useState<any[]>([])

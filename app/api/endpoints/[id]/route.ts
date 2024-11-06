@@ -4,11 +4,11 @@ import { NextResponse } from "next/server";
 export async function GET(Request:Request,{params}:{params:{id:string}}) {
     try {
         const {id}= params
-        console.log(id);
+        
         
         const sql = 'SELECT * FROM `endpoints` WHERE project_id=?'
         const [rows]= await pool.execute(sql,[id])
-        console.log(rows);
+      
         
         return NextResponse.json({
             success:true,

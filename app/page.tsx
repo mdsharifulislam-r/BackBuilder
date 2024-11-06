@@ -1,4 +1,5 @@
 import Blogs from '@/components/Home/Blogs'
+import Expamples from '@/components/Home/Expamples'
 import Features from '@/components/Home/Features'
 import FrameWorks from '@/components/Home/FrameWorks'
 import Hero from '@/components/Home/Hero'
@@ -14,6 +15,7 @@ export default function page() {
       <Hero/>
       <Services/>
       <Blogs/>
+      <Expamples/>
       <Pricing/>
       <FrameWorks/>
       <Features/>

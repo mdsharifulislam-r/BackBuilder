@@ -14,6 +14,7 @@ const transport = nodeMailer.createTransport({
 export async function POST(Request:Request) {
     try {
         const {email}:{email:string}= await Request.json()
+
       await pool.execute('CREATE TABLE IF NOT EXISTS otps (email varchar(256),otp INT)')
         
         if(!email){
@@ -23,6 +24,13 @@ export async function POST(Request:Request) {
             },{
                 status:400
             })
+        }
+        const [exists]:any[] = await pool.execute('SELECT * FROM users WHERE email=?',[email])
+        if(exists?.length){
+            return NextResponse.json({
+                success:false,
+                message:"Account Already Exists"
+            },{status:400})
         }
         let otp = Math.floor(Math.random()*1000000000000).toString().slice(0,4)
        
@@ -45,8 +53,8 @@ export async function POST(Request:Request) {
 	  <hr style="border:none;border-top:1px solid #eee" />
 	  <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
 		<p>Backbuilder Inc</p>
-		<p>1600 Amphitheatre Parkway</p>
-		<p>California</p>
+		<p>Cumilla</p>
+		<p>Bangladesh</p>
 	  </div>
 	</div>
   </div>`
@@ -59,7 +67,7 @@ export async function POST(Request:Request) {
             const check = 'SELECT * FROM otps WHERE email=?'
             const [emails]:any[] = await pool.execute(check,[email])
             if(emails?.length){
-                const [rowsData]= await pool.execute('UPDATE `otps` SET `otp`=? WHERE emai=?',[otp,email])
+                const [rowsData]= await pool.execute('UPDATE `otps` SET `otp`=? WHERE email=?',[otp,email])
             }else{
                 const sql = 'INSERT INTO `otps`(`email`, `otp`) VALUES (?,?)'
                 const [rows] = await pool.execute(sql,[email,otp])

@@ -68,7 +68,7 @@ if(!match){
         }
         const [data]= await pool.execute(`SELECT * FROM ${userinfo[2]+userinfo[1]}`)
         //Single query selector
-        if(userinfo[3]){
+        if(userinfo[3] && !userinfo[3].includes("-") ){
             const [obj]:any = await pool.execute(`SELECT * FROM ${userinfo[2]+userinfo[1]} WHERE primary_id=?`,[userinfo[3]])
             if(!obj[0]?.primary_id){
                 return MyResponse({
@@ -82,6 +82,23 @@ if(!match){
                 data:obj[0]
             },200)
         }
+        // Send Range Data
+        if(userinfo[3] && userinfo[3].includes("-") ){
+            const [obj]:any[] = await pool.execute(`SELECT * FROM ${userinfo[2]+userinfo[1]}`)
+            const [item1,item2] = userinfo[3].trim().split("-")
+            if(!obj?.length){
+                return MyResponse({
+                    success:false,
+                    message:"data not found"
+                },404) 
+            }
+            return MyResponse({
+                success:true,
+                message:"Successfully Get Data ",
+                data:obj?.slice(item1,item2)
+            },200)
+        }
+        // searchparams data
         if(Object.keys(searchParams)?.length){
             const {sql,values}:any = await generateQuerySearch(userinfo[2]+userinfo[1],searchParams)
            const [queryData]:any[] = await pool.execute(sql,values)

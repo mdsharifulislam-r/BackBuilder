@@ -13,28 +13,18 @@ export default function InputForm({setFieldData}:{setFieldData:React.Dispatch<Re
       </option>
     )
   );
+  const [req,setReq]=useState(false)
   
   const [formValues, setFormValues] = useState({
     name: "",
     type: "",
-    required: false,
+    required: req,
   });
   const AddValue = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
 
     setFormValues((prev) => {
-      if (name == "required") {
-        if (value == "on") {
-          return {
-            ...prev,
-            [name]: true,
-          };
-        }
-        return {
-          ...prev,
-          [name]: false,
-        };
-      }
+   
       return {
         ...prev,
         [name]: value,
@@ -44,8 +34,10 @@ export default function InputForm({setFieldData}:{setFieldData:React.Dispatch<Re
   const submit = () => {
    
     
+    
     const {name,required,type} = formValues
-
+  
+    
     if(("1234567890~`!@#%^&*()_-+={}[]|:'?><,./".includes(name[0]))){
       toast.error("name first character cant be number or symbol")
       return
@@ -62,7 +54,8 @@ export default function InputForm({setFieldData}:{setFieldData:React.Dispatch<Re
       }else{
         return [...prev,{
           ...formValues,
-          name:formValues.name.toLowerCase().split(" ").join("_")
+          name:formValues.name.toLowerCase().split(" ").join("_"),
+          required:req
         }]
       }
     })
@@ -97,9 +90,10 @@ export default function InputForm({setFieldData}:{setFieldData:React.Dispatch<Re
           <div className="flex place-items-center gap-2">
             <input
               type="checkbox"
-              onChange={AddValue}
+              
               id="required"
               name="required"
+              onChange={(e)=>setReq(e.target.checked)}
             />
             <label htmlFor="required">Required</label>
           </div>

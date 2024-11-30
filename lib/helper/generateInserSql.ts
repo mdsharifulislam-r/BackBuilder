@@ -31,6 +31,14 @@ export async function generateInserSqlForRegister(request:any,tableName:string) 
         const keys = Object.keys(request)
         let values:string[] = Object.values(request)
         const passIndex = keys.findIndex(item=>item=='password')
+        const emailIndex = keys.findIndex(item=>item=='email')
+        const [rows]:any[] = await pool.execute(`SELECT * FROM ${tableName} WHERE email=?`,[values[emailIndex]])
+        if(rows?.length){
+            return {
+                sql:"",
+                values:[]
+            }
+        }
         const hashpass = await bcrypt.hash(values[passIndex],10)
         values[passIndex]=hashpass
         const qn = new Array(keys.length).fill('?,').join("")

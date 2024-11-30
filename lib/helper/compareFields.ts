@@ -29,6 +29,8 @@ export async function compareFields(req:object,schema?:any[]) {
         
 
     } catch (error) {
+        console.log(error);
+        
         return false
     }
 }

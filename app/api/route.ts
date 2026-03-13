@@ -7,3 +7,8 @@ export async function GET(){
         msg:"Server is Running"
     })
 }
+
+export async function POST(Request:Request){
+    console.log(Request.json());
+    
+}

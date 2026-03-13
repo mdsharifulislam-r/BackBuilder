@@ -52,7 +52,7 @@ export async function POST(Request:Request,{params}:{params:{id:string}}){
         if(!user_id){
             return MyResponse({success:false,message:"Token expired please re login"},400)
         }
-        const [rows]:any = await pool.execute('SELECT * FROM `apps` WHERE app_id=? AND user_id=?',[params.id,user_id])
+        const [rows]:any = await pool.execute('SELECT * FROM `apps` WHERE app_id=?',[params.id])
         const appInfo = rows[0]
         if(!appInfo?.app_id){
             return MyResponse({success:false,message:"App not found"},404)

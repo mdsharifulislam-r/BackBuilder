@@ -22,6 +22,7 @@ export default async function AuthorizePage({ id }: { id: string }) {
   }
 
   async function accept() {
+    console.log( `${process.env.NEXT_PUBLIC_BASE_URL}/app/verify/${info?.app?.app_id}`)
     const infos = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/app/verify/${info?.app?.app_id}`,
       {

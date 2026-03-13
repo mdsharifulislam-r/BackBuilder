@@ -19,7 +19,6 @@ export default function GoogleSignInButton() {
           const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/login`,{
             method:"POST",
             body:JSON.stringify({
-           
                 email:user?.email,
                 social_login:true
             })

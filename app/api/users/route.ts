@@ -73,15 +73,19 @@ export async function POST(Request: Request) {
       const [rows]:any =await pool.execute(sqlite,[email])
        const exist =rows[0]
       if(exist?.email){
-        return NextResponse.json(
-            {
-              success: false,
-              message: "Account already exist",
-            },
-            {
-              status: 400,
-            }
-          );
+        const response = NextResponse.json(
+          {
+            success: true,
+            message: "Logged in successfully",
+            data:exist
+          },
+          {
+            status: 200,
+          }
+        )
+        const token = JWT.encode(exist.user_id,process.env.JWT_SECRET!)
+        response.cookies.set('token',token)
+        return response
       }
 
 
@@ -90,18 +94,21 @@ export async function POST(Request: Request) {
 
 
       const VALUES = [null,name,email,'basic',true]
-   const data=await pool.execute(sql,VALUES)
+   const [data]:any=await pool.execute(sql,VALUES)
       
-      
-      return NextResponse.json(
+   const response = NextResponse.json(
         {
           success: true,
-          message: "Successfully created account",
+          message: "Logged in successfully",
+          data:data[0]
         },
         {
           status: 200,
         }
-      );
+      )
+      const token = JWT.encode(data[0].user_id,process.env.JWT_SECRET!)
+      response.cookies.set('token',token)
+      return response
     }
   } catch (error) {
 console.log(error);

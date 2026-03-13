@@ -3,8 +3,11 @@ import { signInWithPopup } from "firebase/auth";
 import { GoogleProvider,auth } from '@/lib/helper/firebaseConfig';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { useAppDispatch } from '@/lib/hooks/hooks';
+import { signInUser } from '@/lib/Store/features/UserSclice';
 export default function GoogleSignInButton() {
     const router = useRouter()
+    const dispatch = useAppDispatch()
     const signInWithGoogle = async () => {
 
    
@@ -28,8 +31,8 @@ export default function GoogleSignInButton() {
         if(data.success){
       
           toast.success(data.message)
-         
-          router.push("/login")
+          dispatch(signInUser(data?.data))
+          router.push("/")
         }else{
             toast.error(data?.message)
         }

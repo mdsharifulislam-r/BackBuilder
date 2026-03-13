@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks/hooks'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { useCookies } from 'next-client-cookies'
+import MultiSelect from '@/lib/hooks/MultipleSelect'
 
 export default function EndForm() {
   const cookie = useCookies()
@@ -37,6 +38,8 @@ export default function EndForm() {
     />
   ))
   const [name,setName]=useState("")
+  const [values,setValues]=useState<string[]>([])
+
   const submitData =async (e:FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
     if(isUser){
@@ -54,7 +57,8 @@ export default function EndForm() {
       name:name.toLowerCase().split(" ").join("_"),
       project_id,
       schmea:fieldData,
-      is_user:isUser
+      is_user:isUser,
+      is_auth_required:values?.join(",")
     })
    })
     
@@ -69,12 +73,28 @@ export default function EndForm() {
     }
     
   }
+
+  
   return (
     <>
     {isUser?<p className='mt-2 p-3 rounded-md shadow-lg text-sm bg-white '>You have to add two required field <span className='text-blue-600'>username/email</span> and <span className='text-red-600'>password</span> for authentication</p>:""}
     <form onSubmit={submitData} className='md:w-[80%] w-full mx-auto mt-7 bg-white p-10 rounded-lg shadow-lg'>
       <input type="text" name="" id="" className='w-full bg-slate-100 px-4 py-2 rounded-md mb-4' placeholder='Primary ID Provided by Default' disabled />
       <input type="text" onChange={(e)=>setName(e.target.value)}  name="name" id="" className='w-full  px-4 py-2 rounded-md border focus:outline-none focus:shadow-lg ' placeholder='Enter End Point Name' />
+      <div className='flex items-center py-2'>
+        <label htmlFor="" className=' font-thin text-gray-600 text-xs py-2 block'>Authenicated Method</label>
+        <MultiSelect
+        options={[
+          {label:"POST",value:"POST"},
+          {label:"GET",value:"GET"},
+          {label:"PUT",value:"PUT"},
+          
+          {label:"PATCH",value:"PATCH"},
+          {label:"DELETE",value:"DELETE"}
+        ]}
+        onChange={(value)=>setValues(value.map(item=>item.value))}
+        />
+      </div>
       <div>
         <label htmlFor="" className=' font-thin text-blue-600 py-2 block'>Fields</label>
         <div>

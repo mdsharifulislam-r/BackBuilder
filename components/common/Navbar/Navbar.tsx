@@ -18,7 +18,7 @@ export default function Navbar() {
     <>
   {/* ========== HEADER ========== */}
   <header className="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-blue-600 border-b text-sm py-2.5  erebg-neutral-950 ereborder-neutral-700">
-    <nav className="max-w-[85rem] mx-auto w-full flex md:grid md:grid-cols-3 md:gap-x-1 basis-full items-center w-full mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="max-w-[85rem] flex md:grid md:grid-cols-3 md:gap-x-1 basis-full items-center w-full mx-auto px-4 sm:px-6 lg:px-8">
       <div className="me-5">
         {/* Logo */}
         <Link

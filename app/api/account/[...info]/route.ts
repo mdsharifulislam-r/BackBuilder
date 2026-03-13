@@ -1,6 +1,8 @@
 import { pool } from "@/lib/DB/pool";
 import { compareFields } from "@/lib/helper/compareFields";
 import { CheackLogin, generateInserSql, generateInserSqlForRegister } from "@/lib/helper/generateInserSql";
+import { generateJwtToken } from "@/lib/helper/generateJWT";
+import { generateZodSchema } from "@/lib/helper/generateZodSchema";
 import { MyResponse } from "@/lib/helper/MyResponse";
 import { NextResponse } from "next/server";
 
@@ -8,6 +10,7 @@ import { NextResponse } from "next/server";
 export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
     try {
         const userinfo = params.info
+
     
     
         // Checkeing User Existence
@@ -46,20 +49,29 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
                 message:"No action here"
             },401)
          }
-        
+
          const request = await Request.json()
-     
+         
          if(userinfo[3]=='register'){
          const [schmea]:any = await pool.execute('SELECT * FROM `scheme` WHERE primary_id = ?',[endpoint[0]?.primary_id])
-         
-         const compare = await compareFields(request,schmea)
-         if(!compare){
+       const error= generateZodSchema(schmea).safeParse(request)
+       if(!error.success){
+        return MyResponse({
+            success:false,
+            message:'Please fill all require field',
+            error:error.error.issues
+        },401)
+       }
+
+
+
+        const {sql,values}:any = await generateInserSqlForRegister(request,userinfo[2]+userinfo[1])  
+        if(sql=="already-exist"){
             return MyResponse({
                 success:false,
-                message:"Please fill all required fields"
-            },401)  
-         }
-        const {sql,values}:any = await generateInserSqlForRegister(request,userinfo[2]+userinfo[1])  
+                message:"User already exist"
+            },401)
+        }
         const [rows]= await pool.execute(sql,values)
         return MyResponse({
             success:true,
@@ -67,13 +79,14 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
         },200)
     }
     const {isOk,data}:any = await CheackLogin(request,userinfo[2]+userinfo[1])
-  
-    
+
     if(isOk){
+        const token = generateJwtToken(data)
         return MyResponse({
             success:true,
             message:"Successfully Login",
-            data:data
+            data:data,
+            token
         },200)
     }else{
         return MyResponse({
@@ -83,6 +96,7 @@ export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
     }
     } catch (error) {
 
+        console.log(error);
         
         return MyResponse({
             success:false,

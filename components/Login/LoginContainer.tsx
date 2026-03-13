@@ -43,6 +43,7 @@ export default function LoginContainer() {
 
     const data = await res.json()
 
+    console.log(data);
     
     if(data?.success){
       dispatch(signInUser(data?.data))

@@ -31,11 +31,12 @@ export async function generateInserSqlForRegister(request:any,tableName:string) 
         const keys = Object.keys(request)
         let values:string[] = Object.values(request)
         const passIndex = keys.findIndex(item=>item=='password')
-        const emailIndex = keys.findIndex(item=>item=='email')
-        const [rows]:any[] = await pool.execute(`SELECT * FROM ${tableName} WHERE email=?`,[values[emailIndex]])
+        const isEmail = keys.findIndex(item=>item=='email')!=-1
+        const emailIndex = keys.findIndex(item=>item=='email')===-1? keys.findIndex(item=>item=='username'):keys.findIndex(item=>item=='email')
+        const [rows]:any[] = await pool.execute(`SELECT * FROM ${tableName} WHERE ${isEmail?'email':'username'} = ?`,[values[emailIndex]])
         if(rows?.length){
             return {
-                sql:"",
+                sql:"already-exist",
                 values:[]
             }
         }
@@ -67,10 +68,11 @@ export async function CheackLogin(request:any,tableName:string) {
         const keys = Object.keys(request)
         let values:string[] = Object.values(request)
         const passIndex = keys.findIndex(item=>item=='password')
-        const EmailIndex = keys.findIndex(item=>item=='email')
+        const isEmail = keys.findIndex(item=>item=='email')!==-1
+        const EmailIndex = keys.findIndex(item=>item=='email')!==-1? keys.findIndex(item=>item=='email'): keys.findIndex(item=>item=='username')
         const password = values[passIndex]
         const email = values[EmailIndex]
-        const [rows]:any[] = await pool.execute(`SELECT * FROM ${tableName} WHERE email = ?`,[email])
+        const [rows]:any[] = await pool.execute(`SELECT * FROM ${tableName} WHERE ${isEmail?'email':'username'} = ?`,[email])
         if(rows?.length){
             const hashpass = rows[0]?.password
             const match = await bcrypt.compare(password,hashpass)

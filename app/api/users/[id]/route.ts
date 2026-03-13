@@ -52,6 +52,8 @@ export async function POST(Request:Request) {
             }
         })
         const token = jwt.encode(user.user_id,process.env.JWT_SECRET!)
+    
+        
         response.cookies.set('token',token)
         return response
     }else{

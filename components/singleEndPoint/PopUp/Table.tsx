@@ -34,7 +34,7 @@ export default function Table({endpoint_name}:{endpoint_name:string}) {
     />
   ))
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-5">
   <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
       <div className="overflow-hidden">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type Option = {
   label: string;
@@ -8,12 +8,16 @@ type Option = {
 type MultiSelectProps = {
   options: Option[];
   onChange: (selected: Option[]) => void;
+  selectedItems?: Option[]
 };
 
-export default function MultiSelect({ options, onChange }: MultiSelectProps) {
+export default function MultiSelect({ options, onChange, selectedItems=[] }: MultiSelectProps) {
+  
   const [selected, setSelected] = useState<Option[]>([]);
   const [open, setOpen] = useState(false);
-
+  useEffect(() => {
+    setSelected(selectedItems)
+  },[selectedItems])
   const toggleOption = (option: Option) => {
     let newSelected;
 
@@ -28,7 +32,6 @@ export default function MultiSelect({ options, onChange }: MultiSelectProps) {
     setSelected(newSelected);
     onChange(newSelected);
   };
-
   return (
     <div className="relative w-full">
       

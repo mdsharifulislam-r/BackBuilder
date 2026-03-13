@@ -4,7 +4,7 @@ import { FaRegClipboard } from 'react-icons/fa'
 import CodeShow from './CodeShow'
 import copy from 'clipboard-copy'
 import toast from 'react-hot-toast'
-export default function Put({url}:{url:string}) {
+export default function Put({url,is_auth}:{url:string,is_auth?:boolean}) {
     const copySomeThing = async ()=>{
         try {
           await copy(url)
@@ -27,6 +27,7 @@ export default function Put({url}:{url:string}) {
         <div className="text px-4 pb-4">
             <div className=' text-center'>
             <h1 className='text-2xl font-bold text-orange'><span className='text-blue-600'>P</span>UT</h1>
+            {is_auth?<span className='text-white bg-slate-500 px-2 text-[10px]'>Authenticate</span>:''}
             </div>
             <div className='flex justify-between place-items-center bg-dark px-3 text-xs py-2 mt-3 rounded-md'>
                 <span className='text-slate-500 text-[10px]'>{url}/:primary_id</span>

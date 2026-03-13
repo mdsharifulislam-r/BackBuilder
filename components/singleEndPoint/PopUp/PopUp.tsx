@@ -4,10 +4,9 @@ import Table from './Table'
 import LoadingButton from '@/components/common/button/Button'
 import { endpoint } from '../Table/TableRow'
 import AddRow from './AddRow'
+import AuthMethods from './AuthMethods'
 
 export default function PopUp({setShow,endpoint_name}:{setShow:React.Dispatch<React.SetStateAction<boolean>>,endpoint_name:string}) {
-  const [deleteArr,setDeleteArr]=useState<endpoint[]>([])
-  const [updateArr,setUpdateArr]=useState<endpoint[]>([])
   return (
     <div className='p-4 py-5'>
       
@@ -20,6 +19,7 @@ export default function PopUp({setShow,endpoint_name}:{setShow:React.Dispatch<Re
           <div className='text-center'>
             <h1 className='text-2xl text-blue-600 font-bold'><span className='text-orange'>U</span>PDATE</h1>
           </div>
+          <AuthMethods/>
           <Table endpoint_name={endpoint_name} />
           <AddRow/>
          

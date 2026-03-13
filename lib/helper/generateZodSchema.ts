@@ -10,7 +10,6 @@ type FieldConfig = {
 
 export const generateZodSchema = (fields: FieldConfig[]) => {
   const schemaShape: Record<string, any> = {};
-console.log(fields);
 
 
   for (const field of fields) {

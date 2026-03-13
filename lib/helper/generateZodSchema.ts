@@ -4,12 +4,13 @@ type FieldConfig = {
   schema_id: number;
   primary_id: number;
   name: string;
-  type: "string" | "number" | "boolean";
+  type: "string" | "integer" | "boolean" | "float" | "null";
   required: number;
 };
 
 export const generateZodSchema = (fields: FieldConfig[]) => {
   const schemaShape: Record<string, any> = {};
+console.log(fields);
 
 
   for (const field of fields) {
@@ -17,16 +18,20 @@ export const generateZodSchema = (fields: FieldConfig[]) => {
 
     switch (field.type) {
       case "string":
-        validator = z.string();
+        validator = z.string({required_error:`${field.name} is required`});
         break;
-      case "number":
-        validator = z.number();
+      case "integer":
+        validator = z.number({required_error:`${field.name} is required`});
+        break;
+    case "float":
+        validator = z.number({required_error:`${field.name} is required`});
         break;
       case "boolean":
-        validator = z.boolean();
+        validator = z.boolean({required_error:`${field.name} is required`});
         break;
       default:
-        validator = z.any();
+        validator = z.any({required_error:`${field.name} is required`});
+        break;
     }
 
     if (!field.required) {

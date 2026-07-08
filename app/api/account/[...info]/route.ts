@@ -1,0 +1,107 @@
+import { pool } from "@/lib/DB/pool";
+import { compareFields } from "@/lib/helper/compareFields";
+import { CheackLogin, generateInserSql, generateInserSqlForRegister } from "@/lib/helper/generateInserSql";
+import { generateJwtToken } from "@/lib/helper/generateJWT";
+import { generateZodSchema } from "@/lib/helper/generateZodSchema";
+import { MyResponse } from "@/lib/helper/MyResponse";
+import { NextResponse } from "next/server";
+
+
+export async function POST(Request:Request,{params}:{params:{info:string[]}}) {
+    try {
+        const userinfo = params.info
+
+    
+    
+        // Checkeing User Existence
+         const [user]:any = await pool.execute('SELECT * FROM `users` WHERE user_id = ?',[userinfo[0]])
+         
+         
+         if(!user[0]?.user_id){
+             return MyResponse({
+                 success:false,
+                 message:"User not found"
+             },404)
+         }
+         
+         
+ 
+         // Checking procject Existence
+         const [project]:any = await pool.execute('SELECT * FROM `projects` WHERE project_id=? AND user_id=?',[userinfo[1],userinfo[0]])
+         if(!project[0]?.project_id){
+             return MyResponse({
+                 success:false,
+                 message:"Project not found"
+             },404)  
+         }
+         // Checking Endpoint
+        
+         const [endpoint]:any = await pool.execute('SELECT * FROM `endpoints` WHERE name=? AND project_id=?',[userinfo[2],userinfo[1]])
+         if(!endpoint[0]?.primary_id){
+             return MyResponse({
+                 success:false,
+                 message:"Endpoint not found"
+             },404) 
+         }
+         if(!userinfo[3]){
+            return MyResponse({
+                success:false,
+                message:"No action here"
+            },401)
+         }
+
+         const request = await Request.json()
+         
+         if(userinfo[3]=='register'){
+         const [schmea]:any = await pool.execute('SELECT * FROM `scheme` WHERE primary_id = ?',[endpoint[0]?.primary_id])
+       const error= generateZodSchema(schmea).safeParse(request)
+       if(!error.success){
+        return MyResponse({
+            success:false,
+            message:'Please fill all require field',
+            error:error.error.issues
+        },401)
+       }
+
+
+
+        const {sql,values}:any = await generateInserSqlForRegister(request,userinfo[2]+userinfo[1])  
+        if(sql=="already-exist"){
+            return MyResponse({
+                success:false,
+                message:"User already exist"
+            },401)
+        }
+        const [rows]= await pool.execute(sql,values)
+        return MyResponse({
+            success:true,
+            message:"Data add successfully"
+        },200)
+    }
+    const {isOk,data}:any = await CheackLogin(request,userinfo[2]+userinfo[1])
+
+    if(isOk){
+        const token = generateJwtToken(data)
+        return MyResponse({
+            success:true,
+            message:"Successfully Login",
+            data:data,
+            token
+        },200)
+    }else{
+        return MyResponse({
+            success:false,
+            message:data
+        },401)
+    }
+    } catch (error) {
+
+        console.log(error);
+        
+        return MyResponse({
+            success:false,
+            message:"Something went wrong"
+        },500)
+    }
+    
+}

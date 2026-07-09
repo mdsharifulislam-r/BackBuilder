@@ -136,7 +136,10 @@ export async function GET(
       const [item1, item2] = userinfo[3].trim().split("-");
       if (!Object.keys(searchParams)?.length) {
         const [obj]: any[] = await pool.execute(
-          `SELECT * FROM ${userinfo[2] + userinfo[1]} OFFSET ${item1} LIMIT ${item2} ORDER BY primary_id DESC`,
+          `SELECT * FROM ${userinfo[2] + userinfo[1]}
+   ORDER BY primary_id DESC
+   LIMIT ? OFFSET ?`,
+          [item2, item1],
         );
 
         if (!obj?.length) {

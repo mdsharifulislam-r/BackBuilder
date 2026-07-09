@@ -238,6 +238,12 @@ export async function GET(
       const { sql, values }: any = await generateQuerySearch(
         tableName,
         filters,
+        {
+          limit,
+          offset,
+          sort: sortColumn,
+          order,
+        }
       );
 
       const query = `

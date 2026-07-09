@@ -61,9 +61,7 @@ export async function GET(
       "email",
     ];
 
-    const sortColumn = sort
-      ? sort
-      : "primary_id";
+    const sortColumn = allowedColumns.includes(sort) ? sort : "primary_id";
 
     //---------------------------------------------------
     // User
@@ -207,7 +205,7 @@ export async function GET(
       const [rows]: any = await pool.execute(
         `SELECT *
          FROM \`${tableName}\`
-         ORDER BY ${sortColumn} ${order}
+         ORDER BY \`${sortColumn}\` ${order}
          LIMIT ?
          OFFSET ?`,
         [count, skip],
@@ -235,29 +233,19 @@ export async function GET(
     delete filters.order;
 
     if (Object.keys(filters).length) {
+      // FIX: Pass options array to helper directly so it handles sorting, limits, and offsets securely
       const { sql, values }: any = await generateQuerySearch(
         tableName,
         filters,
         {
+          sort: sortColumn,
+          order: order as "ASC" | "DESC",
           limit,
           offset,
-          sort: sortColumn,
-          order,
         }
       );
 
-      const query = `
-        ${sql}
-        ORDER BY ${sortColumn} ${order}
-        LIMIT ?
-        OFFSET ?
-      `;
-
-      const [rows]: any = await pool.execute(query, [
-        ...values,
-        limit,
-        offset,
-      ]);
+      const [rows]: any = await pool.execute(sql, values);
 
       return MyResponse(
         {
@@ -276,7 +264,7 @@ export async function GET(
     const [rows]: any = await pool.execute(
       `SELECT *
        FROM \`${tableName}\`
-       ORDER BY ${sortColumn} ${order}
+       ORDER BY \`${sortColumn}\` ${order}
        LIMIT ?
        OFFSET ?`,
       [limit, offset],
@@ -305,7 +293,6 @@ export async function GET(
     );
   }
 }
-
 export async function POST(
   Request: Request,
   { params }: { params: { info: string[] } },

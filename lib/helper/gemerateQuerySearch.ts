@@ -26,6 +26,7 @@ export async function generateQuerySearch(
   const values: any[] = [];
 
   for (const [key, value] of Object.entries(filters)) {
+    if (!allowedColumns.includes(key)) continue;
 
     if (value === undefined || value === null || value === "") continue;
 
@@ -45,7 +46,7 @@ export async function generateQuerySearch(
   }
 
   const sort =
-    options?.sort
+    allowedColumns.includes(options?.sort || "")
       ? options!.sort
       : "primary_id";
 
@@ -56,7 +57,7 @@ export async function generateQuerySearch(
 
   sql += ` ORDER BY \`${sort}\` ${order}`;
 
-  if (options?.limit) {
+  if (options?.limit !== undefined) {
     sql += ` LIMIT ?`;
     values.push(options.limit);
 

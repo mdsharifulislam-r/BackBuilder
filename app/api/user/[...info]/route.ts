@@ -136,7 +136,7 @@ export async function GET(
       const [item1, item2] = userinfo[3].trim().split("-");
       if (!Object.keys(searchParams)?.length) {
         const [obj]: any[] = await pool.execute(
-          `SELECT * FROM ${userinfo[2] + userinfo[1]}`,
+          `SELECT * FROM ${userinfo[2] + userinfo[1]} OFFSET ${item1} LIMIT ${item2} ORDER BY primary_id DESC`,
         );
 
         if (!obj?.length) {
@@ -152,7 +152,7 @@ export async function GET(
           {
             success: true,
             message: "Successfully Get Data ",
-            data: obj?.slice(item1, item2),
+            data: obj,
           },
           200,
         );

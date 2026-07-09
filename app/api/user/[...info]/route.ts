@@ -23,22 +23,58 @@ import { generateZodSchema } from "@/lib/helper/generateZodSchema";
 export const dynamic = "force-dynamic";
 
 export async function GET(
-  Request: NextRequest,
+  request: NextRequest,
   { params }: { params: { info: string[] } },
 ) {
   try {
-    const search = new URLSearchParams(Request.nextUrl.searchParams);
-    const searchParams = Object.fromEntries(search.entries());
+    const { info } = params;
+    const [userId, projectId, endpointName, identifier] = info;
 
-    const userinfo = params.info;
+    const tableName = `${endpointName}${projectId}`;
 
-    // Checkeing User Existence
-    const [user]: any = await pool.execute(
-      "SELECT * FROM `users` WHERE user_id = ?",
-      [userinfo[0]],
+    // Prevent SQL Injection
+    if (!/^[a-zA-Z0-9_]+$/.test(tableName)) {
+      return MyResponse(
+        {
+          success: false,
+          message: "Invalid table name",
+        },
+        400,
+      );
+    }
+
+    const search = request.nextUrl.searchParams;
+
+    const page = Math.max(Number(search.get("page") ?? 1), 1);
+    const limit = Math.max(Number(search.get("limit") ?? 20), 1);
+    const offset = (page - 1) * limit;
+
+    const sort = search.get("sort") ?? "primary_id";
+    const order =
+      search.get("order")?.toUpperCase() === "ASC" ? "ASC" : "DESC";
+
+    const allowedColumns = [
+      "primary_id",
+      "created_at",
+      "updated_at",
+      "name",
+      "email",
+    ];
+
+    const sortColumn = sort
+      ? sort
+      : "primary_id";
+
+    //---------------------------------------------------
+    // User
+    //---------------------------------------------------
+
+    const [users]: any = await pool.execute(
+      "SELECT user_id FROM users WHERE user_id=?",
+      [userId],
     );
 
-    if (!user[0]?.user_id) {
+    if (!users.length) {
       return MyResponse(
         {
           success: false,
@@ -48,12 +84,16 @@ export async function GET(
       );
     }
 
-    // Checking procject Existence
-    const [project]: any = await pool.execute(
-      "SELECT * FROM `projects` WHERE project_id=? AND user_id=?",
-      [userinfo[1], userinfo[0]],
+    //---------------------------------------------------
+    // Project
+    //---------------------------------------------------
+
+    const [projects]: any = await pool.execute(
+      "SELECT project_id FROM projects WHERE project_id=? AND user_id=?",
+      [projectId, userId],
     );
-    if (!project[0]?.project_id) {
+
+    if (!projects.length) {
       return MyResponse(
         {
           success: false,
@@ -62,22 +102,35 @@ export async function GET(
         404,
       );
     }
-    // Checking Endpoint
-    const match = await CheckOrigin(Request, userinfo[1]);
+
+    //---------------------------------------------------
+    // Origin
+    //---------------------------------------------------
+
+    const match = await CheckOrigin(request, projectId);
+
     if (!match) {
       return MyResponse(
         {
           success: false,
-          message: "origin not allowed",
+          message: "Origin not allowed",
         },
         401,
       );
     }
-    const [endpoint]: any = await pool.execute(
-      "SELECT * FROM `endpoints` WHERE name=? AND project_id=?",
-      [userinfo[2], userinfo[1]],
+
+    //---------------------------------------------------
+    // Endpoint
+    //---------------------------------------------------
+
+    const [endpoints]: any = await pool.execute(
+      "SELECT * FROM endpoints WHERE name=? AND project_id=?",
+      [endpointName, projectId],
     );
-    if (!endpoint[0]?.primary_id) {
+
+    const endpoint = endpoints[0];
+
+    if (!endpoint) {
       return MyResponse(
         {
           success: false,
@@ -87,13 +140,18 @@ export async function GET(
       );
     }
 
-    if (endpoint[0]?.is_auth_required) {
-      const check = checkAuth(
-        Request.headers.get("Authorization") || "",
-        endpoint[0]?.is_auth_required,
+    //---------------------------------------------------
+    // Auth
+    //---------------------------------------------------
+
+    if (endpoint.is_auth_required) {
+      const auth = checkAuth(
+        request.headers.get("Authorization") || "",
+        endpoint.is_auth_required,
         "GET",
       );
-      if (!check) {
+
+      if (!auth) {
         return MyResponse(
           {
             success: false,
@@ -104,116 +162,140 @@ export async function GET(
       }
     }
 
-    const [data] = await pool.execute(
-      `SELECT * FROM ${userinfo[2] + userinfo[1]}`,
-    );
-    //Single query selector
-    if (userinfo[3] && !userinfo[3].includes("-")) {
-      const [obj]: any = await pool.execute(
-        `SELECT * FROM ${userinfo[2] + userinfo[1]} WHERE primary_id=?`,
-        [userinfo[3]],
+    //---------------------------------------------------
+    // Single Record
+    //---------------------------------------------------
+
+    if (identifier && !identifier.includes("-")) {
+      const [rows]: any = await pool.execute(
+        `SELECT *
+         FROM \`${tableName}\`
+         WHERE primary_id=?`,
+        [identifier],
       );
-      if (!obj[0]?.primary_id) {
+
+      if (!rows.length) {
         return MyResponse(
           {
             success: false,
-            message: "data not found",
+            message: "Data not found",
           },
           404,
         );
       }
+
       return MyResponse(
         {
           success: true,
-          message: "Successfully Get Data ",
-          data: obj[0],
+          message: "Data fetched successfully",
+          data: rows[0],
         },
         200,
       );
     }
-    // Send Range Data
-    if (userinfo[3] && userinfo[3].includes("-")) {
-      const [item1, item2] = userinfo[3].trim().split("-");
-      if (!Object.keys(searchParams)?.length) {
-        const [obj]: any[] = await pool.execute(
-          `SELECT * FROM ${userinfo[2] + userinfo[1]}
-   ORDER BY primary_id DESC
-   LIMIT ? OFFSET ?`,
-          [item2, item1],
-        );
 
-        if (!obj?.length) {
-          return MyResponse(
-            {
-              success: false,
-              message: "data not found",
-            },
-            404,
-          );
-        }
-        return MyResponse(
-          {
-            success: true,
-            message: "Successfully Get Data ",
-            data: obj,
-          },
-          200,
-        );
-      } else {
-        const { sql, values }: any = await generateQuerySearch(
-          userinfo[2] + userinfo[1],
-          searchParams,
-        );
-        const [queryData]: any[] = await pool.execute(sql, values);
+    //---------------------------------------------------
+    // Range
+    //---------------------------------------------------
 
-        return MyResponse(
-          {
-            success: true,
-            message: "Data get successfully",
-            data: queryData?.slice(item1, item2),
-          },
-          200,
-        );
-      }
+    if (identifier?.includes("-")) {
+      const [start, end] = identifier.split("-").map(Number);
+
+      const count = end - start;
+      const skip = start;
+
+      const [rows]: any = await pool.execute(
+        `SELECT *
+         FROM \`${tableName}\`
+         ORDER BY ${sortColumn} ${order}
+         LIMIT ?
+         OFFSET ?`,
+        [count, skip],
+      );
+
+      return MyResponse(
+        {
+          success: true,
+          message: "Data fetched successfully",
+          data: rows,
+        },
+        200,
+      );
     }
-    // searchparams data
-    if (Object.keys(searchParams)?.length) {
+
+    //---------------------------------------------------
+    // Search
+    //---------------------------------------------------
+
+    const filters = Object.fromEntries(search.entries());
+
+    delete filters.page;
+    delete filters.limit;
+    delete filters.sort;
+    delete filters.order;
+
+    if (Object.keys(filters).length) {
       const { sql, values }: any = await generateQuerySearch(
-        userinfo[2] + userinfo[1],
-        searchParams,
+        tableName,
+        filters,
       );
-      const [queryData]: any[] = await pool.execute(sql, values);
+
+      const query = `
+        ${sql}
+        ORDER BY ${sortColumn} ${order}
+        LIMIT ?
+        OFFSET ?
+      `;
+
+      const [rows]: any = await pool.execute(query, [
+        ...values,
+        limit,
+        offset,
+      ]);
 
       return MyResponse(
         {
           success: true,
-          message: "Data get successfully",
-          data: queryData,
+          message: "Data fetched successfully",
+          data: rows,
         },
         200,
       );
     }
+
+    //---------------------------------------------------
+    // Get All
+    //---------------------------------------------------
+
+    const [rows]: any = await pool.execute(
+      `SELECT *
+       FROM \`${tableName}\`
+       ORDER BY ${sortColumn} ${order}
+       LIMIT ?
+       OFFSET ?`,
+      [limit, offset],
+    );
+
     return MyResponse(
       {
         success: true,
-        message: "Successfully Get Data of " + userinfo[2],
-        data: data,
+        message: "Data fetched successfully",
+        page,
+        limit,
+        total: rows.length,
+        data: rows,
       },
       200,
     );
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
-    return NextResponse.json(
+    return MyResponse(
       {
         success: false,
         message: "Something went wrong",
       },
-      {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-      },
+      500,
     );
   }
 }

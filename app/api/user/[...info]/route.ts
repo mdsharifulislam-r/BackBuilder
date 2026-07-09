@@ -22,6 +22,35 @@ import { generateZodSchema } from "@/lib/helper/generateZodSchema";
 
 export const dynamic = "force-dynamic";
 
+function sanitizeSelectColumns(input?: string | null) {
+  if (!input || input.trim() === "" || input.trim() === "*") {
+    return "*";
+  }
+
+  const columns = input
+    .split(",")
+    .map((column) => column.trim())
+    .filter(Boolean);
+
+  const validColumns = columns.filter((column) => /^[a-zA-Z0-9_]+$/.test(column));
+
+  return validColumns.length
+    ? validColumns.map((column) => `\`${column}\``).join(", ")
+    : "*";
+}
+
+function sanitizeSearchColumns(input?: string | null) {
+  if (!input || input.trim() === "") {
+    return [] as string[];
+  }
+
+  return input
+    .split(",")
+    .map((column) => column.trim())
+    .filter(Boolean)
+    .filter((column) => /^[a-zA-Z0-9_]+$/.test(column));
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { info: string[] } },
@@ -53,15 +82,22 @@ export async function GET(
     const order =
       search.get("order")?.toUpperCase() === "ASC" ? "ASC" : "DESC";
 
-    const allowedColumns = [
+    const select = sanitizeSelectColumns(search.get("select"));
+    const searchTerm = search.get("search")?.trim() ?? "";
+    const searchFields = sanitizeSearchColumns(
+      search.get("searchFields") ?? search.get("search_fields"),
+    );
+
+    console.log("searchFields", searchFields);
+
+    const allowedSortColumns = [
       "primary_id",
       "created_at",
       "updated_at",
       "name",
       "email",
     ];
-
-    const sortColumn = allowedColumns.includes(sort) ? sort : "primary_id";
+    const sortColumn = allowedSortColumns.includes(sort) ? sort : "primary_id";
 
     //---------------------------------------------------
     // User
@@ -166,11 +202,12 @@ export async function GET(
 
     if (identifier && !identifier.includes("-")) {
       const [rows]: any = await pool.execute(
-        `SELECT *
+        `SELECT ${select}
          FROM \`${tableName}\`
          WHERE primary_id=?`,
         [identifier],
       );
+
 
       if (!rows.length) {
         return MyResponse(
@@ -197,17 +234,17 @@ export async function GET(
     //---------------------------------------------------
 
     if (identifier?.includes("-")) {
-      const [start, end] = identifier.split("-").map(Number);
-
-      const count = end - start;
-      const skip = start;
+      const [startRaw, endRaw] = identifier.split("-");
+      const start = Number(startRaw);
+      const end = Number(endRaw);
+      const count = Math.max(Math.floor(end - start), 0);
+      const skip = Math.max(Math.floor(start), 0);
 
       const [rows]: any = await pool.execute(
-        `SELECT *
+        `SELECT ${select}
          FROM \`${tableName}\`
          ORDER BY \`${sortColumn}\` ${order}
-         LIMIT ? OFFSET ?`,
-        [count, skip],
+         LIMIT ${count} OFFSET ${skip}`,
       );
 
       return MyResponse(
@@ -230,9 +267,12 @@ export async function GET(
     delete filters.limit;
     delete filters.sort;
     delete filters.order;
+    delete filters.select;
+    delete filters.search;
+    delete filters.searchFields;
+    delete filters.search_fields;
 
-    if (Object.keys(filters).length) {
-      // FIX: Pass options array to helper directly so it handles sorting, limits, and offsets securely
+    if (Object.keys(filters).length || searchTerm) {
       const { sql, values }: any = await generateQuerySearch(
         tableName,
         filters,
@@ -241,7 +281,10 @@ export async function GET(
           order: order as "ASC" | "DESC",
           limit,
           offset,
-        }
+          select,
+          search: searchTerm,
+          searchFields,
+        },
       );
 
       const [rows]: any = await pool.execute(sql, values);
@@ -261,11 +304,10 @@ export async function GET(
     //---------------------------------------------------
 
     const [rows]: any = await pool.execute(
-      `SELECT *
+      `SELECT ${select}
        FROM \`${tableName}\`
        ORDER BY \`${sortColumn}\` ${order}
-       LIMIT ? OFFSET ?`,
-      [limit, offset],
+       LIMIT ${limit} OFFSET ${offset}`,
     );
 
     return MyResponse(

@@ -171,19 +171,38 @@ export default function DocsPage() {
             />
           </Section>
 
-          <Section id="querying" title="Filtering, ranges & pagination">
-            <p>Filter records by any field using ordinary query parameters — each pair is combined with <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">AND</code>:</p>
+          <Section id="querying" title="Filtering, ranges, search & pagination">
+            <p>Filter records by any field using ordinary query parameters — each field filter is combined with <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">AND</code>:</p>
             <CodeBlock
               title="Filter by fields"
               lang="text"
               code={`GET {ENDPOINT_URL}?name=sharif&age=22`}
             />
-            <p>Slice results by position by adding a <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">start-end</code> range segment after the endpoint name. This can be combined with filters:</p>
+            <p>Search across one or more columns using <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">search</code> and optionally <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">searchFields</code> (or <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">search_fields</code>):</p>
+            <CodeBlock
+              title="Full-text style search"
+              lang="text"
+              code={`GET {ENDPOINT_URL}?search=sharif
+GET {ENDPOINT_URL}?search=sharif&searchFields=name,email`}
+            />
+            <p>Select only the columns you need with <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">select</code>:</p>
+            <CodeBlock
+              title="Choose returned fields"
+              lang="text"
+              code={`GET {ENDPOINT_URL}?select=name,email`}
+            />
+            <p>Slice results by position by adding a <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">start-end</code> range segment after the endpoint name. This can be combined with filters, search, and selects:</p>
             <CodeBlock
               title="Range of records"
               lang="text"
               code={`GET {ENDPOINT_URL}/0-10
-GET {ENDPOINT_URL}/0-10?category=shoes`}
+GET {ENDPOINT_URL}/0-10?category=shoes&search=sharif&select=name,email`}
+            />
+            <p>Control pagination with <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">page</code> and <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">limit</code>, and sort with <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">sort</code> and <code className="text-sm bg-slate-100 px-1.5 py-0.5 rounded">order</code>:</p>
+            <CodeBlock
+              title="Pagination and sorting"
+              lang="text"
+              code={`GET {ENDPOINT_URL}?page=2&limit=10&sort=created_at&order=DESC`}
             />
           </Section>
 

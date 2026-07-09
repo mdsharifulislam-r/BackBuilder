@@ -206,8 +206,7 @@ export async function GET(
         `SELECT *
          FROM \`${tableName}\`
          ORDER BY \`${sortColumn}\` ${order}
-         LIMIT ?
-         OFFSET ?`,
+         LIMIT ? OFFSET ?`,
         [count, skip],
       );
 
@@ -265,8 +264,7 @@ export async function GET(
       `SELECT *
        FROM \`${tableName}\`
        ORDER BY \`${sortColumn}\` ${order}
-       LIMIT ?
-       OFFSET ?`,
+       LIMIT ? OFFSET ?`,
       [limit, offset],
     );
 

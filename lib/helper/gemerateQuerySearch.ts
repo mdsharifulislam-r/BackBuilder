@@ -50,10 +50,7 @@ export async function generateQuerySearch(
       ? options!.sort
       : "primary_id";
 
-  const order =
-    options?.order === "ASC"
-      ? "ASC"
-      : "DESC";
+  const order = options?.order === "ASC" ? "ASC" : "DESC";
 
   sql += ` ORDER BY \`${sort}\` ${order}`;
 
@@ -61,7 +58,7 @@ export async function generateQuerySearch(
     sql += ` LIMIT ?`;
     values.push(options.limit);
 
-    if (options.offset !== undefined) {
+    if (options.offset !== undefined && options.offset > 0) {
       sql += ` OFFSET ?`;
       values.push(options.offset);
     }
